@@ -27,3 +27,4 @@ RESOURCES +=   src/resources/mainwindow.qrc \
 RCC_DIR +=   ./build/rc
 INCLUDEPATH +=   ./src
 CONFIG +=   release
+TRANSLATIONS +=   qdictionary_hu.ts
