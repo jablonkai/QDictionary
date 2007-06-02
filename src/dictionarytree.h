@@ -15,6 +15,7 @@ public:
 	DictionaryTree(QWidget*);
 	
 signals:
+	void statusBarMessage(QString, int);
 	void activateDictionary(Dictionary*);
 	
 private:

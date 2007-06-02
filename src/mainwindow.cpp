@@ -22,6 +22,7 @@ MainWindow::MainWindow() : QMainWindow()
 	readSettings();
 	
 	connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
+	connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
 	connect(dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
 }
 
