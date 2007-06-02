@@ -4,10 +4,6 @@
 #include <QString>
 
 
-class QDomDocument;
-class QDomElement;
-
-
 class Word
 {
 public:
@@ -15,9 +11,6 @@ public:
 	QString translated;
 	
 	Word(QString, QString);
-	Word(const QDomElement&);
-
-	QDomElement createXMLNode(QDomDocument&);
 };
 
 
