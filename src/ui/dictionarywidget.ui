@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>448</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -16,9 +16,9 @@
    <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="QComboBox" name="comboBox" >
-       <property name="sizeAdjustPolicy" >
-        <enum>QComboBox::AdjustToContents</enum>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>Search:</string>
        </property>
       </widget>
      </item>
@@ -26,9 +26,22 @@
       <widget class="QLineEdit" name="lineEdit" />
      </item>
      <item>
-      <widget class="QPushButton" name="eraseButton" >
-       <property name="icon" >
-        <iconset resource="../resources/dictionarywidget.qrc" >:/new/prefix1/erase.png</iconset>
+      <widget class="QLabel" name="clearButton" >
+       <property name="toolTip" >
+        <string>Clear text</string>
+       </property>
+       <property name="text" >
+        <string/>
+       </property>
+       <property name="pixmap" >
+        <pixmap resource="../resources/dictionarywidget.qrc" >:/new/prefix1/clear.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox" >
+       <property name="sizeAdjustPolicy" >
+        <enum>QComboBox::AdjustToContents</enum>
        </property>
       </widget>
      </item>
@@ -44,6 +57,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox" >
+       <property name="text" >
+        <string>Filter</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

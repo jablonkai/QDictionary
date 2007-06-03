@@ -102,8 +102,6 @@
    <header>dictionarytree.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources/mainwindow.qrc" />
- </resources>
+ <resources/>
  <connections/>
 </ui>

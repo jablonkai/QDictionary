@@ -50,7 +50,7 @@ void MainWindow::setupActions()
 
 void MainWindow::readSettings()
 {
-    QSettings settings("Jablonkai", "QVocabulary");
+    QSettings settings("Jablonkai", "QDictionary");
 
     settings.beginGroup("MainWindow");
     restoreState(settings.value("state", saveState()).toByteArray());
@@ -61,7 +61,7 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
-    QSettings settings("Jablonkai", "QVocabulary");
+    QSettings settings("Jablonkai", "QDictionary");
 
     settings.beginGroup("MainWindow");
     settings.setValue("state", saveState());

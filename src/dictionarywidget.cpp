@@ -17,10 +17,11 @@ setStyleSheet(QString(":enabled { padding-right: %1; }").arg(buttonWidth));
 
 where buttonWidth is the width of the clear button and voila ... no more text under
 the button. this gives us:*/
-//	ui.lineEdit->setStyleSheet(QString(":enabled { padding-right: %1; }").arg(buttonWidth));
-
+//	ui.lineEdit->setStyleSheet(QString(":enabled { padding-right: %1; }").arg(ui.eraseButton->width()));
+	ui.clearButton->setParent(ui.lineEdit);
+	
 	connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
-	connect(ui.eraseButton, SIGNAL(clicked()), ui.lineEdit, SLOT(clear()));
+//	connect(ui.eraseButton, SIGNAL(clicked()), ui.lineEdit, SLOT(clear()));
 }
 
 
