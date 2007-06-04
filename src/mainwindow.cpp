@@ -15,7 +15,6 @@ MainWindow::MainWindow() : QMainWindow()
 	centralWidget = new QStackedWidget;
 	setCentralWidget(centralWidget);
 	
-	// dictionary widget
 	dictionaryWidget = new DictionaryWidget;
 	centralWidget->addWidget(dictionaryWidget);
 	

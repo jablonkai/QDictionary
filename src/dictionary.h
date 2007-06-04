@@ -3,7 +3,7 @@
 
 #include <QList>
 
-#include "word.h"
+#include "entry.h"
 
 
 class Dictionary
@@ -11,7 +11,7 @@ class Dictionary
 public:
 	Dictionary(QString);
 	
-	QList<Word> dictionary;
+	QList<Entry> dictionary;
 
 	void setOLang(QString);
 	QString oLang();
@@ -24,7 +24,7 @@ public:
 		
 	void load();
 	
-	QList<Word> search(QString, int);
+	QList<Entry> search(QString, int);
 
 private:
 	QString _oLang;

@@ -31,7 +31,7 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 void DictionaryTree::initDicts()
 {
 	QDir dictDir = QDir(qApp->applicationDirPath());
-	dictDir.cd("../dict");
+	dictDir.cd("dict");
 	
 	int i = 0;
 	foreach (QString fileName, dictDir.entryList(QDir::Files))
@@ -48,5 +48,8 @@ void DictionaryTree::initDicts()
 
 void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
 {
+	if ()
+		return;
+	
 	emit activateDictionary(static_cast<DictionaryItem*>(item)->dictionary);
 }

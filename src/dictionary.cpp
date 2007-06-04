@@ -27,7 +27,7 @@ void Dictionary::load()
 }
 
 
-QList<Word> Dictionary::search(QString string, int index)
+QList<Entry> Dictionary::search(QString string, int index)
 {
 	QList<Word> list;
 

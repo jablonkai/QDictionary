@@ -1,16 +1,16 @@
-#ifndef WORD_H
-#define WORD_H
+#ifndef ENTRY_H
+#define ENTRY_H
 
 #include <QString>
 
 
-class Word
+class Entry
 {
 public:
 	QString original;
 	QString translated;
 	
-	Word(QString, QString);
+	Entry(QString, QString);
 };
 
 
