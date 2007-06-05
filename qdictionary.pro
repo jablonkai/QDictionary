@@ -22,7 +22,6 @@ QT +=   gui \
 UI_DIR +=   ./build/ui
 FORMS +=   src/ui/dictionarywidget.ui \
   src/ui/mainwindow.ui
-RESOURCES +=   src/resources/dictionarywidget.qrc
 RCC_DIR +=   ./build/rc
 INCLUDEPATH +=   ./src
 CONFIG +=   release
