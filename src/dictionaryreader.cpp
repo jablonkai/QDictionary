@@ -18,10 +18,10 @@ bool DictionaryReader::read(QIODevice *device)
 
 		if (isStartElement())
 		{
-			if (name() == "qvoc")
+			if (name() == "xdict")
 				readRoot();
 			else
-				raiseError(QObject::tr("The file is not an QVOC file."));
+				raiseError(QObject::tr("The file is not an XDICT file."));
 		}
 	}
 	

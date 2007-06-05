@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE QVOC>
-<qvoc>
+<!DOCTYPE XDICT>
+<xdict>
 <header>
 <doc_type>Dictionary</doc_type>
 <lang from="German" to="Hungarian" />
@@ -151560,4 +151560,4 @@
 <t>e.i.sz. (ez idő szerin) /röv./</t>
 </e>
 </dict>
-</qvoc>
+</xdict>

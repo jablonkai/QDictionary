@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE QDICT>
-<qvoc>
+<!DOCTYPE XDICT>
+<xdict>
 <header>
 <doc_type>Dictionary</doc_type>
 <lang from="English" to="Spanish" />
@@ -96880,4 +96880,4 @@
 <t>Zúrich</t>
 </e>
 </dict>
-</qvoc>
+</xdict>

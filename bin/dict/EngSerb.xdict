@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE QVOC>
-<qvoc>
+<!DOCTYPE XDICT>
+<xdict>
 <header>
 <doc_type>Dictionary</doc_type>
 <lang from="English" to="Serbian" />
@@ -296756,4 +296756,4 @@
 <t>zigot</t>
 </e>
 </dict>
-</qvoc>
+</xdict>
