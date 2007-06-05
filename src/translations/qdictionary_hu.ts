@@ -21,8 +21,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dictionarywidget.cpp" line="42"/>
+        <location filename="../dictionarywidget.cpp" line="39"/>
         <source>The number of results: %1<byte value="x9"/>(Within %2 sec)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dictionarywidget.ui" line="21"/>
+        <source>Search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dictionarywidget.ui" line="51"/>
+        <source>Filtering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dictionarywidget.ui" line="62"/>
+        <source>Filter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dictionarywidget.ui" line="75"/>
+        <source>Invert result</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -41,7 +61,7 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="36"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Segítség</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="51"/>
@@ -51,7 +71,7 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="74"/>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="84"/>
@@ -69,9 +89,9 @@
         <translation>Qt névjegye</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="39"/>
+        <location filename="../mainwindow.cpp" line="38"/>
         <source>About QDictionary</source>
-        <translation type="unfinished">QDictionary névjegye</translation>
+        <translation>QDictionary névjegye</translation>
     </message>
 </context>
 <context>

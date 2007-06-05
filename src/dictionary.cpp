@@ -29,14 +29,14 @@ void Dictionary::load()
 
 QList<Entry> Dictionary::search(QString string, int index)
 {
-	QList<Word> list;
+	QList<Entry> list;
 
 	if (index == 0)
-		foreach (Word i, dictionary)
+		foreach (Entry i, dictionary)
 			if (i.original.contains(string, Qt::CaseInsensitive))
 				list << i;
 	if (index == 1)
-		foreach (Word i, dictionary)
+		foreach (Entry i, dictionary)
 			if (i.translated.contains(string, Qt::CaseInsensitive))
 				list << i;
 	

@@ -6,8 +6,6 @@
 #include "ui_mainwindow.h"
 
 
-class QStackedWidget;
-
 class Dictionary;
 class DictionaryWidget;
 
@@ -36,8 +34,6 @@ private:
 	
 	Ui::MainWindow ui;
 
-	QStackedWidget *centralWidget;
-	
 	DictionaryWidget *dictionaryWidget;
 };
 

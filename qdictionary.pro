@@ -26,5 +26,3 @@ RESOURCES +=   src/resources/dictionarywidget.qrc
 RCC_DIR +=   ./build/rc
 INCLUDEPATH +=   ./src
 CONFIG +=   release
-TRANSLATIONS +=   src/translations/qdictionary_hu.ts \
-  src/translations/qdictionary_hu_HU.ts

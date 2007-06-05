@@ -19,7 +19,7 @@ signals:
 	void activateDictionary(Dictionary*);
 	
 private:
-	QTreeWidgetItem *dictionary;
+	QTreeWidgetItem *dictionaries;
 	QTreeWidgetItem *vocabulary;
 	
 	void initDicts();

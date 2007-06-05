@@ -12,11 +12,8 @@ MainWindow::MainWindow() : QMainWindow()
 	ui.setupUi(this);
 	setupActions();
 	
-	centralWidget = new QStackedWidget;
-	setCentralWidget(centralWidget);
-	
 	dictionaryWidget = new DictionaryWidget;
-	centralWidget->addWidget(dictionaryWidget);
+	setCentralWidget(dictionaryWidget);
 	
 	readSettings();
 	

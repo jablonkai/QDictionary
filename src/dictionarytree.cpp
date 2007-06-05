@@ -19,8 +19,8 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 {
 	header()->hide();
 	
-	dictionary = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionary")));
-	insertTopLevelItem(0, dictionary);
+	dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionary")));
+	insertTopLevelItem(0, dictionaries);
 	
 	initDicts();
 	
@@ -37,10 +37,10 @@ void DictionaryTree::initDicts()
 	foreach (QString fileName, dictDir.entryList(QDir::Files))
     {
     	Dictionary *d = new Dictionary(dictDir.absoluteFilePath(fileName));
-		new DictionaryItem(dictionary, d->dictName(), d);
+		new DictionaryItem(dictionaries, d->dictName(), d);
 		++i;
     }
-    expandItem(dictionary);
+    expandItem(dictionaries);
     
     emit statusBarMessage(tr("%1 dictionaries loaded").arg(i), 0);
 }
@@ -48,7 +48,7 @@ void DictionaryTree::initDicts()
 
 void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
 {
-	if ()
+	if (dictionaries == item)
 		return;
 	
 	emit activateDictionary(static_cast<DictionaryItem*>(item)->dictionary);

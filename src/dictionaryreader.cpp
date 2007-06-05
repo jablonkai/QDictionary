@@ -104,7 +104,7 @@ void DictionaryReader::readLang()
 	dict->setOLang(attributes().value("from").toString());
 	dict->setTLang(attributes().value("to").toString());
 
-	readNext();						// kell ez ide???
+	readNext();
 }
 
 
@@ -142,7 +142,7 @@ void DictionaryReader::readWord()
 		if (isEndElement())
 			break;
 			
-		else if (isStartElement())				// jobbat !!!!!!!!!
+		else if (isStartElement())
 		{
 			if (name() == "o")
 				o = readElementText();
@@ -152,5 +152,5 @@ void DictionaryReader::readWord()
 				readUnknownElement();
 		}
 	}
-	dict->dictionary << Word(o, t);
+	dict->dictionary << Entry(o, t);
 }
