@@ -8,14 +8,16 @@ SOURCES +=   src/main.cpp \
   src/dictionarywidget.cpp \
   src/dictionarytree.cpp \
   src/dictionaryreader.cpp \
-  src/entry.cpp
+  src/entry.cpp \
+  src/lineedit.cpp
 HEADERS +=   src/mainwindow.h \
   src/dictionary.h \
   src/dictionarywidget.h \
   src/dictionarytree.h \
   src/version.h \
   src/dictionaryreader.h \
-  src/entry.h
+  src/entry.h \
+  src/lineedit.h
 QT +=   gui \
   core \
   xml

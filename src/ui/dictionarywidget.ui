@@ -30,7 +30,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit" />
+      <widget class="LineEdit" name="lineEdit" />
      </item>
      <item>
       <spacer>
@@ -65,6 +65,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>lineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/dictionarywidget.qrc" />
  </resources>

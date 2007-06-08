@@ -19,7 +19,7 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 {
 	header()->hide();
 	
-	dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionary")));
+	dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")));
 	insertTopLevelItem(0, dictionaries);
 	
 	initDicts();
