@@ -22,6 +22,7 @@ public slots:
 
 private slots:
     void slotSearch();
+    void slotFilter();
 
 private:
     Ui::DictionaryWidget ui;

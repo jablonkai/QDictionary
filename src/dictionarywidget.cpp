@@ -11,6 +11,10 @@ DictionaryWidget::DictionaryWidget()
 
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
     connect(ui.searchButton, SIGNAL(released()), this, SLOT(slotSearch()));
+    connect(ui.filterLineEdit, SIGNAL(returnPressed()), this, SLOT(slotFilter()));
+    connect(ui.filterButton, SIGNAL(released()), this, SLOT(slotFilter()));
+
+    ui.filterWidget->setVisible(false);
 }
 
 
@@ -24,6 +28,12 @@ void DictionaryWidget::activateDictionary(Dictionary *d)
 
     ui.comboBox->addItem(QString("%1 -> %2").arg(dict->oLang()).arg(dict->tLang()));
     ui.comboBox->addItem(QString("%1 -> %2").arg(dict->tLang()).arg(dict->oLang()));
+
+    ui.filterComboBox->clear();
+    ui.filterLineEdit->clear();
+
+    ui.filterComboBox->addItem(QString("%1").arg(dict->oLang()));
+    ui.filterComboBox->addItem(QString("%1").arg(dict->tLang()));
 }
 
 
@@ -48,4 +58,9 @@ void DictionaryWidget::slotSearch()
     ui.tableView->resizeColumnsToContents();
 
     emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(d.size()).arg(time.elapsed() / 1000.0f), 0);
+}
+
+
+void DictionaryWidget::slotFilter()
+{
 }

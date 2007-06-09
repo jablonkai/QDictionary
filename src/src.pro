@@ -24,5 +24,3 @@ FORMS += dictionarywidget.ui \
 mainwindow.ui
 QT += core \
 xml
-RESOURCES += dictionarywidget.qrc
-
