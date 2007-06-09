@@ -40,6 +40,9 @@
       </widget>
      </item>
      <item>
+      <widget class="SearchLine" name="lineEdit_2" />
+     </item>
+     <item>
       <spacer>
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
@@ -78,9 +81,14 @@
    <extends>QLineEdit</extends>
    <header>lineedit.h</header>
   </customwidget>
+  <customwidget>
+   <class>SearchLine</class>
+   <extends>QLineEdit</extends>
+   <header>searchline.h</header>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resources/dictionarywidget.qrc" />
+  <include location="dictionarywidget.qrc" />
  </resources>
  <connections/>
 </ui>

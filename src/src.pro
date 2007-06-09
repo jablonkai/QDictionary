@@ -1,11 +1,10 @@
-SOURCES += main.cpp \
-dictionary.cpp \
+SOURCES += dictionary.cpp \
 dictionaryreader.cpp \
 dictionarytree.cpp \
 dictionarywidget.cpp \
 entry.cpp \
-lineedit.cpp \
-mainwindow.cpp
+mainwindow.cpp \
+searchline.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -17,10 +16,12 @@ dictionaryreader.h \
 dictionarytree.h \
 dictionarywidget.h \
 entry.h \
-lineedit.h \
 mainwindow.h \
-version.h
+version.h \
+searchline.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui
 QT += core \
 xml
+RESOURCES += dictionarywidget.qrc
+

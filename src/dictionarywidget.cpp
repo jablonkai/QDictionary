@@ -10,6 +10,9 @@ DictionaryWidget::DictionaryWidget()
 {
     ui.setupUi(this);
 
+//    ui.label_2->setParent(ui.lineEdit_2);
+//    ui.lineEdit_2->setStyleSheet(QString("QLineEdit { padding-right: %1px; } ").arg(ui.label_2->sizeHint().width() + 1));
+
 //  ui.lineEdit = new LineEdit;
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
     connect(ui.searchButton, SIGNAL(released()), this, SLOT(slotSearch()));
