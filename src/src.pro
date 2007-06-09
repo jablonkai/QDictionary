@@ -4,7 +4,8 @@ dictionarytree.cpp \
 dictionarywidget.cpp \
 entry.cpp \
 mainwindow.cpp \
-searchline.cpp
+searchline.cpp \
+main.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \

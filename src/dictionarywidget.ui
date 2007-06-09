@@ -30,7 +30,7 @@
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="lineEdit" />
+      <widget class="SearchLine" name="lineEdit" />
      </item>
      <item>
       <widget class="QPushButton" name="searchButton" >
@@ -38,9 +38,6 @@
         <string>Search</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="SearchLine" name="lineEdit_2" />
      </item>
      <item>
       <spacer>
@@ -77,18 +74,11 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>lineedit.h</header>
-  </customwidget>
-  <customwidget>
    <class>SearchLine</class>
    <extends>QLineEdit</extends>
    <header>searchline.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="dictionarywidget.qrc" />
- </resources>
+ <resources/>
  <connections/>
 </ui>
