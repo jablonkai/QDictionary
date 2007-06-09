@@ -9,23 +9,23 @@ class Dictionary;
 
 class DictionaryTree : public QTreeWidget
 {
-	Q_OBJECT
-	
+    Q_OBJECT
+
 public:
-	DictionaryTree(QWidget*);
-	
+    DictionaryTree(QWidget*);
+
 signals:
-	void statusBarMessage(QString, int);
-	void activateDictionary(Dictionary*);
-	
+    void statusBarMessage(QString, int);
+    void activateDictionary(Dictionary*);
+
 private:
-	QTreeWidgetItem *dictionaries;
-	QTreeWidgetItem *vocabulary;
-	
-	void initDicts();
-	
+    QTreeWidgetItem *dictionaries;
+    QTreeWidgetItem *vocabulary;
+
+    void initDicts();
+
 private slots:
-	void itemActivate(QTreeWidgetItem*, int);
+    void itemActivate(QTreeWidgetItem*, int);
 };
 
 

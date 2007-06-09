@@ -9,24 +9,24 @@ class Dictionary;
 
 class DictionaryWidget : public QWidget
 {
-	Q_OBJECT
-	
+    Q_OBJECT
+
 public:
-	DictionaryWidget();
-	
+    DictionaryWidget();
+
 signals:
-	void statusBarMessage(QString, int);
-	
+    void statusBarMessage(QString, int);
+
 public slots:
-	void activateDictionary(Dictionary*);
-	
+    void activateDictionary(Dictionary*);
+
 private slots:
-	void slotSearch();
+    void slotSearch();
 
 private:
-	Ui::DictionaryWidget ui;
-	
-	Dictionary *dict;
+    Ui::DictionaryWidget ui;
+
+    Dictionary *dict;
 };
 
 

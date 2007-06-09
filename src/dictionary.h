@@ -9,71 +9,87 @@
 class Dictionary
 {
 public:
-	Dictionary(QString);
-	
-	QList<Entry> dictionary;
+    Dictionary(QString);
 
-	void setOLang(QString);
-	QString oLang();
-	void setTLang(QString);
-	QString tLang();
-	void setDictName(QString);
-	QString dictName();
-		
-	QString fileName();
-		
-	void load();
-	
-	QList<Entry> search(QString, int);
+    QList<Entry> dictionary;
+
+    void setOLang(QString);
+    QString oLang();
+    void setTLang(QString);
+    QString tLang();
+    void setDictName(QString);
+    QString dictName();
+
+    QString fileName();
+
+    bool loaded();
+    void setLoaded(bool);
+
+    void load();
+
+    QList<Entry> search(QString, int);
 
 private:
-	QString _oLang;
-	QString _tLang;
-	QString _dictName;
-	
-	QString _fileName;
+    QString _oLang;
+    QString _tLang;
+    QString _dictName;
+
+    QString _fileName;
+    bool _loaded;
 };
 
 
 inline void Dictionary::setOLang(QString s)
 {
-	_oLang = s;
+    _oLang = s;
 }
 
 
 inline QString Dictionary::oLang()
 {
-	return _oLang;
+    return _oLang;
 }
 
 
 inline void Dictionary::setTLang(QString s)
 {
-	_tLang = s;
+    _tLang = s;
 }
 
 
 inline QString Dictionary::tLang()
 {
-	return _tLang;
+    return _tLang;
 }
 
 
 inline void Dictionary::setDictName(QString s)
 {
-	_dictName = s;
+    _dictName = s;
 }
 
 
 inline QString Dictionary::dictName()
 {
-	return _dictName;
+    return _dictName;
 }
 
 
 inline QString Dictionary::fileName()
 {
-	return _fileName;
+    return _fileName;
+}
+
+
+inline bool Dictionary::loaded()
+{
+    return _loaded;
+}
+
+
+inline void Dictionary::setLoaded(bool b)
+{
+    _loaded = b;
 }
 
 

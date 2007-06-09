@@ -12,29 +12,29 @@ class DictionaryWidget;
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
-	
+    Q_OBJECT
+
 public:
-	MainWindow();
-	
+    MainWindow();
+
 signals:
-	void activateDictionary(Dictionary*);
-	
+    void activateDictionary(Dictionary*);
+
 protected:
     void closeEvent(QCloseEvent*);
 
 private slots:
-	void slotAbout();
-	
-private:
-	void setupActions();
-	
-	void readSettings();
-	void writeSettings();
-	
-	Ui::MainWindow ui;
+    void slotAbout();
 
-	DictionaryWidget *dictionaryWidget;
+private:
+    void setupActions();
+
+    void readSettings();
+    void writeSettings();
+
+    Ui::MainWindow ui;
+
+    DictionaryWidget *dictionaryWidget;
 };
 
 

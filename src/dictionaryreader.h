@@ -10,19 +10,20 @@ class Dictionary;
 class DictionaryReader : public QXmlStreamReader
 {
 public:
-	DictionaryReader(Dictionary*);
-	
-	bool read(QIODevice*);
-	
+    DictionaryReader(Dictionary*);
+
+    bool readHeader(QIODevice*);
+    bool read(QIODevice*);
+
 private:
-	void readUnknownElement();
-	void readRoot();
-	void readHeader();
-	void readLang();
-	void readDict();
-	void readWord();
-	
-	Dictionary *dict;
+    void readUnknownElement();
+    void readRoot();
+    void readHeader();
+    void readLang();
+    void readDict();
+    void readWord();
+
+    Dictionary *dict;
 };
 
 

@@ -9,38 +9,38 @@
 
 MainWindow::MainWindow() : QMainWindow()
 {
-	ui.setupUi(this);
-	setupActions();
-	
-	dictionaryWidget = new DictionaryWidget;
-	setCentralWidget(dictionaryWidget);
-	
-	readSettings();
-	
-	connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
-	connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
-	connect(dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+    ui.setupUi(this);
+    setupActions();
+
+    dictionaryWidget = new DictionaryWidget;
+    setCentralWidget(dictionaryWidget);
+
+    readSettings();
+
+    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
+    connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+    connect(dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
 }
 
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	writeSettings();
+    writeSettings();
     event->accept();
 }
 
 
 void MainWindow::slotAbout()
 {
-	QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("QDictionary\nVersion " QDICT_VERSION_STRING "\nCopyright (C) 2007 by Tamás Jablonkai\ntamas.jablonkai@gmail.com"));
+    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("QDictionary\nVersion " QDICT_VERSION_STRING "\nCopyright (C) 2007 by Tamás Jablonkai\ntamas.jablonkai@gmail.com"));
 }
 
 
 void MainWindow::setupActions()
 {
-	connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
-	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(slotAbout()));
-	connect(ui.actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
+    connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(slotAbout()));
+    connect(ui.actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 
 

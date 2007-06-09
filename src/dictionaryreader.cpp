@@ -8,6 +8,42 @@ DictionaryReader::DictionaryReader(Dictionary *d) : dict(d)
 }
 
 
+bool DictionaryReader::readHeader(QIODevice *device)
+{
+    setDevice(device);
+
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isStartElement())
+        {
+            if (name() == "xdict")
+                while (!atEnd())
+                {
+                    readNext();
+
+                    if (isEndElement())
+                        break;
+
+                    if (isStartElement())
+                    {
+                        if (name() == "header")
+                            readHeader();
+                        else if (name() == "dict")
+                            break;
+                        else
+                            readUnknownElement();
+                    }
+                }
+            else
+                raiseError(QObject::tr("The file is not an XDICT file."));
+        }
+    }
+    return !error();
+}
+
+
 bool DictionaryReader::read(QIODevice *device)
 {
 	setDevice(device);
@@ -24,7 +60,7 @@ bool DictionaryReader::read(QIODevice *device)
 				raiseError(QObject::tr("The file is not an XDICT file."));
 		}
 	}
-	
+
 //	QMessageBox::information(0, QString("%1").arg(error()), errorString());
 	return !error();
 }
@@ -33,14 +69,14 @@ bool DictionaryReader::read(QIODevice *device)
 void DictionaryReader::readUnknownElement()
 {
 	Q_ASSERT(isStartElement());
-	
+
 	while (!atEnd())
 	{
 		readNext();
-		
+
 		if (isEndElement())
 			break;
-		
+
 		if (isStartElement())
 			readUnknownElement();
 	}
@@ -54,10 +90,10 @@ void DictionaryReader::readRoot()
 	while (!atEnd())
 	{
 		readNext();
-		
+
 		if (isEndElement())
 			break;
-		
+
 		if (isStartElement())
 		{
 			if (name() == "header")
@@ -69,7 +105,7 @@ void DictionaryReader::readRoot()
 		}
 	}
 }
-	
+
 
 void DictionaryReader::readHeader()
 {
@@ -78,10 +114,10 @@ void DictionaryReader::readHeader()
 	while (!atEnd())
 	{
 		readNext();
-		
+
 		if (isEndElement())
 			break;
-		
+
 		if (isStartElement())
 		{
 			if (name() == "doc_type")
@@ -100,7 +136,7 @@ void DictionaryReader::readHeader()
 void DictionaryReader::readLang()
 {
 	Q_ASSERT(isStartElement() && name() == "lang");
-	
+
 	dict->setOLang(attributes().value("from").toString());
 	dict->setTLang(attributes().value("to").toString());
 
@@ -115,10 +151,10 @@ void DictionaryReader::readDict()
 	while (!atEnd())
 	{
 		readNext();
-		
+
 		if (isEndElement())
 			break;
-		
+
 		if (isStartElement())
 		{
 			if (name() == "w" || name() == "e")
@@ -138,10 +174,10 @@ void DictionaryReader::readWord()
 	while (!atEnd())
 	{
 		readNext();
-		
+
 		if (isEndElement())
 			break;
-			
+
 		else if (isStartElement())
 		{
 			if (name() == "o")
