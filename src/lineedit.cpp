@@ -15,9 +15,9 @@ LineEdit::LineEdit(QWidget *parent)
     : QLineEdit(parent)
 {
     clearButton = new QToolButton(this);
-    QPixmap pixmap("fileclose.png");
+    QPixmap pixmap("./src/clear.png");
     clearButton->setIcon(QIcon(pixmap));
-    clearButton->setIconSize(pixmap.size());
+//    clearButton->setIconSize(pixmap.size());
     clearButton->setCursor(Qt::ArrowCursor);
     clearButton->setStyleSheet("QToolButton { border: none; padding: 0px; }");
     clearButton->hide();
