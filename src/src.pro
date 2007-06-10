@@ -23,4 +23,7 @@ searchline.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui
 QT += core \
-xml
+xml \
+gui
+TRANSLATIONS += translations/qdictionary_hu.ts
+
