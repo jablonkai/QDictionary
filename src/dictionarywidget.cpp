@@ -9,10 +9,18 @@ DictionaryWidget::DictionaryWidget()
 {
     ui.setupUi(this);
 
+    filterModel = new QSortFilterProxyModel(this);
+    filterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    filterModel->setDynamicSortFilter(true);
+    filterModel->setSortLocaleAware(true),
+    ui.tableView->setModel(filterModel);
+
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
     connect(ui.searchButton, SIGNAL(released()), this, SLOT(slotSearch()));
-    connect(ui.filterLineEdit, SIGNAL(returnPressed()), this, SLOT(slotFilter()));
-    connect(ui.filterButton, SIGNAL(released()), this, SLOT(slotFilter()));
+    connect(ui.filteringCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotFiltering(bool)));
+    connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
+    connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
+    connect(ui.filterCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotFilter()));
 
     ui.filterWidget->setVisible(false);
 }
@@ -24,7 +32,6 @@ void DictionaryWidget::activateDictionary(Dictionary *d)
 
     ui.comboBox->clear();
     ui.lineEdit->clear();
-    ui.tableView->setModel(0);
 
     ui.comboBox->addItem(QString("%1 -> %2").arg(dict->oLang()).arg(dict->tLang()));
     ui.comboBox->addItem(QString("%1 -> %2").arg(dict->tLang()).arg(dict->oLang()));
@@ -39,6 +46,9 @@ void DictionaryWidget::activateDictionary(Dictionary *d)
 
 void DictionaryWidget::slotSearch()
 {
+    if (!dict)
+        return;
+
     QTime time;
     time.start();
     QList<Entry> d = dict->search(ui.lineEdit->text(), ui.comboBox->currentIndex());
@@ -53,7 +63,7 @@ void DictionaryWidget::slotSearch()
         model->setData(model->index(i, 1, QModelIndex()), d.at(i).translated);
     }
 
-    ui.tableView->setModel(model);
+    filterModel->setSourceModel(model);
     ui.tableView->sortByColumn(0, Qt::AscendingOrder);
     ui.tableView->resizeColumnsToContents();
 
@@ -61,6 +71,14 @@ void DictionaryWidget::slotSearch()
 }
 
 
+void DictionaryWidget::slotFiltering(bool b)
+{
+    b ? slotFilter() : filterModel->setFilterRegExp(0);
+}
+
+
 void DictionaryWidget::slotFilter()
 {
+    filterModel->setFilterKeyColumn(ui.filterComboBox->currentIndex());
+    filterModel->setFilterRegExp(QRegExp(ui.filterLineEdit->text(), Qt::CaseInsensitive, QRegExp::Wildcard));
 }

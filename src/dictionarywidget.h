@@ -4,6 +4,7 @@
 #include "ui_dictionarywidget.h"
 
 
+class QSortFilterProxyModel;
 class Dictionary;
 
 
@@ -22,12 +23,14 @@ public slots:
 
 private slots:
     void slotSearch();
+    void slotFiltering(bool);
     void slotFilter();
 
 private:
     Ui::DictionaryWidget ui;
 
     Dictionary *dict;
+    QSortFilterProxyModel *filterModel;
 };
 
 

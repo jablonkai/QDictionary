@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>420</width>
-    <height>400</height>
+    <height>396</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -92,13 +92,6 @@
       </item>
       <item>
        <widget class="SearchLine" name="filterLineEdit" />
-      </item>
-      <item>
-       <widget class="QPushButton" name="filterButton" >
-        <property name="text" >
-         <string>Filter</string>
-        </property>
-       </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="filterCheckBox" >

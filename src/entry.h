@@ -7,10 +7,10 @@
 class Entry
 {
 public:
-	QString original;
-	QString translated;
-	
-	Entry(QString, QString);
+    QString original;
+    QString translated;
+
+    Entry(QString, QString);
 };
 
 
