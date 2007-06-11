@@ -25,6 +25,7 @@ private slots:
     void slotSearch();
     void slotFiltering(bool);
     void slotFilter();
+    void slotItemActivated(const QModelIndex&);
 
 private:
     Ui::DictionaryWidget ui;

@@ -86,11 +86,13 @@ void SearchLine::mousePressEvent(QMouseEvent *event)
 }
 
 
-void SearchLine::resizeEvent(QResizeEvent*)
+void SearchLine::resizeEvent(QResizeEvent *event)
 {
     QSize size = clearButton->sizeHint();
     int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
     clearButton->move(rect().right() - frameWidth - size.width(), (rect().bottom() + 1 - size.height())/2);
+
+    QLineEdit::resizeEvent(event);
 }
 
 

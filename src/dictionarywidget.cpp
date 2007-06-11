@@ -13,6 +13,7 @@ DictionaryWidget::DictionaryWidget()
     filterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     filterModel->setDynamicSortFilter(true);
     filterModel->setSortLocaleAware(true),
+    filterModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     ui.tableView->setModel(filterModel);
 
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
@@ -21,6 +22,7 @@ DictionaryWidget::DictionaryWidget()
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
     connect(ui.filterCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotFilter()));
+    connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
 
     ui.filterWidget->setVisible(false);
 }
@@ -32,13 +34,11 @@ void DictionaryWidget::activateDictionary(Dictionary *d)
 
     ui.comboBox->clear();
     ui.lineEdit->clear();
-
     ui.comboBox->addItem(QString("%1 -> %2").arg(dict->oLang()).arg(dict->tLang()));
     ui.comboBox->addItem(QString("%1 -> %2").arg(dict->tLang()).arg(dict->oLang()));
 
     ui.filterComboBox->clear();
     ui.filterLineEdit->clear();
-
     ui.filterComboBox->addItem(QString("%1").arg(dict->oLang()));
     ui.filterComboBox->addItem(QString("%1").arg(dict->tLang()));
 }
@@ -64,7 +64,7 @@ void DictionaryWidget::slotSearch()
     }
 
     filterModel->setSourceModel(model);
-    ui.tableView->sortByColumn(0, Qt::AscendingOrder);
+    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
     ui.tableView->resizeColumnsToContents();
 
     emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(d.size()).arg(time.elapsed() / 1000.0f), 0);
@@ -81,4 +81,15 @@ void DictionaryWidget::slotFilter()
 {
     filterModel->setFilterKeyColumn(ui.filterComboBox->currentIndex());
     filterModel->setFilterRegExp(QRegExp(ui.filterLineEdit->text(), Qt::CaseInsensitive, QRegExp::Wildcard));
+}
+
+
+void DictionaryWidget::slotItemActivated(const QModelIndex &index)
+{
+    ui.comboBox->setCurrentIndex(index.column());
+    ui.lineEdit->setText(index.data().toString());
+    slotSearch();
+
+    ui.filterLineEdit->clear();
+    slotFilter();
 }

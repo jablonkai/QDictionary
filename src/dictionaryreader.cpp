@@ -68,8 +68,6 @@ bool DictionaryReader::read(QIODevice *device)
 
 void DictionaryReader::readUnknownElement()
 {
-    Q_ASSERT(isStartElement());
-
     while (!atEnd())
     {
         readNext();
@@ -85,8 +83,6 @@ void DictionaryReader::readUnknownElement()
 
 void DictionaryReader::readRoot()
 {
-    Q_ASSERT(isStartElement() && name() == "qvoc");
-
     while (!atEnd())
     {
         readNext();
@@ -109,8 +105,6 @@ void DictionaryReader::readRoot()
 
 void DictionaryReader::readHeader()
 {
-    Q_ASSERT(isStartElement() && name() == "header");
-
     while (!atEnd())
     {
         readNext();
@@ -135,8 +129,6 @@ void DictionaryReader::readHeader()
 
 void DictionaryReader::readLang()
 {
-    Q_ASSERT(isStartElement() && name() == "lang");
-
     dict->setOLang(attributes().value("from").toString());
     dict->setTLang(attributes().value("to").toString());
 
@@ -146,8 +138,6 @@ void DictionaryReader::readLang()
 
 void DictionaryReader::readDict()
 {
-    Q_ASSERT(isStartElement() && name() == "dict");
-
     while (!atEnd())
     {
         readNext();
@@ -168,8 +158,6 @@ void DictionaryReader::readDict()
 
 void DictionaryReader::readWord()
 {
-    Q_ASSERT(isStartElement() && name() == "w");
-
     QString o, t;
     while (!atEnd())
     {

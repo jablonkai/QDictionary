@@ -5,7 +5,7 @@
 #include "dictionaryreader.h"
 
 
-Dictionary::Dictionary(QString name) : _fileName(name), _loaded(false)
+Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false)
 {
     QFile file(_fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -16,7 +16,6 @@ Dictionary::Dictionary(QString name) : _fileName(name), _loaded(false)
 
     DictionaryReader reader(this);
     reader.readHeader(&file);
-//    load();
 }
 
 
@@ -37,7 +36,7 @@ void Dictionary::load()
 }
 
 
-QList<Entry> Dictionary::search(QString string, int index)
+QList<Entry> Dictionary::search(const QString &string, int index) const
 {
     QList<Entry> list;
 
