@@ -21,7 +21,6 @@ DictionaryWidget::DictionaryWidget()
     connect(ui.filteringCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotFiltering(bool)));
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
-    connect(ui.filterCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotFilter()));
     connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
 
     ui.filterWidget->setVisible(false);

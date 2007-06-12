@@ -94,13 +94,6 @@
        <widget class="SearchLine" name="filterLineEdit" />
       </item>
       <item>
-       <widget class="QCheckBox" name="filterCheckBox" >
-        <property name="text" >
-         <string>Invert Results</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer>
         <property name="orientation" >
          <enum>Qt::Horizontal</enum>
