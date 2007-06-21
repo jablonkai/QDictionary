@@ -24,6 +24,9 @@ DictionaryWidget::DictionaryWidget()
     connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
 
     ui.filterWidget->setVisible(false);
+
+
+    ui.textBrowser->setHtml("<strong><span lang=\"en-US\">apple</span></strong> <span><em>főnév</em></span><br><strong>1. alma</strong><span>: </span>kerek, kemény húsú, lédús gyümölcs, amelynek zöld, sárga vagy piros héja és kis magjai vannak. <em><span lang=\"en-US\">Give me an apple</span>. (Adj egy almát!)<span lang=\"en-US\"><br></span></em><strong>2.</strong> <strong>almafa</strong><span>: </span>az a fa, amin ez a gyümölcs terem. <em><span lang=\"en-US\">We have some apples in the garden</span>. (Van néhány almafánk a <span lang=\"hu-HU\">kertben.</span><span lang=\"en-US\">)</span>");
 }
 
 

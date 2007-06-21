@@ -5,20 +5,41 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
+    <width>482</width>
     <height>412</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>QDictionary</string>
   </property>
-  <widget class="QWidget" name="centralwidget" />
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QVBoxLayout" >
+    <property name="leftMargin" >
+     <number>0</number>
+    </property>
+    <property name="topMargin" >
+     <number>0</number>
+    </property>
+    <property name="rightMargin" >
+     <number>0</number>
+    </property>
+    <property name="bottomMargin" >
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget" >
+      <widget class="DictionaryWidget" name="dictionaryWidget" />
+      <widget class="EditWidget" name="editWidget" />
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>470</width>
+     <width>482</width>
      <height>29</height>
     </rect>
    </property>
@@ -26,8 +47,8 @@
     <property name="title" >
      <string>&amp;File</string>
     </property>
-    <addaction name="separator" />
-    <addaction name="separator" />
+    <addaction name="actionNew" />
+    <addaction name="actionSave" />
     <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
@@ -39,7 +60,25 @@
     <addaction name="actionAbout" />
     <addaction name="actionAboutQt" />
    </widget>
+   <widget class="QMenu" name="menu_Edit" >
+    <property name="title" >
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionUndo" />
+    <addaction name="actionRedo" />
+   </widget>
+   <widget class="QMenu" name="menu_Tools" >
+    <property name="title" >
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionDictionary" />
+    <addaction name="actionEdit" />
+    <addaction name="separator" />
+    <addaction name="actionSettings" />
+   </widget>
    <addaction name="menu_File" />
+   <addaction name="menu_Edit" />
+   <addaction name="menu_Tools" />
    <addaction name="menu_Help" />
   </widget>
   <widget class="QStatusBar" name="statusBar" />
@@ -94,6 +133,53 @@
     <string>About Qt</string>
    </property>
   </action>
+  <action name="actionNew" >
+   <property name="icon" >
+    <iconset resource="mainwindow.qrc" >:/new/prefix1/resources/new.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;New</string>
+   </property>
+  </action>
+  <action name="actionUndo" >
+   <property name="icon" >
+    <iconset resource="mainwindow.qrc" >:/new/prefix1/resources/undo.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo" >
+   <property name="icon" >
+    <iconset resource="mainwindow.qrc" >:/new/prefix1/resources/redo.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Redo</string>
+   </property>
+  </action>
+  <action name="actionSave" >
+   <property name="icon" >
+    <iconset resource="mainwindow.qrc" >:/new/prefix1/resources/save.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Save</string>
+   </property>
+  </action>
+  <action name="actionDictionary" >
+   <property name="text" >
+    <string>&amp;Dictionary</string>
+   </property>
+  </action>
+  <action name="actionEdit" >
+   <property name="text" >
+    <string>&amp;Edit</string>
+   </property>
+  </action>
+  <action name="actionSettings" >
+   <property name="text" >
+    <string>&amp;Settings</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -101,7 +187,21 @@
    <extends>QTreeWidget</extends>
    <header>dictionarytree.h</header>
   </customwidget>
+  <customwidget>
+   <class>DictionaryWidget</class>
+   <extends>QWidget</extends>
+   <header>dictionarywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EditWidget</class>
+   <extends>QWidget</extends>
+   <header>editwidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="mainwindow.qrc" />
+ </resources>
  <connections/>
 </ui>

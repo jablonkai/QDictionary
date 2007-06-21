@@ -28,6 +28,14 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 }
 
 
+
+void DictionaryTree::addNewDictionary(Dictionary *dict)
+{
+    new DictionaryItem(dictionaries, dict->dictName(), dict);
+    emit activateDictionary(dict);
+}
+
+
 void DictionaryTree::initDicts()
 {
     QDir dictDir = QDir(qApp->applicationDirPath());

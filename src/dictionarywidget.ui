@@ -16,9 +16,35 @@
    <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="QLabel" name="label" >
+      <widget class="QToolButton" name="backwardButton" >
+       <property name="toolTip" >
+        <string>Previous</string>
+       </property>
        <property name="text" >
-        <string>Search:</string>
+        <string/>
+       </property>
+       <property name="icon" >
+        <iconset resource="dictionarywidget.qrc" >:/new/prefix1/resources/prev.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="forwardButton" >
+       <property name="toolTip" >
+        <string>Next</string>
+       </property>
+       <property name="text" >
+        <string/>
+       </property>
+       <property name="icon" >
+        <iconset resource="dictionarywidget.qrc" >:/new/prefix1/resources/next.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
@@ -54,6 +80,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="filteringCheckBox" >
+       <property name="toolTip" >
+        <string>Filter Results</string>
+       </property>
        <property name="text" >
         <string>Filtering</string>
        </property>
@@ -128,6 +157,9 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QTextBrowser" name="textBrowser" />
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -137,7 +169,9 @@
    <header>searchline.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="dictionarywidget.qrc" />
+ </resources>
  <connections>
   <connection>
    <sender>filteringCheckBox</sender>
@@ -146,12 +180,44 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>373</x>
-     <y>22</y>
+     <x>471</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel" >
      <x>209</x>
      <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser</receiver>
+   <slot>backward()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>30</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>54</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser</receiver>
+   <slot>forward()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>64</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>102</x>
+     <y>280</y>
     </hint>
    </hints>
   </connection>

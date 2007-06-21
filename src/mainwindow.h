@@ -7,7 +7,6 @@
 
 
 class Dictionary;
-class DictionaryWidget;
 
 
 class MainWindow : public QMainWindow
@@ -24,7 +23,9 @@ protected:
     void closeEvent(QCloseEvent*);
 
 private slots:
+    void slotNew();
     void slotAbout();
+    void slotSetMode(QAction*);
 
 private:
     void setupActions();
@@ -33,8 +34,6 @@ private:
     void writeSettings();
 
     Ui::MainWindow ui;
-
-    DictionaryWidget *dictionaryWidget;
 };
 
 

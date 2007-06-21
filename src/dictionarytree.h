@@ -14,6 +14,8 @@ class DictionaryTree : public QTreeWidget
 public:
     DictionaryTree(QWidget*);
 
+    void addNewDictionary(Dictionary*);
+
 signals:
     void statusBarMessage(QString, int);
     void activateDictionary(Dictionary*);

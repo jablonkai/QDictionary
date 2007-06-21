@@ -9,6 +9,7 @@
 class Dictionary
 {
 public:
+    Dictionary();
     Dictionary(const QString&);
 
     QList<Entry> dictionary;

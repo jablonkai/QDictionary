@@ -5,6 +5,11 @@
 #include "dictionaryreader.h"
 
 
+Dictionary::Dictionary()
+{
+}
+
+
 Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false)
 {
     QFile file(_fileName);
