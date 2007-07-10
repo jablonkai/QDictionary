@@ -28,7 +28,23 @@ class DictionaryWriter : public QXmlStreamWriter
 public:
     DictionaryWriter();
     ~DictionaryWriter();
-};
+};/* #include <QXmlStreamWriter>
+
+ class QTreeWidget;
+ class QTreeWidgetItem;
+
+ class XbelWriter : public QXmlStreamWriter
+ {
+ public:
+     XbelWriter(QTreeWidget *treeWidget);
+     bool writeFile(QIODevice *device);
+
+ private:
+     void writeItem(QTreeWidgetItem *item);
+     QTreeWidget *treeWidget;
+ };
+
+ #endif*/
 
 
 #endif

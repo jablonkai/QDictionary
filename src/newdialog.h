@@ -25,7 +25,7 @@
 #include "ui_newdialog.h"
 
 
-class Dictionary;
+class DictionaryModel;
 
 
 class NewDialog : public QDialog
@@ -33,7 +33,7 @@ class NewDialog : public QDialog
     Q_OBJECT
 
 public:
-    NewDialog(QWidget*, Dictionary*);
+    NewDialog(QWidget*, DictionaryModel*);
 
 public slots:
     virtual void accept();
@@ -41,7 +41,7 @@ public slots:
 private:
     Ui::NewDialog ui;
 
-    Dictionary *dictionary;
+    DictionaryModel *dictionary;
 };
 
 

@@ -1,43 +1,45 @@
-SOURCES += dictionary.cpp \
-dictionaryreader.cpp \
+SOURCES += dictionaryreader.cpp \
 dictionarytree.cpp \
 dictionarywidget.cpp \
-entry.cpp \
 mainwindow.cpp \
 searchline.cpp \
 main.cpp \
 editwidget.cpp \
-aboutdialog.cpp \
 dictionarywriter.cpp \
-newdialog.cpp
+newdialog.cpp \
+dictionarymodel.cpp \
+settingsdialog.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
           qt
 TARGET = ../bin/qdictionary
 
-HEADERS += dictionary.h \
-dictionaryreader.h \
+HEADERS += dictionaryreader.h \
 dictionarytree.h \
 dictionarywidget.h \
-entry.h \
 mainwindow.h \
 version.h \
 searchline.h \
 editwidget.h \
-aboutdialog.h \
 dictionarywriter.h \
-newdialog.h
+newdialog.h \
+dictionarymodel.h \
+settingsdialog.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 editwidget.ui \
-aboutdialog.ui \
-newdialog.ui
+newdialog.ui \
+settingsdialog.ui
 QT += core \
 xml \
 gui
 TRANSLATIONS += translations/qdictionary_hu.ts
 
-RESOURCES += mainwindow.qrc \
-editwidget.qrc \
-dictionarywidget.qrc
+RESOURCES += qdictionary.qrc
+OBJECTS_DIR = /home/tamas/Projects/qdictionary/build
+
+UI_DIR = /home/tamas/Projects/qdictionary/build
+
+MOC_DIR = /home/tamas/Projects/qdictionary/build
+

@@ -1,13 +1,51 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by Jablonkai Tamás                                 *
+ *   tamas.jablonkai@gmail.com                                             *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
 #include "dictionarywidget.h"
 
 #include <QtGui>
 
-#include "dictionary.h"
+#include "dictionarymodel.h"
 
 
-DictionaryWidget::DictionaryWidget()
+class SearchCommand : public QUndoCommand
+{
+public:
+    SearchCommand(const QString &prev, const int &prevI, const QString &s, const int &i, DictionaryWidget *w) : prevText(prev), prevIndex(prevI), text(s), index(i), widget(w) {}
+
+    virtual void undo() { if (prevIndex <= 1) widget->search(prevText, prevIndex); }
+    virtual void redo() { widget->search(text, index); }
+
+private:
+    QString prevText;
+    QString text;
+    int prevIndex;
+    int index;
+    DictionaryWidget *widget;
+};
+
+
+DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
 {
     ui.setupUi(this);
+
+    undoStack = new QUndoStack(this);
 
     filterModel = new QSortFilterProxyModel(this);
     filterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -22,17 +60,28 @@ DictionaryWidget::DictionaryWidget()
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
     connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
+    connect(ui.backwardButton, SIGNAL(released()), undoStack, SLOT(undo()));
+    connect(ui.forwardButton, SIGNAL(released()), undoStack, SLOT(redo()));
+    connect(undoStack, SIGNAL(canUndoChanged(bool)), ui.backwardButton, SLOT(setEnabled(bool)));
+    connect(undoStack, SIGNAL(canRedoChanged(bool)), ui.forwardButton, SLOT(setEnabled(bool)));
 
     ui.filterWidget->setVisible(false);
-
-
-    ui.textBrowser->setHtml("<strong><span lang=\"en-US\">apple</span></strong> <span><em>főnév</em></span><br><strong>1. alma</strong><span>: </span>kerek, kemény húsú, lédús gyümölcs, amelynek zöld, sárga vagy piros héja és kis magjai vannak. <em><span lang=\"en-US\">Give me an apple</span>. (Adj egy almát!)<span lang=\"en-US\"><br></span></em><strong>2.</strong> <strong>almafa</strong><span>: </span>az a fa, amin ez a gyümölcs terem. <em><span lang=\"en-US\">We have some apples in the garden</span>. (Van néhány almafánk a <span lang=\"hu-HU\">kertben.</span><span lang=\"en-US\">)</span>");
 }
 
 
-void DictionaryWidget::activateDictionary(Dictionary *d)
+void DictionaryWidget::search(const QString &s, const int &i)
+{
+    ui.lineEdit->setText(s);
+    ui.comboBox->setCurrentIndex(i);
+    find(s, i);
+}
+
+
+void DictionaryWidget::activateDictionary(DictionaryModel *d)
 {
     dict = d;
+    undoStack->clear();
+    prevIndex = 100;
 
     ui.comboBox->clear();
     ui.lineEdit->clear();
@@ -53,23 +102,17 @@ void DictionaryWidget::slotSearch()
 
     QTime time;
     time.start();
-    QList<Entry> d = dict->search(ui.lineEdit->text(), ui.comboBox->currentIndex());
 
-    QStandardItemModel *model = new QStandardItemModel(d.size(), 2, this);
-    model->setHeaderData(0, Qt::Horizontal, dict->oLang());
-    model->setHeaderData(1, Qt::Horizontal, dict->tLang());
+    QString text = ui.lineEdit->text();
+    int index = ui.comboBox->currentIndex();
 
-    for (int i = 0; i < d.size(); ++i)
-    {
-        model->setData(model->index(i, 0, QModelIndex()), d.at(i).original);
-        model->setData(model->index(i, 1, QModelIndex()), d.at(i).translated);
-    }
+    int result = find(text, index);
 
-    filterModel->setSourceModel(model);
-    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
-    ui.tableView->resizeColumnsToContents();
+    undoStack->push(new SearchCommand(prevText, prevIndex, text, index, this));
+    prevText = text;
+    prevIndex = index;
 
-    emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(d.size()).arg(time.elapsed() / 1000.0f), 0);
+    emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(result).arg(time.elapsed() / 1000.0f), 0);
 }
 
 
@@ -94,4 +137,16 @@ void DictionaryWidget::slotItemActivated(const QModelIndex &index)
 
     ui.filterLineEdit->clear();
     slotFilter();
+}
+
+
+int DictionaryWidget::find(const QString &text, const int &index)
+{
+    QStandardItemModel *result = dict->search(text, index);
+
+    filterModel->setSourceModel(result);
+    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
+    ui.tableView->resizeColumnsToContents();
+
+    return result->rowCount();
 }
