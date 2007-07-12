@@ -23,7 +23,7 @@
 
 #include "dictionarymodel.h"
 #include "dictionarywidget.h"
-#include "newdialog.h"
+//#include "newdialog.h"
 #include "settingsdialog.h"
 #include "version.h"
 
@@ -52,7 +52,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::slotNew()
 {
-    DictionaryModel *dict = new DictionaryModel;
+/*    DictionaryModel *dict = new DictionaryModel;
     NewDialog *dialog = new NewDialog(this, dict);
 
     if (dialog->exec() == QDialog::Accepted)
@@ -61,7 +61,7 @@ void MainWindow::slotNew()
         ui.stackedWidget->setCurrentWidget(ui.editWidget);
     }
     else
-        delete dict;
+        delete dict;*/
 }
 
 
@@ -81,7 +81,7 @@ void MainWindow::slotSetMode(QAction *action)
 
 void MainWindow::slotSettings()
 {
-    SettingsDialog *dialog = new SettingsDialog(this);
+    SettingsDialog *dialog = new SettingsDialog(&dictDirs, this);
 
     if (dialog->exec() == QDialog::Accepted)
     {
@@ -101,8 +101,8 @@ void MainWindow::slotAbout()
 
 void MainWindow::setupActions()
 {
-    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
-    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
+//    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
+  //  connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
     connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 
     QActionGroup *modeGroup = new QActionGroup(this);
@@ -124,6 +124,10 @@ void MainWindow::readSettings()
     restoreState(settings.value("state", saveState()).toByteArray());
     restoreGeometry(settings.value("geometry", saveGeometry()).toByteArray());
     settings.endGroup();
+
+    settings.beginGroup("Dictionary");
+    dictDirs = settings.value("dirs", dictDirs).toStringList();
+    settings.endGroup();
 }
 
 
@@ -134,5 +138,9 @@ void MainWindow::writeSettings()
     settings.beginGroup("MainWindow");
     settings.setValue("state", saveState());
     settings.setValue("geometry", saveGeometry());
+    settings.endGroup();
+
+    settings.beginGroup("Dictionary");
+    settings.setValue("dirs", dictDirs);
     settings.endGroup();
 }

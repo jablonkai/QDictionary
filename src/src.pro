@@ -4,11 +4,12 @@ dictionarywidget.cpp \
 mainwindow.cpp \
 searchline.cpp \
 main.cpp \
-editwidget.cpp \
 dictionarywriter.cpp \
-newdialog.cpp \
 dictionarymodel.cpp \
-settingsdialog.cpp
+settingsdialog.cpp \
+kvtmlreader.cpp \
+editwidget.cpp \
+newdialog.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -21,16 +22,17 @@ dictionarywidget.h \
 mainwindow.h \
 version.h \
 searchline.h \
-editwidget.h \
 dictionarywriter.h \
-newdialog.h \
 dictionarymodel.h \
-settingsdialog.h
+settingsdialog.h \
+kvtmlreader.h \
+editwidget.h \
+newdialog.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
+settingsdialog.ui \
 editwidget.ui \
-newdialog.ui \
-settingsdialog.ui
+newdialog.ui
 QT += core \
 xml \
 gui

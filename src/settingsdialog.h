@@ -30,11 +30,19 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    SettingsDialog(QWidget *parent = 0);
+    SettingsDialog(QStringList*, QWidget *parent = 0);
     ~SettingsDialog();
+
+public slots:
+    virtual void accept();
+
+private slots:
+    void slotAddDir();
+    void slotRemoveDir();
 
 private:
     Ui::SettingsDialog ui;
+    QStringList *dictDirs;
 };
 
 

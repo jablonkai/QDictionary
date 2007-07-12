@@ -55,13 +55,13 @@ DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
     ui.tableView->setModel(filterModel);
 
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
-    connect(ui.searchButton, SIGNAL(released()), this, SLOT(slotSearch()));
+    connect(ui.searchButton, SIGNAL(clicked()), this, SLOT(slotSearch()));
     connect(ui.filteringCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotFiltering(bool)));
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
     connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
-    connect(ui.backwardButton, SIGNAL(released()), undoStack, SLOT(undo()));
-    connect(ui.forwardButton, SIGNAL(released()), undoStack, SLOT(redo()));
+    connect(ui.backwardButton, SIGNAL(clicked()), undoStack, SLOT(undo()));
+    connect(ui.forwardButton, SIGNAL(clicked()), undoStack, SLOT(redo()));
     connect(undoStack, SIGNAL(canUndoChanged(bool)), ui.backwardButton, SLOT(setEnabled(bool)));
     connect(undoStack, SIGNAL(canRedoChanged(bool)), ui.forwardButton, SLOT(setEnabled(bool)));
 

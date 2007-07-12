@@ -47,8 +47,6 @@
     <property name="title" >
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNew" />
-    <addaction name="actionSave" />
     <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
@@ -133,14 +131,6 @@
     <string>About Qt</string>
    </property>
   </action>
-  <action name="actionNew" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/new.png</iconset>
-   </property>
-   <property name="text" >
-    <string>&amp;New</string>
-   </property>
-  </action>
   <action name="actionUndo" >
    <property name="icon" >
     <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/undo.png</iconset>
@@ -155,14 +145,6 @@
    </property>
    <property name="text" >
     <string>&amp;Redo</string>
-   </property>
-  </action>
-  <action name="actionSave" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/save.png</iconset>
-   </property>
-   <property name="text" >
-    <string>&amp;Save</string>
    </property>
   </action>
   <action name="actionDictionary" >

@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>388</width>
-    <height>350</height>
+    <height>334</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -14,62 +14,52 @@
   </property>
   <layout class="QVBoxLayout" >
    <item>
-    <widget class="QTabWidget" name="tabWidget" >
-     <property name="currentIndex" >
-      <number>1</number>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Dictionary Paths</string>
      </property>
-     <widget class="QWidget" name="tab" >
-      <attribute name="title" >
-       <string>Tab 1</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="tab_2" >
-      <attribute name="title" >
-       <string>Tab 2</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
-       <item>
-        <widget class="QListView" name="listView" />
-       </item>
-       <item>
-        <layout class="QHBoxLayout" >
-         <item>
-          <widget class="QToolButton" name="toolButton" >
-           <property name="text" >
-            <string/>
-           </property>
-           <property name="icon" >
-            <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/plus.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="toolButton_2" >
-           <property name="text" >
-            <string/>
-           </property>
-           <property name="icon" >
-            <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/minus.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QListWidget" name="dirListWidget" />
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QToolButton" name="addDirButton" >
+          <property name="text" >
+           <string/>
+          </property>
+          <property name="icon" >
+           <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/plus.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="removeDirButton" >
+          <property name="text" >
+           <string/>
+          </property>
+          <property name="icon" >
+           <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/minus.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>

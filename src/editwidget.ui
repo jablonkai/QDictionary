@@ -10,32 +10,52 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Edit</string>
+   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" >
    <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QLabel" name="oLang" >
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QLabel" name="label1" >
        <property name="text" >
-        <string>TextLabel</string>
+        <string>Magyar:</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="0" column="1" >
       <widget class="QLineEdit" name="lineEdit1" />
      </item>
-     <item>
-      <widget class="QLabel" name="tLang" >
+     <item row="0" column="2" >
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="3" >
+      <widget class="QPushButton" name="addButton" >
        <property name="text" >
-        <string>TextLabel</string>
+        <string>Add</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="label2" >
+       <property name="text" >
+        <string>Angol:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" >
       <widget class="QLineEdit" name="lineEdit2" />
      </item>
-     <item>
+     <item row="1" column="2" >
       <spacer>
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
@@ -48,42 +68,12 @@
        </property>
       </spacer>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QToolButton" name="resetButton" >
+     <item row="1" column="3" >
+      <widget class="QPushButton" name="resetButton" >
        <property name="text" >
-        <string/>
-       </property>
-       <property name="icon" >
-        <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/minus.png</iconset>
+        <string>Reset</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="addButton" >
-       <property name="text" >
-        <string/>
-       </property>
-       <property name="icon" >
-        <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/plus.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
@@ -92,21 +82,13 @@
      <property name="alternatingRowColors" >
       <bool>true</bool>
      </property>
-     <property name="selectionMode" >
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
      <property name="sortingEnabled" >
       <bool>true</bool>
-     </property>
-     <property name="cornerButtonEnabled" >
-      <bool>false</bool>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="qdictionary.qrc" />
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -49,6 +49,7 @@ private:
     void writeSettings();
 
     Ui::MainWindow ui;
+    QStringList dictDirs;
 };
 
 
