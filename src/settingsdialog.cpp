@@ -21,12 +21,14 @@
 
 #include <QtGui>
 
+#include "settings.h"
 
-SettingsDialog::SettingsDialog(QStringList *s, QWidget *parent) : dictDirs(s), QDialog(parent)
+
+SettingsDialog::SettingsDialog(Settings *s, QWidget *parent) : settings(s), QDialog(parent)
 {
     ui.setupUi(this);
 
-    ui.dirListWidget->addItems(*dictDirs);
+    ui.dirListWidget->addItems(settings->dictDirs());
 
     connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
     connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
@@ -40,9 +42,9 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::accept()
 {
-    dictDirs->clear();
+    settings->dictDirs().clear();
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        dictDirs->push_back(ui.dirListWidget->item(i)->text());
+        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
 
     QDialog::accept();
 }

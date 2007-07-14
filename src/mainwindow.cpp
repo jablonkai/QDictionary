@@ -24,6 +24,7 @@
 #include "dictionarymodel.h"
 #include "dictionarywidget.h"
 //#include "newdialog.h"
+#include "settings.h"
 #include "settingsdialog.h"
 #include "version.h"
 
@@ -33,6 +34,7 @@ MainWindow::MainWindow() : QMainWindow()
     ui.setupUi(this);
     setupActions();
 
+    _settings = new Settings;
     readSettings();
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(DictionaryModel*)), ui.dictionaryWidget, SLOT(activateDictionary(DictionaryModel*)));
@@ -81,7 +83,7 @@ void MainWindow::slotSetMode(QAction *action)
 
 void MainWindow::slotSettings()
 {
-    SettingsDialog *dialog = new SettingsDialog(&dictDirs, this);
+    SettingsDialog *dialog = new SettingsDialog(_settings, this);
 
     if (dialog->exec() == QDialog::Accepted)
     {
@@ -126,7 +128,7 @@ void MainWindow::readSettings()
     settings.endGroup();
 
     settings.beginGroup("Dictionary");
-    dictDirs = settings.value("dirs", dictDirs).toStringList();
+    _settings->setDictDirs(settings.value("dirs", _settings->dictDirs()).toStringList());
     settings.endGroup();
 }
 
@@ -141,6 +143,6 @@ void MainWindow::writeSettings()
     settings.endGroup();
 
     settings.beginGroup("Dictionary");
-    settings.setValue("dirs", dictDirs);
+    settings.setValue("dirs", _settings->dictDirs());
     settings.endGroup();
 }

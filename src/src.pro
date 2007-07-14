@@ -9,7 +9,8 @@ dictionarymodel.cpp \
 settingsdialog.cpp \
 kvtmlreader.cpp \
 editwidget.cpp \
-newdialog.cpp
+newdialog.cpp \
+settings.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -27,7 +28,8 @@ dictionarymodel.h \
 settingsdialog.h \
 kvtmlreader.h \
 editwidget.h \
-newdialog.h
+newdialog.h \
+settings.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 settingsdialog.ui \

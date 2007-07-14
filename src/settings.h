@@ -17,35 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
-#include <QDialog>
-
-#include "ui_settingsdialog.h"
+#include <QStringList>
 
 
-class Settings;
-
-
-class SettingsDialog : public QDialog
+class Settings
 {
-    Q_OBJECT
-
 public:
-    SettingsDialog(Settings*, QWidget *parent = 0);
-    ~SettingsDialog();
+    Settings();
+    ~Settings();
 
-public slots:
-    virtual void accept();
-
-private slots:
-    void slotAddDir();
-    void slotRemoveDir();
+    void setDictDirs(const QStringList &stringList) { _dictDirs = stringList; }
+    QStringList &dictDirs() { return _dictDirs; }
 
 private:
-    Ui::SettingsDialog ui;
-    Settings *settings;
+    QStringList _dictDirs;
 };
 
 

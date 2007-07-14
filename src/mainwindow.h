@@ -25,6 +25,9 @@
 #include "ui_mainwindow.h"
 
 
+class Settings;
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -49,7 +52,7 @@ private:
     void writeSettings();
 
     Ui::MainWindow ui;
-    QStringList dictDirs;
+    Settings *_settings;
 };
 
 

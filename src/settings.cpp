@@ -17,36 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
-
-#include <QDialog>
-
-#include "ui_settingsdialog.h"
+#include "settings.h"
 
 
-class Settings;
-
-
-class SettingsDialog : public QDialog
+Settings::Settings()
 {
-    Q_OBJECT
-
-public:
-    SettingsDialog(Settings*, QWidget *parent = 0);
-    ~SettingsDialog();
-
-public slots:
-    virtual void accept();
-
-private slots:
-    void slotAddDir();
-    void slotRemoveDir();
-
-private:
-    Ui::SettingsDialog ui;
-    Settings *settings;
-};
+}
 
 
-#endif
+Settings::~Settings()
+{
+}
