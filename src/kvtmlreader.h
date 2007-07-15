@@ -23,15 +23,14 @@
 #include <QXmlStreamReader>
 
 
+class DictionaryModel;
+
+
 class KvtmlReader : public QXmlStreamReader
 {
 public:
-    KvtmlReader();
+    KvtmlReader(DictionaryModel*);
     ~KvtmlReader();
-};/*class DictionaryReader : public QXmlStreamReader
-{
-public:
-    DictionaryReader(DictionaryModel*);
 
     bool readHeader(QIODevice*);
     bool read(QIODevice*);
@@ -39,13 +38,10 @@ public:
 private:
     void readUnknownElement();
     void readRoot();
-    void readHeader();
-    void readLang();
-    void readDict();
-    void readWord();
+    void readElement();
 
     DictionaryModel *dict;
-};*/
+};
 /*<!--
 This is a machine generated file.
 Be careful when editing here.

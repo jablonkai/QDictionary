@@ -22,6 +22,7 @@
 #include <QtGui>
 
 #include "dictionaryreader.h"
+#include "kvtmlreader.h"
 
 
 DictionaryModel::DictionaryModel(QObject *parent) : QAbstractItemModel(parent)
@@ -38,7 +39,7 @@ DictionaryModel::DictionaryModel(const QString &name) : _fileName(name), _loaded
         return;
     }
 
-    DictionaryReader reader(this);
+    KvtmlReader reader(this);
     reader.readHeader(&file);
 }
 
@@ -81,7 +82,7 @@ void DictionaryModel::load()
         return;
     }
 
-    DictionaryReader reader(this);
+    KvtmlReader reader(this);
     reader.read(&file);
     _loaded = true;
 }

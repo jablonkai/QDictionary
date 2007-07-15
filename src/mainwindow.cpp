@@ -36,6 +36,7 @@ MainWindow::MainWindow() : QMainWindow()
 
     _settings = new Settings;
     readSettings();
+    ui.treeWidget->initDicts(_settings->dictDirs());
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(DictionaryModel*)), ui.dictionaryWidget, SLOT(activateDictionary(DictionaryModel*)));
     connect(ui.treeWidget, SIGNAL(activateDictionary(DictionaryModel*)), ui.editWidget, SLOT(activateDictionary(DictionaryModel*)));
@@ -87,6 +88,7 @@ void MainWindow::slotSettings()
 
     if (dialog->exec() == QDialog::Accepted)
     {
+        ui.treeWidget->initDicts(_settings->dictDirs());
 //        ui.treeWidget->addNewDictionary(dict);
 //        ui.stackedWidget->setCurrentWidget(ui.editWidget);
     }
@@ -104,7 +106,7 @@ void MainWindow::slotAbout()
 void MainWindow::setupActions()
 {
 //    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
-  //  connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
+//    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
     connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 
     QActionGroup *modeGroup = new QActionGroup(this);

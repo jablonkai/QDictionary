@@ -34,6 +34,7 @@ public:
     DictionaryTree(QWidget*);
 
     void addNewDictionary(DictionaryModel*);
+    void initDicts(const QStringList&);
 
 signals:
     void statusBarMessage(QString, int);
@@ -42,8 +43,6 @@ signals:
 private:
     QTreeWidgetItem *dictionaries;
     QTreeWidgetItem *vocabulary;
-
-    void initDicts();
 
 private slots:
     void itemActivate(QTreeWidgetItem*, int);

@@ -19,8 +19,12 @@
  ***************************************************************************/
 #include "kvtmlreader.h"
 
+#include <QtGui>
 
-KvtmlReader::KvtmlReader() : QXmlStreamReader()
+#include "dictionarymodel.h"
+
+
+KvtmlReader::KvtmlReader(DictionaryModel *d) : dict(d)
 {
 }
 
@@ -28,70 +32,9 @@ KvtmlReader::KvtmlReader() : QXmlStreamReader()
 KvtmlReader::~KvtmlReader()
 {
 }
-/*DictionaryReader::DictionaryReader(DictionaryModel *d) : dict(d)
-{
-}
 
 
-bool DictionaryReader::readHeader(QIODevice *device)
-{
-    setDevice(device);
-
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isStartElement())
-        {
-            if (name() == "xdict")
-                while (!atEnd())
-                {
-                    readNext();
-
-                    if (isEndElement())
-                        break;
-
-                    if (isStartElement())
-                    {
-                        if (name() == "header")
-                            readHeader();
-                        else if (name() == "dict")
-                            break;
-                        else
-                            readUnknownElement();
-                    }
-                }
-            else
-                raiseError(QObject::tr("The file is not an XDICT file."));
-        }
-    }
-    return !error();
-}
-
-
-bool DictionaryReader::read(QIODevice *device)
-{
-    setDevice(device);
-
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isStartElement())
-        {
-            if (name() == "xdict")
-                readRoot();
-            else
-                raiseError(QObject::tr("The file is not an XDICT file."));
-        }
-    }
-
-//  QMessageBox::information(0, QString("%1").arg(error()), errorString());
-    return !error();
-}
-
-
-void DictionaryReader::readUnknownElement()
+void KvtmlReader::readUnknownElement()
 {
     while (!atEnd())
     {
@@ -106,7 +49,74 @@ void DictionaryReader::readUnknownElement()
 }
 
 
-void DictionaryReader::readRoot()
+bool KvtmlReader::readHeader(QIODevice *device)
+{
+    setDevice(device);
+
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isStartElement())
+        {
+            if (name() == "kvtml")
+            {
+//                dict->setDictName(attributes().value("encoding").toString());
+//                dict->setDictName(attributes().value("generator").toString());
+//                dict->setDictName(attributes().value("cols").toString());
+//                dict->setDictName(attributes().value("lines").toString());
+                dict->setDictName(attributes().value("title").toString());
+//                dict->setDictName(attributes().value("author").toString());
+            }
+/*  encoding="UTF-8"
+  generator="kvoctrain v0.8.2"
+  cols="2"
+  lines="5014"
+  title="SAT"
+  author="http://www.freevocabulary.com">*/
+            else
+                raiseError(QObject::tr("The file is not an KVTML file."));
+        }
+    }
+    return !error();
+}
+
+
+bool KvtmlReader::read(QIODevice *device)
+{
+    setDevice(device);
+
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isStartElement())
+        {
+            if (name() == "kvtml")
+            {
+//                dict->setDictName(attributes().value("encoding").toString());
+//                dict->setDictName(attributes().value("generator").toString());
+//                dict->setDictName(attributes().value("cols").toString());
+//                dict->setDictName(attributes().value("lines").toString());
+                dict->setDictName(attributes().value("title").toString());
+//                dict->setDictName(attributes().value("author").toString());
+                readRoot();
+            }
+/*  encoding="UTF-8"
+  generator="kvoctrain v0.8.2"
+  cols="2"
+  lines="5014"
+  title="SAT"
+  author="http://www.freevocabulary.com">*/
+            else
+                raiseError(QObject::tr("The file is not an KVTML file."));
+        }
+    }
+    return !error();
+}
+
+
+void KvtmlReader::readRoot()
 {
     while (!atEnd())
     {
@@ -117,10 +127,11 @@ void DictionaryReader::readRoot()
 
         if (isStartElement())
         {
-            if (name() == "header")
-                readHeader();
-            else if (name() == "dict")
-                readDict();
+            if (name() == "e")
+                readElement();
+            else if (name() == "lesson");
+            else if (name() == "options");
+//                readDict();
             else
                 readUnknownElement();
         }
@@ -128,60 +139,7 @@ void DictionaryReader::readRoot()
 }
 
 
-void DictionaryReader::readHeader()
-{
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isEndElement())
-            break;
-
-        if (isStartElement())
-        {
-            if (name() == "doc_type")
-                QString type = readElementText();
-            else if (name() == "lang")
-                readLang();
-            else if (name() == "dict_name")
-                dict->setDictName(readElementText());
-            else
-                readUnknownElement();
-        }
-    }
-}
-
-
-void DictionaryReader::readLang()
-{
-    dict->setOLang(attributes().value("from").toString());
-    dict->setTLang(attributes().value("to").toString());
-
-    readNext();
-}
-
-
-void DictionaryReader::readDict()
-{
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isEndElement())
-            break;
-
-        if (isStartElement())
-        {
-            if (name() == "w" || name() == "e")
-                readWord();
-            else
-                readUnknownElement();
-        }
-    }
-}
-
-
-void DictionaryReader::readWord()
+void KvtmlReader::readElement()
 {
     QString o, t;
     while (!atEnd())
@@ -191,7 +149,7 @@ void DictionaryReader::readWord()
         if (isEndElement())
             break;
 
-        else if (isStartElement())
+        else if (isStartElement())          // ha egysorban van minden akkor nem olvasa be !!!
         {
             if (name() == "o")
                 o = readElementText();
@@ -203,4 +161,3 @@ void DictionaryReader::readWord()
     }
     dict->push_back(Entry(o, t));
 }
-*/

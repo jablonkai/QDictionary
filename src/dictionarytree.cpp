@@ -41,7 +41,7 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
     dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")));
     insertTopLevelItem(0, dictionaries);
 
-    initDicts();
+//    initDicts();
 
     connect(this, SIGNAL(itemActivated(QTreeWidgetItem*, int)), this, SLOT(itemActivate(QTreeWidgetItem*, int)));
 }
@@ -56,17 +56,21 @@ void DictionaryTree::addNewDictionary(DictionaryModel *dict)
 }
 
 
-void DictionaryTree::initDicts()
+void DictionaryTree::initDicts(const QStringList &dictDirs)
 {
-    QDir dictDir = QDir(qApp->applicationDirPath());
-    dictDir.cd("dict");
-
     int i = 0;
-    foreach (QString fileName, dictDir.entryList(QDir::Files))
+    foreach (QString dir, dictDirs)
     {
-        DictionaryModel *d = new DictionaryModel(dictDir.absoluteFilePath(fileName));
-        new DictionaryItem(dictionaries, d->dictName(), d);
-        ++i;
+        QDir dictDir = QDir(dir);
+//    QDir dictDir = QDir(qApp->applicationDirPath());
+//    dictDir.cd("dict");
+
+        foreach (QString fileName, dictDir.entryList(QDir::Files))
+        {
+            DictionaryModel *d = new DictionaryModel(dictDir.absoluteFilePath(fileName));
+            new DictionaryItem(dictionaries, d->dictName(), d);
+            ++i;
+        }
     }
     expandItem(dictionaries);
 
