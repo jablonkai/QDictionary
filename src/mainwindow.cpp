@@ -131,6 +131,8 @@ void MainWindow::readSettings()
 
     settings.beginGroup("Dictionary");
     _settings->setDictDirs(settings.value("dirs", _settings->dictDirs()).toStringList());
+    _settings->setFirstColor(settings.value("firstColor", _settings->firstColor()).value<QColor>());
+    _settings->setSecondColor(settings.value("secondColor", _settings->secondColor()).value<QColor>());
     settings.endGroup();
 }
 
@@ -146,5 +148,7 @@ void MainWindow::writeSettings()
 
     settings.beginGroup("Dictionary");
     settings.setValue("dirs", _settings->dictDirs());
+    settings.setValue("firstColor", _settings->firstColor());
+    settings.setValue("secondColor", _settings->secondColor());
     settings.endGroup();
 }

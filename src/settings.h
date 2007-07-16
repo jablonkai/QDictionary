@@ -20,6 +20,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QColor>
 #include <QStringList>
 
 
@@ -30,10 +31,21 @@ public:
     ~Settings();
 
     void setDictDirs(const QStringList &stringList) { _dictDirs = stringList; }
-    QStringList &dictDirs() { return _dictDirs; }
+    QStringList dictDirs() const { return _dictDirs; }
+
+    void setFirstColor(const QColor &color) { _firstColor = color; }
+    QColor firstColor() const { return _firstColor; }
+    QString firstColorName() const { return _firstColor.name(); }
+
+    void setSecondColor(const QColor &color) { _secondColor = color; }
+    QColor secondColor() const { return _secondColor; }
+    QString secondColorName() const { return _secondColor.name(); }
 
 private:
     QStringList _dictDirs;
+
+    QColor _firstColor;
+    QColor _secondColor;
 };
 
 

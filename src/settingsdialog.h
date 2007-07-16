@@ -42,6 +42,7 @@ public slots:
 private slots:
     void slotAddDir();
     void slotRemoveDir();
+    void slotChangeColor();
 
 private:
     Ui::SettingsDialog ui;
