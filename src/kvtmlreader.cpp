@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include "kvtmlreader.h"
 
-#include <QtGui>
-
 #include "dictionarymodel.h"
 
 
@@ -67,6 +65,7 @@ bool KvtmlReader::readHeader(QIODevice *device)
 //                dict->setDictName(attributes().value("lines").toString());
                 dict->setDictName(attributes().value("title").toString());
 //                dict->setDictName(attributes().value("author").toString());
+                return true;
             }
 /*  encoding="UTF-8"
   generator="kvoctrain v0.8.2"
@@ -75,7 +74,7 @@ bool KvtmlReader::readHeader(QIODevice *device)
   title="SAT"
   author="http://www.freevocabulary.com">*/
             else
-                raiseError(QObject::tr("The file is not an KVTML file."));
+                raiseError(QObject::tr("The file is not a KVTML file."));
         }
     }
     return !error();
@@ -98,18 +97,12 @@ bool KvtmlReader::read(QIODevice *device)
 //                dict->setDictName(attributes().value("generator").toString());
 //                dict->setDictName(attributes().value("cols").toString());
 //                dict->setDictName(attributes().value("lines").toString());
-                dict->setDictName(attributes().value("title").toString());
+//                dict->setDictName(attributes().value("title").toString());
 //                dict->setDictName(attributes().value("author").toString());
                 readRoot();
             }
-/*  encoding="UTF-8"
-  generator="kvoctrain v0.8.2"
-  cols="2"
-  lines="5014"
-  title="SAT"
-  author="http://www.freevocabulary.com">*/
             else
-                raiseError(QObject::tr("The file is not an KVTML file."));
+                raiseError(QObject::tr("The file is not a KVTML file."));
         }
     }
     return !error();
@@ -131,7 +124,6 @@ void KvtmlReader::readRoot()
                 readElement();
             else if (name() == "lesson");
             else if (name() == "options");
-//                readDict();
             else
                 readUnknownElement();
         }

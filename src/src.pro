@@ -41,9 +41,10 @@ gui
 TRANSLATIONS += translations/qdictionary_hu.ts
 
 RESOURCES += qdictionary.qrc
-OBJECTS_DIR = /home/tamas/Projects/qdictionary/build
+OBJECTS_DIR = ../build
 
-UI_DIR = /home/tamas/Projects/qdictionary/build
+UI_DIR = ../build
 
-MOC_DIR = /home/tamas/Projects/qdictionary/build
+MOC_DIR = ../build
 
+RCC_DIR = ../build

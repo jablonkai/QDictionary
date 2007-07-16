@@ -62,14 +62,15 @@ void DictionaryTree::initDicts(const QStringList &dictDirs)
     foreach (QString dir, dictDirs)
     {
         QDir dictDir = QDir(dir);
-//    QDir dictDir = QDir(qApp->applicationDirPath());
-//    dictDir.cd("dict");
 
         foreach (QString fileName, dictDir.entryList(QDir::Files))
         {
             DictionaryModel *d = new DictionaryModel(dictDir.absoluteFilePath(fileName));
-            new DictionaryItem(dictionaries, d->dictName(), d);
-            ++i;
+            if (d->readInfo())
+            {
+                new DictionaryItem(dictionaries, d->dictName(), d);
+                ++i;
+            }
         }
     }
     expandItem(dictionaries);

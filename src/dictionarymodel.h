@@ -52,8 +52,9 @@ public:
     QModelIndex parent(const QModelIndex & index) const { return QModelIndex(); }
     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const { return hasIndex(row, column, parent) ? createIndex(row, column, 0) : QModelIndex(); }
 
+    bool readInfo();
     void load();
-    QStandardItemModel *search(const QString&, int) const;
+    QString search(const QString&, int) const;
 
     void setDictName(const QString &s) { _dictName = s; }
     QString dictName() const { return _dictName; }
