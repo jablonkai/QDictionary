@@ -60,10 +60,12 @@ DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
 //    connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
-    connect(ui.backwardButton, SIGNAL(clicked()), undoStack, SLOT(undo()));
+/*    connect(ui.backwardButton, SIGNAL(clicked()), undoStack, SLOT(undo()));
     connect(ui.forwardButton, SIGNAL(clicked()), undoStack, SLOT(redo()));
     connect(undoStack, SIGNAL(canUndoChanged(bool)), ui.backwardButton, SLOT(setEnabled(bool)));
     connect(undoStack, SIGNAL(canRedoChanged(bool)), ui.forwardButton, SLOT(setEnabled(bool)));
+*/
+    connect(ui.textBrowser, SIGNAL(anchorClicked(const QUrl&)), this, SLOT(slotAnchorClicked(const QUrl&)));
 
     ui.filterWidget->setVisible(false);
 }
@@ -106,14 +108,7 @@ void DictionaryWidget::slotSearch()
     QString text = ui.lineEdit->text();
     int index = ui.comboBox->currentIndex();
 
-//    int result = find(text, index);
-    QString result = dict->search(text, index);
-//    QStandardItemModel *result = dict->search(text, index);
-
-//    filterModel->setSourceModel(result);
-//    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
-//    ui.tableView->resizeColumnsToContents();
-    ui.textBrowser->setHtml(result);
+    ui.textBrowser->setHtml(dict->search(text, index));
 
 //    return result->rowCount();
 
@@ -147,6 +142,14 @@ void DictionaryWidget::slotItemActivated(const QModelIndex &index)
     ui.filterLineEdit->clear();
     slotFilter();
 */}
+
+
+void DictionaryWidget::slotAnchorClicked(const QUrl &url)
+{
+    ui.comboBox->setCurrentIndex(url.scheme().toInt());
+    ui.lineEdit->setText(url.authority());
+    slotSearch();
+}
 
 
 int DictionaryWidget::find(const QString &text, const int &index)

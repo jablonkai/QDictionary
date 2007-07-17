@@ -145,7 +145,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextBrowser" name="textBrowser" />
+    <widget class="QTextBrowser" name="textBrowser" >
+     <property name="openLinks" >
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -173,6 +177,70 @@
     <hint type="destinationlabel" >
      <x>209</x>
      <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser</receiver>
+   <slot>backward()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>22</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>240</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser</receiver>
+   <slot>forward()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>54</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>240</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textBrowser</sender>
+   <signal>forwardAvailable(bool)</signal>
+   <receiver>forwardButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>240</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>54</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textBrowser</sender>
+   <signal>backwardAvailable(bool)</signal>
+   <receiver>backwardButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>240</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>22</x>
+     <y>23</y>
     </hint>
    </hints>
   </connection>

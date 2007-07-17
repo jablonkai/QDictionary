@@ -101,7 +101,7 @@ QString DictionaryModel::search(const QString &string, int index) const
             if (i.original.contains(string, Qt::CaseInsensitive))
             {
                 QString color = b ? "#6699FF" : "#6699CC";
-                result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\">%2</td><td width=2></td><td width=\"49%\" bgcolor=\"%1\">%3</td></tr>").arg(color).arg(i.original).arg(i.translated);
+                result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\"><a href=\"0://%2\">%2</a></td><td width=2></td><td width=\"49%\" bgcolor=\"%1\"><a href=\"1://%3\">%3</a></td></tr>").arg(color).arg(i.original).arg(i.translated);
                 b = !b;
             }
     if (index == 1)
@@ -109,7 +109,7 @@ QString DictionaryModel::search(const QString &string, int index) const
             if (i.translated.contains(string, Qt::CaseInsensitive))
             {
                 QString color = b ? "#6699FF" : "#6699CC";
-                result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\">%2</td><td width=2></td><td width=\"49%\" bgcolor=\"%1\">%3</td></tr>").arg(color).arg(i.original).arg(i.translated);
+                result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\"><a href=\"0://%2\">%2</a></td><td width=2></td><td width=\"49%\" bgcolor=\"%1\"><a href=\"1://%3\">%3</a></td></tr>").arg(color).arg(i.original).arg(i.translated);
                 b = !b;
             }
 
