@@ -23,13 +23,13 @@
 #include <QXmlStreamReader>
 
 
-class DictionaryModel;
+class Dictionary;
 
 
 class KvtmlReader : public QXmlStreamReader
 {
 public:
-    KvtmlReader(DictionaryModel*);
+    KvtmlReader(Dictionary*);
     ~KvtmlReader();
 
     bool readHeader(QIODevice*);
@@ -40,7 +40,9 @@ private:
     void readRoot();
     void readElement();
 
-    DictionaryModel *dict;
+    Dictionary *dict;
+    bool firstO;
+    bool firstT;
 };
 /*<!--
 This is a machine generated file.

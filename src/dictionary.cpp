@@ -17,29 +17,25 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "dictionarymodel.h"
+#include "dictionary.h"
 
 #include <QtGui>
 
 #include "kvtmlreader.h"
 
 
-DictionaryModel::DictionaryModel(QObject *parent) : QAbstractItemModel(parent)
+
+Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false)
 {
 }
 
 
-DictionaryModel::DictionaryModel(const QString &name) : _fileName(name), _loaded(false)
+Dictionary::~Dictionary()
 {
 }
 
 
-DictionaryModel::~DictionaryModel()
-{
-}
-
-
-QVariant DictionaryModel::data(const QModelIndex &index, int role) const
+/*QVariant Dictionary::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || role != Qt::DisplayRole)
         return QVariant();
@@ -51,17 +47,17 @@ QVariant DictionaryModel::data(const QModelIndex &index, int role) const
 }
 
 
-QVariant DictionaryModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant Dictionary::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (section == 0)
         return _oLang;
     else if (section == 1)
         return _tLang;
     else return 0;
-}
+}*/
 
 
-bool DictionaryModel::readInfo()
+bool Dictionary::readInfo()
 {
     QFile file(_fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -75,7 +71,7 @@ bool DictionaryModel::readInfo()
 }
 
 
-void DictionaryModel::load()
+void Dictionary::load()
 {
     dictionary.clear();
 
@@ -92,7 +88,7 @@ void DictionaryModel::load()
 }
 
 
-QString DictionaryModel::search(const QString &string, int index) const
+QString Dictionary::search(const QString &string, int index) const
 {
     QString result("<table cellspacing=2 cellpadding=3 border=0 align=\"center\">");
     bool b = true;

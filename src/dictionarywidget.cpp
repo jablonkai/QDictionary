@@ -21,7 +21,7 @@
 
 #include <QtGui>
 
-#include "dictionarymodel.h"
+#include "dictionary.h"
 
 
 class SearchCommand : public QUndoCommand
@@ -79,7 +79,7 @@ void DictionaryWidget::search(const QString &s, const int &i)
 }
 
 
-void DictionaryWidget::activateDictionary(DictionaryModel *d)
+void DictionaryWidget::activateDictionary(Dictionary *d)
 {
     dict = d;
     undoStack->clear();
@@ -146,7 +146,11 @@ void DictionaryWidget::slotItemActivated(const QModelIndex &index)
 
 void DictionaryWidget::slotAnchorClicked(const QUrl &url)
 {
-    ui.comboBox->setCurrentIndex(url.scheme().toInt());
+    if (url.scheme() == dict->oLang())
+        ui.comboBox->setCurrentIndex(0);
+    else
+        ui.comboBox->setCurrentIndex(1);
+
     ui.lineEdit->setText(url.authority());
     slotSearch();
 }

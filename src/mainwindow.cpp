@@ -21,7 +21,7 @@
 
 #include <QtGui>
 
-#include "dictionarymodel.h"
+#include "dictionary.h"
 #include "dictionarywidget.h"
 //#include "newdialog.h"
 #include "settings.h"

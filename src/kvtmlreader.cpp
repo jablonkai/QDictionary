@@ -19,10 +19,10 @@
  ***************************************************************************/
 #include "kvtmlreader.h"
 
-#include "dictionarymodel.h"
+#include "dictionary.h"
 
 
-KvtmlReader::KvtmlReader(DictionaryModel *d) : dict(d)
+KvtmlReader::KvtmlReader(Dictionary *d) : dict(d), firstO(true), firstT(true)
 {
 }
 
@@ -144,9 +144,23 @@ void KvtmlReader::readElement()
         else if (isStartElement())          // ha egysorban van minden akkor nem olvasa be !!!
         {
             if (name() == "o")
+            {
+                if (firstO)
+                {
+                    dict->setOLang(attributes().value("l").toString());
+                    firstO = false;
+                }
                 o = readElementText();
+            }
             else if (name() == "t")
+            {
+                if (firstT)
+                {
+                    dict->setTLang(attributes().value("l").toString());
+                    firstT = false;
+                }
                 t = readElementText();
+            }
             else
                 readUnknownElement();
         }

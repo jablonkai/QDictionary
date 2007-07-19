@@ -25,7 +25,7 @@
 
 class QSortFilterProxyModel;
 class QUndoStack;
-class DictionaryModel;
+class Dictionary;
 
 
 class DictionaryWidget : public QWidget
@@ -41,7 +41,7 @@ signals:
     void statusBarMessage(QString, int);
 
 public slots:
-    void activateDictionary(DictionaryModel*);
+    void activateDictionary(Dictionary*);
 
 private slots:
     void slotSearch();
@@ -55,7 +55,7 @@ private:
 
     Ui::DictionaryWidget ui;
 
-    DictionaryModel *dict;
+    Dictionary *dict;
     QSortFilterProxyModel *filterModel;
     QUndoStack *undoStack;
     QString prevText;
