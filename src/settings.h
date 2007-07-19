@@ -32,6 +32,7 @@ public:
 
     void setDictDirs(const QStringList &stringList) { _dictDirs = stringList; }
     QStringList dictDirs() const { return _dictDirs; }
+    void addDictDir(const QString &s) { _dictDirs << s; }
 
     void setFirstColor(const QColor &color) { _firstColor = color; }
     QColor firstColor() const { return _firstColor; }

@@ -54,7 +54,8 @@ void SettingsDialog::accept()
 {
     settings->dictDirs().clear();
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
+        settings->addDictDir(ui.dirListWidget->item(i)->text());
+
     settings->setFirstColor(ui.firstColorButton->palette().color(QPalette::Window));
     settings->setSecondColor(ui.secondColorButton->palette().color(QPalette::Window));
 

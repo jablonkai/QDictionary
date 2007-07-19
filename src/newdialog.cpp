@@ -19,10 +19,10 @@
  ***************************************************************************/
 #include "newdialog.h"
 
-#include "dictionarymodel.h"
+#include "dictionary.h"
 
 
-NewDialog::NewDialog(QWidget *parent, DictionaryModel *dict) : QDialog(parent), dictionary(dict)
+NewDialog::NewDialog(QWidget *parent, Dictionary *dict) : QDialog(parent), dictionary(dict)
 {
     ui.setupUi(this);
 }

@@ -23,13 +23,13 @@
 #include <QXmlStreamReader>
 
 
-class DictionaryModel;
+class Dictionary;
 
 
 class DictionaryReader : public QXmlStreamReader
 {
 public:
-    DictionaryReader(DictionaryModel*);
+    DictionaryReader(Dictionary*);
 
     bool readHeader(QIODevice*);
     bool read(QIODevice*);
@@ -42,7 +42,7 @@ private:
     void readDict();
     void readWord();
 
-    DictionaryModel *dict;
+    Dictionary *dict;
 };
 
 

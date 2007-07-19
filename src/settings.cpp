@@ -20,7 +20,7 @@
 #include "settings.h"
 
 
-Settings::Settings()
+Settings::Settings() : _firstColor("#DCDCDC"), _secondColor("#C3C3C3")
 {
 }
 

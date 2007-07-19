@@ -19,10 +19,10 @@
  ***************************************************************************/
 #include "dictionaryreader.h"
 
-#include "dictionarymodel.h"
+#include "dictionary.h"
 
 
-DictionaryReader::DictionaryReader(DictionaryModel *d) : dict(d)
+DictionaryReader::DictionaryReader(Dictionary *d) : dict(d)
 {
 }
 

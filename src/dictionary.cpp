@@ -88,7 +88,7 @@ void Dictionary::load()
 }
 
 
-QString Dictionary::search(const QString &string, int index) const
+QString Dictionary::search(const QString &string, int index, const QColor &color1, const QColor &color2) const
 {
     QString result("<table cellspacing=2 cellpadding=3 border=0 align=\"center\">");
     bool b = true;
@@ -96,7 +96,7 @@ QString Dictionary::search(const QString &string, int index) const
         foreach (Entry i, dictionary)
             if (i.original.contains(string, Qt::CaseInsensitive))
             {
-                QString color = b ? "#DCDCDC" : "#C3C3C3";
+                QString color = b ? color1.name() : color2.name();
                 result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\"><a href=\"%2://%3\">%3</a></td><td width=2></td><td width=\"49%\" bgcolor=\"%1\"><a href=\"%4://%5\">%5</a></td></tr>").arg(color).arg(_oLang).arg(i.original).arg(_tLang).arg(i.translated);
                 b = !b;
             }
@@ -104,7 +104,7 @@ QString Dictionary::search(const QString &string, int index) const
         foreach (Entry i, dictionary)
             if (i.translated.contains(string, Qt::CaseInsensitive))
             {
-                QString color = b ? "#00CC66" : "#0000FF";
+                QString color = b ? color1.name() : color2.name();
                 result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\"><a href=\"%2://%3\">%3</a></td><td width=2></td><td width=\"49%\" bgcolor=\"%1\"><a href=\"%4://%5\">%5</a></td></tr>").arg(color).arg(_oLang).arg(i.original).arg(_tLang).arg(i.translated);
                 b = !b;
             }

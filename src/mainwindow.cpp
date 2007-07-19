@@ -38,11 +38,13 @@ MainWindow::MainWindow() : QMainWindow()
     readSettings();
     ui.treeWidget->initDicts(_settings->dictDirs());
 
-    connect(ui.treeWidget, SIGNAL(activateDictionary(DictionaryModel*)), ui.dictionaryWidget, SLOT(activateDictionary(DictionaryModel*)));
-    connect(ui.treeWidget, SIGNAL(activateDictionary(DictionaryModel*)), ui.editWidget, SLOT(activateDictionary(DictionaryModel*)));
+    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
+    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.editWidget, SLOT(activateDictionary(Dictionary*)));
     connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
     connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
     connect(ui.editWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+
+    ui.dictionaryWidget->init(_settings);
 }
 
 
@@ -88,6 +90,7 @@ void MainWindow::slotSettings()
 
     if (dialog->exec() == QDialog::Accepted)
     {
+//        QMessageBox::information(0, "", _settings->dictDirs().first());
         ui.treeWidget->initDicts(_settings->dictDirs());
 //        ui.treeWidget->addNewDictionary(dict);
 //        ui.stackedWidget->setCurrentWidget(ui.editWidget);

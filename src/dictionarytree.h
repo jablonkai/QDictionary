@@ -23,7 +23,7 @@
 #include <QTreeWidget>
 
 
-class DictionaryModel;
+class Dictionary;
 
 
 class DictionaryTree : public QTreeWidget
@@ -33,12 +33,12 @@ class DictionaryTree : public QTreeWidget
 public:
     DictionaryTree(QWidget*);
 
-    void addNewDictionary(DictionaryModel*);
+    void addNewDictionary(Dictionary*);
     void initDicts(const QStringList&);
 
 signals:
     void statusBarMessage(QString, int);
-    void activateDictionary(DictionaryModel*);
+    void activateDictionary(Dictionary*);
 
 private:
     QTreeWidgetItem *dictionaries;

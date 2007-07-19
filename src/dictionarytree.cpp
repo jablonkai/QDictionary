@@ -21,16 +21,16 @@
 
 #include <QtGui>
 
-#include "dictionarymodel.h"
+#include "dictionary.h"
 
 
 class DictionaryItem : public QTreeWidgetItem
 {
 public:
-    DictionaryItem(QTreeWidgetItem *parent, QString text, DictionaryModel *d) : QTreeWidgetItem(parent, QStringList(text)), dictionary(d) {}
+    DictionaryItem(QTreeWidgetItem *parent, QString text, Dictionary *d) : QTreeWidgetItem(parent, QStringList(text)), dictionary(d) {}
     ~DictionaryItem() { delete dictionary; }
 
-    DictionaryModel *dictionary;
+    Dictionary *dictionary;
 };
 
 
@@ -48,7 +48,7 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 
 
 
-void DictionaryTree::addNewDictionary(DictionaryModel *dict)
+void DictionaryTree::addNewDictionary(Dictionary *dict)
 {
     DictionaryItem *item = new DictionaryItem(dictionaries, dict->dictName(), dict);
     item->setIcon(0, QIcon(":resources/save.png"));                                   // még nem jó
@@ -65,7 +65,7 @@ void DictionaryTree::initDicts(const QStringList &dictDirs)
 
         foreach (QString fileName, dictDir.entryList(QDir::Files))
         {
-            DictionaryModel *d = new DictionaryModel(dictDir.absoluteFilePath(fileName));
+            Dictionary *d = new Dictionary(dictDir.absoluteFilePath(fileName));
             if (d->readInfo())
             {
                 new DictionaryItem(dictionaries, d->dictName(), d);
@@ -84,7 +84,7 @@ void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
     if (dictionaries == item)
         return;
 
-    DictionaryModel *dict = static_cast<DictionaryItem*>(item)->dictionary;
+    Dictionary *dict = static_cast<DictionaryItem*>(item)->dictionary;
     if (!dict->loaded())
         dict->load();
 

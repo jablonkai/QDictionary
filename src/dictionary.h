@@ -20,6 +20,7 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
+#include <QColor>
 #include <QList>
 #include <QString>
 
@@ -50,7 +51,7 @@ public:
 
     bool readInfo();
     void load();
-    QString search(const QString&, int) const;
+    QString search(const QString&, int, const QColor&, const QColor&) const;
 
     void setDictName(const QString &s) { _dictName = s; }
     QString dictName() const { return _dictName; }

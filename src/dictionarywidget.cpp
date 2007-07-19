@@ -22,6 +22,7 @@
 #include <QtGui>
 
 #include "dictionary.h"
+#include "settings.h"
 
 
 class SearchCommand : public QUndoCommand
@@ -71,6 +72,12 @@ DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
 }
 
 
+void DictionaryWidget::init(Settings *s)
+{
+    settings = s;
+}
+
+
 void DictionaryWidget::search(const QString &s, const int &i)
 {
     ui.lineEdit->setText(s);
@@ -108,7 +115,7 @@ void DictionaryWidget::slotSearch()
     QString text = ui.lineEdit->text();
     int index = ui.comboBox->currentIndex();
 
-    ui.textBrowser->setHtml(dict->search(text, index));
+    ui.textBrowser->setHtml(dict->search(text, index, settings->firstColor(), settings->secondColor()));
 
 //    return result->rowCount();
 

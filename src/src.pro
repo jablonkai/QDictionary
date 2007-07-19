@@ -14,7 +14,8 @@ dictionary.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
-          qt
+          qt \
+	  release
 TARGET = ../bin/qdictionary
 
 HEADERS += dictionaryreader.h \
