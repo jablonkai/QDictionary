@@ -39,10 +39,10 @@ MainWindow::MainWindow() : QMainWindow()
     ui.treeWidget->initDicts(_settings->dictDirs());
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
-    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.editWidget, SLOT(activateDictionary(Dictionary*)));
+//    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.editWidget, SLOT(activateDictionary(Dictionary*)));
     connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
     connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
-    connect(ui.editWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+//    connect(ui.editWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
 
     ui.dictionaryWidget->init(_settings);
 }
@@ -75,28 +75,12 @@ void MainWindow::slotSave()
 }
 
 
-void MainWindow::slotSetMode(QAction *action)
-{
-    if (action == ui.actionDictionary)
-        ui.stackedWidget->setCurrentWidget(ui.dictionaryWidget);
-    else if (action == ui.actionEdit)
-        ui.stackedWidget->setCurrentWidget(ui.editWidget);
-}
-
-
 void MainWindow::slotSettings()
 {
     SettingsDialog *dialog = new SettingsDialog(_settings, this);
 
     if (dialog->exec() == QDialog::Accepted)
-    {
-//        QMessageBox::information(0, "", _settings->dictDirs().first());
         ui.treeWidget->initDicts(_settings->dictDirs());
-//        ui.treeWidget->addNewDictionary(dict);
-//        ui.stackedWidget->setCurrentWidget(ui.editWidget);
-    }
-    else;
-//        delete dict;
 }
 
 
@@ -111,11 +95,6 @@ void MainWindow::setupActions()
 //    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
 //    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
     connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
-
-    QActionGroup *modeGroup = new QActionGroup(this);
-    modeGroup->addAction(ui.actionDictionary);
-    modeGroup->addAction(ui.actionEdit);
-    connect(modeGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotSetMode(QAction*)));
 
     connect(ui.actionSettings, SIGNAL(triggered()), this, SLOT(slotSettings()));
     connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(slotAbout()));

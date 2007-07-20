@@ -27,10 +27,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget" >
-      <widget class="DictionaryWidget" name="dictionaryWidget" />
-      <widget class="EditWidget" name="editWidget" />
-     </widget>
+     <widget class="DictionaryWidget" native="1" name="dictionaryWidget" />
     </item>
    </layout>
   </widget>
@@ -58,13 +55,6 @@
     <addaction name="actionAbout" />
     <addaction name="actionAboutQt" />
    </widget>
-   <widget class="QMenu" name="menu_Edit" >
-    <property name="title" >
-     <string>&amp;Edit</string>
-    </property>
-    <addaction name="actionUndo" />
-    <addaction name="actionRedo" />
-   </widget>
    <widget class="QMenu" name="menu_Tools" >
     <property name="title" >
      <string>&amp;Tools</string>
@@ -75,7 +65,6 @@
     <addaction name="actionSettings" />
    </widget>
    <addaction name="menu_File" />
-   <addaction name="menu_Edit" />
    <addaction name="menu_Tools" />
    <addaction name="menu_Help" />
   </widget>
@@ -131,22 +120,6 @@
     <string>About Qt</string>
    </property>
   </action>
-  <action name="actionUndo" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/undo.png</iconset>
-   </property>
-   <property name="text" >
-    <string>&amp;Undo</string>
-   </property>
-  </action>
-  <action name="actionRedo" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/redo.png</iconset>
-   </property>
-   <property name="text" >
-    <string>&amp;Redo</string>
-   </property>
-  </action>
   <action name="actionDictionary" >
    <property name="text" >
     <string>&amp;Dictionary</string>
@@ -173,12 +146,6 @@
    <class>DictionaryWidget</class>
    <extends>QWidget</extends>
    <header>dictionarywidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>EditWidget</class>
-   <extends>QWidget</extends>
-   <header>editwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

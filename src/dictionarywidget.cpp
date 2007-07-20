@@ -42,7 +42,7 @@ private:
 };
 
 
-DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
+DictionaryWidget::DictionaryWidget(QWidget *parent) : QWidget(parent), prevText(""), prevIndex(100)
 {
     ui.setupUi(this);
 

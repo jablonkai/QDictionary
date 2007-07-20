@@ -4,11 +4,8 @@ dictionarywidget.cpp \
 mainwindow.cpp \
 searchline.cpp \
 main.cpp \
-dictionarywriter.cpp \
 settingsdialog.cpp \
 kvtmlreader.cpp \
-editwidget.cpp \
-newdialog.cpp \
 settings.cpp \
 dictionary.cpp
 TEMPLATE = app
@@ -24,18 +21,13 @@ dictionarywidget.h \
 mainwindow.h \
 version.h \
 searchline.h \
-dictionarywriter.h \
 settingsdialog.h \
 kvtmlreader.h \
-editwidget.h \
-newdialog.h \
 settings.h \
 dictionary.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
-settingsdialog.ui \
-editwidget.ui \
-newdialog.ui
+settingsdialog.ui
 QT += core \
 xml \
 gui

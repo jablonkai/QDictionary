@@ -43,7 +43,6 @@ private slots:
     void slotSave();
     void slotSettings();
     void slotAbout();
-    void slotSetMode(QAction*);
 
 private:
     void setupActions();
