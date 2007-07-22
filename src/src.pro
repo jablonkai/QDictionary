@@ -7,7 +7,8 @@ main.cpp \
 settingsdialog.cpp \
 kvtmlreader.cpp \
 settings.cpp \
-dictionary.cpp
+dictionary.cpp \
+popupwidget.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -24,7 +25,8 @@ searchline.h \
 settingsdialog.h \
 kvtmlreader.h \
 settings.h \
-dictionary.h
+dictionary.h \
+popupwidget.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 settingsdialog.ui

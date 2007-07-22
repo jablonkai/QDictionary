@@ -50,11 +50,8 @@ private slots:
     void slotFiltering(bool);
     void slotFilter();
     void slotItemActivated(const QModelIndex&);
-    void slotAnchorClicked(const QUrl&);
 
 private:
-    int find(const QString&, const int&);
-
     Ui::DictionaryWidget ui;
 
     Dictionary *dict;
@@ -62,7 +59,7 @@ private:
     QUndoStack *undoStack;
     QString prevText;
     int prevIndex;
-    Settings *settings;
+    int n;
 };
 
 

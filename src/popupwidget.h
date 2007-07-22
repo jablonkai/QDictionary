@@ -17,46 +17,70 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef POPUPWIDGET_H
+#define POPUPWIDGET_H
 
-#include <QColor>
-#include <QStringList>
+#include <QWidget>
 
 
-class Settings
+class PopupWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
-    Settings();
-    ~Settings();
+    PopupWidget(QWidget *parent = 0);
 
-    void setDictDirs(const QStringList &stringList) { _dictDirs = stringList; }
-    QStringList dictDirs() const { return _dictDirs; }
-    void addDictDir(const QString &s) { _dictDirs << s; }
+    ~PopupWidget();
+};/*#include <QWidget>
 
-    void setShowTrayIcon(bool b) { _showTrayIcon = b; }
-    bool showTrayIcon() { return _showTrayIcon; }
+class QAction;
+class QEvent;
+class QTextBrowser;
+class QTimer;
+class QClipboard;
 
-    void setScan(bool b) { _scan = b; }
-    bool scan() { return _scan; }
+class DictCore;
 
-    void setFirstColor(const QColor &color) { _firstColor = color; }
-    QColor firstColor() const { return _firstColor; }
-    QString firstColorName() const { return _firstColor.name(); }
+class PopupWindow: public QWidget
+{
+        Q_OBJECT
 
-    void setSecondColor(const QColor &color) { _secondColor = color; }
-    QColor secondColor() const { return _secondColor; }
-    QString secondColorName() const { return _secondColor.name(); }
+    public:
+        PopupWindow(DictCore *dict = NULL, QWidget *parent = 0);
+        ~PopupWindow();
 
-private:
-    QStringList _dictDirs;
+        bool isScan() const;
+        int modifierKey() const;
+        bool showIfNotFound() const;
 
-    bool _showTrayIcon;
-    bool _scan;
+        DictCore* dict() const;
 
-    QColor _firstColor;
-    QColor _secondColor;
-};
+    public slots:
+        void setScan(bool scan);
+        void setModifierKey(int key);
+        void setShowIfNotFound(bool mode);
 
+    signals:
+        void scanChanged(bool);
+
+    protected:
+        void enterEvent(QEvent*);
+        void leaveEvent(QEvent*);
+        void timerEvent(QTimerEvent*);
+
+    private slots:
+        void xSelectionChanged();
+
+    private:
+        QTextBrowser *translationView;
+        QTimer *closeTimer;
+        DictCore* m_dict;
+        QString m_source;
+        bool m_scan;
+        int m_modifierKey;
+        bool m_showIfNotFound;
+        QString lastSelection;
+        int timerId;
+};*/
 
 #endif

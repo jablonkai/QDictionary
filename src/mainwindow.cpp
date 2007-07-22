@@ -33,16 +33,28 @@ MainWindow::MainWindow() : QMainWindow()
 {
     ui.setupUi(this);
     setupActions();
-
+/*    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        QMessageBox::critical(0, QObject::tr("Systray"), QObject::tr("I couldn't detect any system tray on this system."));
+        return 1;
+    }
+*/
     _settings = new Settings;
     readSettings();
     ui.treeWidget->initDicts(_settings->dictDirs());
+    createTrayIcon();
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
-//    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.editWidget, SLOT(activateDictionary(Dictionary*)));
     connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
     connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
-//    connect(ui.editWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+/*     connect(showIconCheckBox, SIGNAL(toggled(bool)),
+             trayIcon, SLOT(setVisible(bool)));
+     connect(iconComboBox, SIGNAL(currentIndexChanged(int)),
+             this, SLOT(setIcon(int)));
+     connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
+     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));*/
+    trayIcon->show();
 
     ui.dictionaryWidget->init(_settings);
 }
@@ -50,8 +62,17 @@ MainWindow::MainWindow() : QMainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    writeSettings();
-    event->accept();
+    if (trayIcon->isVisible())
+    {
+        QMessageBox::information(this, tr("Systray"), tr("The program will keep running in the system tray. To terminate the program, choose <b>Quit</b> in the context menu of the system tray entry."));
+        hide();
+        event->ignore();
+    }
+    else
+    {
+        writeSettings();
+        event->accept();
+    }
 }
 
 
@@ -102,6 +123,22 @@ void MainWindow::setupActions()
 }
 
 
+void MainWindow::createTrayIcon()
+{
+    trayIconMenu = new QMenu(this);
+/*     trayIconMenu->addAction(minimizeAction);
+     trayIconMenu->addAction(maximizeAction);
+     trayIconMenu->addAction(restoreAction);
+     trayIconMenu->addSeparator();*/
+    trayIconMenu->addAction(ui.actionQuit);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setIcon(QIcon(":/new/prefix1/resources/qdictionary.png"));
+    trayIcon->setToolTip(tr("QDictionary"));
+}
+
+
 void MainWindow::readSettings()
 {
     QSettings settings;
@@ -115,6 +152,9 @@ void MainWindow::readSettings()
     _settings->setDictDirs(settings.value("dirs", _settings->dictDirs()).toStringList());
     _settings->setFirstColor(settings.value("firstColor", _settings->firstColor()).value<QColor>());
     _settings->setSecondColor(settings.value("secondColor", _settings->secondColor()).value<QColor>());
+    settings.endGroup();
+
+    settings.beginGroup("TrayIcon");
     settings.endGroup();
 }
 
@@ -132,5 +172,8 @@ void MainWindow::writeSettings()
     settings.setValue("dirs", _settings->dictDirs());
     settings.setValue("firstColor", _settings->firstColor());
     settings.setValue("secondColor", _settings->secondColor());
+    settings.endGroup();
+
+    settings.beginGroup("TrayIcon");
     settings.endGroup();
 }

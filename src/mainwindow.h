@@ -25,6 +25,7 @@
 #include "ui_mainwindow.h"
 
 
+class QSystemTrayIcon;
 class Settings;
 
 
@@ -46,11 +47,14 @@ private slots:
 
 private:
     void setupActions();
+    void createTrayIcon();
 
     void readSettings();
     void writeSettings();
 
     Ui::MainWindow ui;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
     Settings *_settings;
 };
 

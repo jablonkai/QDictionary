@@ -42,39 +42,40 @@ private:
 };
 
 
-DictionaryWidget::DictionaryWidget(QWidget *parent) : QWidget(parent), prevText(""), prevIndex(100)
+DictionaryWidget::DictionaryWidget(QWidget *parent) : QWidget(parent), dict(0), prevText(""), prevIndex(100)
 {
     ui.setupUi(this);
 
     undoStack = new QUndoStack(this);
 
-/*    filterModel = new QSortFilterProxyModel(this);
+    filterModel = new QSortFilterProxyModel(this);
     filterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     filterModel->setDynamicSortFilter(true);
     filterModel->setSortLocaleAware(true),
     filterModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    ui.tableView->setModel(filterModel);*/
+    ui.tableView->setModel(filterModel);
 
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
     connect(ui.searchButton, SIGNAL(clicked()), this, SLOT(slotSearch()));
     connect(ui.filteringCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotFiltering(bool)));
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
-//    connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
-/*    connect(ui.backwardButton, SIGNAL(clicked()), undoStack, SLOT(undo()));
+    connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
+    connect(ui.backwardButton, SIGNAL(clicked()), undoStack, SLOT(undo()));
     connect(ui.forwardButton, SIGNAL(clicked()), undoStack, SLOT(redo()));
     connect(undoStack, SIGNAL(canUndoChanged(bool)), ui.backwardButton, SLOT(setEnabled(bool)));
     connect(undoStack, SIGNAL(canRedoChanged(bool)), ui.forwardButton, SLOT(setEnabled(bool)));
-*/
-    connect(ui.textBrowser, SIGNAL(anchorClicked(const QUrl&)), this, SLOT(slotAnchorClicked(const QUrl&)));
 
     ui.filterWidget->setVisible(false);
 }
 
 
-void DictionaryWidget::init(Settings *s)
+void DictionaryWidget::init(Settings *settings)
 {
-    settings = s;
+    QPalette palette = ui.tableView->palette();                         // nem jó !!!!!!!!!!!44
+    palette.setColor(QPalette::Base, settings->firstColor());
+    palette.setColor(QPalette::AlternateBase, settings->firstColor());
+    ui.tableView->setPalette(palette);
 }
 
 
@@ -82,7 +83,24 @@ void DictionaryWidget::search(const QString &s, const int &i)
 {
     ui.lineEdit->setText(s);
     ui.comboBox->setCurrentIndex(i);
-    find(s, i);
+
+    QList<Entry> d = dict->search(ui.lineEdit->text(), ui.comboBox->currentIndex());
+
+    QStandardItemModel *model = new QStandardItemModel(d.size(), 2, this);
+    model->setHeaderData(0, Qt::Horizontal, dict->oLang());
+    model->setHeaderData(1, Qt::Horizontal, dict->tLang());
+
+    for (int i = 0; i < d.size(); ++i)
+    {
+        model->setData(model->index(i, 0, QModelIndex()), d.at(i).original);
+        model->setData(model->index(i, 1, QModelIndex()), d.at(i).translated);
+    }
+
+    filterModel->setSourceModel(model);
+    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
+    ui.tableView->resizeColumnsToContents();
+
+    n = d.size();
 }
 
 
@@ -115,61 +133,33 @@ void DictionaryWidget::slotSearch()
     QString text = ui.lineEdit->text();
     int index = ui.comboBox->currentIndex();
 
-    ui.textBrowser->setHtml(dict->search(text, index, settings->firstColor(), settings->secondColor()));
-
-//    return result->rowCount();
-
     undoStack->push(new SearchCommand(prevText, prevIndex, text, index, this));
     prevText = text;
     prevIndex = index;
 
-    emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(1).arg(time.elapsed() / 1000.0f), 0);
+    emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(n).arg(time.elapsed() / 1000.0f), 0);
 }
 
 
 void DictionaryWidget::slotFiltering(bool b)
 {
-//    b ? slotFilter() : filterModel->setFilterRegExp(0);
+    b ? slotFilter() : filterModel->setFilterRegExp(0);
 }
 
 
 void DictionaryWidget::slotFilter()
 {
-//    filterModel->setFilterKeyColumn(ui.filterComboBox->currentIndex());
-//    filterModel->setFilterRegExp(QRegExp(ui.filterLineEdit->text(), Qt::CaseInsensitive, QRegExp::Wildcard));
+    filterModel->setFilterKeyColumn(ui.filterComboBox->currentIndex());
+    filterModel->setFilterRegExp(QRegExp(ui.filterLineEdit->text(), Qt::CaseInsensitive, QRegExp::Wildcard));
 }
 
 
 void DictionaryWidget::slotItemActivated(const QModelIndex &index)
 {
-/*    ui.comboBox->setCurrentIndex(index.column());
+    ui.comboBox->setCurrentIndex(index.column());
     ui.lineEdit->setText(index.data().toString());
     slotSearch();
 
     ui.filterLineEdit->clear();
     slotFilter();
-*/}
-
-
-void DictionaryWidget::slotAnchorClicked(const QUrl &url)
-{
-    if (url.scheme() == dict->oLang())
-        ui.comboBox->setCurrentIndex(0);
-    else
-        ui.comboBox->setCurrentIndex(1);
-
-    ui.lineEdit->setText(url.authority());
-    slotSearch();
 }
-
-
-int DictionaryWidget::find(const QString &text, const int &index)
-{
-/*    QStandardItemModel *result = dict->search(text, index);
-
-    filterModel->setSourceModel(result);
-    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
-    ui.tableView->resizeColumnsToContents();
-
-    return result->rowCount();
-*/}

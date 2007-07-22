@@ -12,6 +12,9 @@
   <property name="windowTitle" >
    <string>QDictionary</string>
   </property>
+  <property name="windowIcon" >
+   <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/qdictionary.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QVBoxLayout" >
     <property name="leftMargin" >

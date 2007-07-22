@@ -51,7 +51,7 @@ public:
 
     bool readInfo();
     void load();
-    QString search(const QString&, int, const QColor&, const QColor&) const;
+    QList<Entry> search(const QString&, int) const;
 
     void setDictName(const QString &s) { _dictName = s; }
     QString dictName() const { return _dictName; }

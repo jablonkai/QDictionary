@@ -88,26 +88,18 @@ void Dictionary::load()
 }
 
 
-QString Dictionary::search(const QString &string, int index, const QColor &color1, const QColor &color2) const
+QList<Entry> Dictionary::search(const QString &string, int index) const
 {
-    QString result("<table cellspacing=2 cellpadding=3 border=0 align=\"center\">");
-    bool b = true;
+    QList<Entry> list;
+
     if (index == 0)
         foreach (Entry i, dictionary)
             if (i.original.contains(string, Qt::CaseInsensitive))
-            {
-                QString color = b ? color1.name() : color2.name();
-                result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\"><a href=\"%2://%3\">%3</a></td><td width=2></td><td width=\"49%\" bgcolor=\"%1\"><a href=\"%4://%5\">%5</a></td></tr>").arg(color).arg(_oLang).arg(i.original).arg(_tLang).arg(i.translated);
-                b = !b;
-            }
+                list << i;
     if (index == 1)
         foreach (Entry i, dictionary)
             if (i.translated.contains(string, Qt::CaseInsensitive))
-            {
-                QString color = b ? color1.name() : color2.name();
-                result +=  QString("<tr><td width=\"49%\" height=18 bgcolor=\"%1\"><a href=\"%2://%3\">%3</a></td><td width=2></td><td width=\"49%\" bgcolor=\"%1\"><a href=\"%4://%5\">%5</a></td></tr>").arg(color).arg(_oLang).arg(i.original).arg(_tLang).arg(i.translated);
-                b = !b;
-            }
+                list << i;
 
-    return result += "</table>";
+    return list;
 }
