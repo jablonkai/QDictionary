@@ -21,11 +21,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 #include "ui_mainwindow.h"
 
+#define QDICTIONARY_VERSION "0.2.0"
 
-class QSystemTrayIcon;
+
 class Settings;
 
 
@@ -44,6 +46,7 @@ private slots:
     void slotSave();
     void slotSettings();
     void slotAbout();
+    void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
 
 private:
     void setupActions();

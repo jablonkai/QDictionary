@@ -72,7 +72,7 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) : QWidget(parent), dict(0), 
 
 void DictionaryWidget::init(Settings *settings)
 {
-    QPalette palette = ui.tableView->palette();                         // nem jó !!!!!!!!!!!44
+    QPalette palette = ui.tableView->palette();                         // nem jó !!!!!!!!!!!
     palette.setColor(QPalette::Base, settings->firstColor());
     palette.setColor(QPalette::AlternateBase, settings->firstColor());
     ui.tableView->setPalette(palette);

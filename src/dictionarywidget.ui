@@ -27,7 +27,7 @@
         <string/>
        </property>
        <property name="icon" >
-        <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/prev.png</iconset>
+        <iconset resource="qdictionary.qrc" >:/resources/prev.png</iconset>
        </property>
       </widget>
      </item>
@@ -43,7 +43,7 @@
         <string/>
        </property>
        <property name="icon" >
-        <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/next.png</iconset>
+        <iconset resource="qdictionary.qrc" >:/resources/next.png</iconset>
        </property>
       </widget>
      </item>

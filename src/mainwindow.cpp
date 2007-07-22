@@ -23,7 +23,6 @@
 
 #include "dictionary.h"
 #include "dictionarywidget.h"
-//#include "newdialog.h"
 #include "settings.h"
 #include "settingsdialog.h"
 #include "version.h"
@@ -32,7 +31,6 @@
 MainWindow::MainWindow() : QMainWindow()
 {
     ui.setupUi(this);
-    setupActions();
 /*    if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
         QMessageBox::critical(0, QObject::tr("Systray"), QObject::tr("I couldn't detect any system tray on this system."));
@@ -41,8 +39,10 @@ MainWindow::MainWindow() : QMainWindow()
 */
     _settings = new Settings;
     readSettings();
+
     ui.treeWidget->initDicts(_settings->dictDirs());
     createTrayIcon();
+    setupActions();
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
     connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
@@ -62,13 +62,13 @@ MainWindow::MainWindow() : QMainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (trayIcon->isVisible())
+/*    if (trayIcon->isVisible() && isVisible())
     {
         QMessageBox::information(this, tr("Systray"), tr("The program will keep running in the system tray. To terminate the program, choose <b>Quit</b> in the context menu of the system tray entry."));
         hide();
         event->ignore();
     }
-    else
+    else*/
     {
         writeSettings();
         event->accept();
@@ -107,7 +107,14 @@ void MainWindow::slotSettings()
 
 void MainWindow::slotAbout()
 {
-    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("QDictionary\nVersion " QDICTIONARY_VERSION_STRING "\nCopyright (C) 2007 by Tamás Jablonkai\ntamas.jablonkai@gmail.com"));
+    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("QDictionary\nVersion " QDICTIONARY_VERSION "\nCopyright (C) 2007 by Tamás Jablonkai\ntamas.jablonkai@gmail.com"));
+}
+
+
+void MainWindow::slotTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::Trigger)
+        setVisible(!isVisible());
 }
 
 
@@ -115,11 +122,11 @@ void MainWindow::setupActions()
 {
 //    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
 //    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
-    connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
-
+    connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(ui.actionSettings, SIGNAL(triggered()), this, SLOT(slotSettings()));
     connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(slotAbout()));
     connect(ui.actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 }
 
 
@@ -134,7 +141,7 @@ void MainWindow::createTrayIcon()
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setIcon(QIcon(":/new/prefix1/resources/qdictionary.png"));
+    trayIcon->setIcon(QIcon(":/resources/qdictionary.png"));
     trayIcon->setToolTip(tr("QDictionary"));
 }
 

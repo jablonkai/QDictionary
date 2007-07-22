@@ -20,7 +20,6 @@ HEADERS += dictionaryreader.h \
 dictionarytree.h \
 dictionarywidget.h \
 mainwindow.h \
-version.h \
 searchline.h \
 settingsdialog.h \
 kvtmlreader.h \
@@ -35,7 +34,6 @@ xml \
 gui
 TRANSLATIONS += translations/qdictionary_hu.ts
 
-RESOURCES += qdictionary.qrc
 OBJECTS_DIR = ../build
 
 UI_DIR = ../build
@@ -43,3 +41,5 @@ UI_DIR = ../build
 MOC_DIR = ../build
 
 RCC_DIR = ../build
+RESOURCES += qdictionary.qrc
+
