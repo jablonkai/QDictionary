@@ -28,6 +28,7 @@
 #define QDICTIONARY_VERSION "0.2.0"
 
 
+class PopupWidget;
 class Settings;
 
 
@@ -37,19 +38,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent*);
 
 private slots:
-    void slotNew();
-    void slotSave();
+    void slotShowTrayIcon(bool);
     void slotSettings();
     void slotAbout();
     void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
 
 private:
-    void setupActions();
+    void createConnections();
     void createTrayIcon();
 
     void readSettings();
@@ -57,8 +58,8 @@ private:
 
     Ui::MainWindow ui;
     QSystemTrayIcon *trayIcon;
-    QMenu *trayIconMenu;
     Settings *_settings;
+    PopupWidget *popupWidget;
 };
 
 

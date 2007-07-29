@@ -23,76 +23,49 @@
 
 #include "dictionary.h"
 #include "dictionarywidget.h"
+#include "popupwidget.h"
 #include "settings.h"
 #include "settingsdialog.h"
-#include "version.h"
 
 
 MainWindow::MainWindow() : QMainWindow()
 {
     ui.setupUi(this);
-/*    if (!QSystemTrayIcon::isSystemTrayAvailable())
-    {
-        QMessageBox::critical(0, QObject::tr("Systray"), QObject::tr("I couldn't detect any system tray on this system."));
-        return 1;
-    }
-*/
+
     _settings = new Settings;
-    readSettings();
 
-    ui.treeWidget->initDicts(_settings->dictDirs());
     createTrayIcon();
-    setupActions();
+    popupWidget = new PopupWidget(this);
+    createConnections();
 
-    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
-    connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
-    connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
-/*     connect(showIconCheckBox, SIGNAL(toggled(bool)),
-             trayIcon, SLOT(setVisible(bool)));
-     connect(iconComboBox, SIGNAL(currentIndexChanged(int)),
-             this, SLOT(setIcon(int)));
-     connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
-     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));*/
-    trayIcon->show();
+    readSettings();
+}
 
-    ui.dictionaryWidget->init(_settings);
+
+MainWindow::~MainWindow()
+{
+    writeSettings();
 }
 
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-/*    if (trayIcon->isVisible() && isVisible())
+    if (trayIcon->isVisible())
     {
-        QMessageBox::information(this, tr("Systray"), tr("The program will keep running in the system tray. To terminate the program, choose <b>Quit</b> in the context menu of the system tray entry."));
         hide();
         event->ignore();
     }
-    else*/
-    {
-        writeSettings();
-        event->accept();
-    }
-}
-
-
-void MainWindow::slotNew()
-{
-/*    DictionaryModel *dict = new DictionaryModel;
-    NewDialog *dialog = new NewDialog(this, dict);
-
-    if (dialog->exec() == QDialog::Accepted)
-    {
-        ui.treeWidget->addNewDictionary(dict);
-        ui.stackedWidget->setCurrentWidget(ui.editWidget);
-    }
     else
-        delete dict;*/
+        event->accept();
 }
 
 
-void MainWindow::slotSave()
+void MainWindow::slotShowTrayIcon(bool b)
 {
+    if (b && ui.actionScan->isChecked())
+        popupWidget->slotScan(b);
+    else if (!b)
+        popupWidget->slotScan(b);
 }
 
 
@@ -101,7 +74,10 @@ void MainWindow::slotSettings()
     SettingsDialog *dialog = new SettingsDialog(_settings, this);
 
     if (dialog->exec() == QDialog::Accepted)
+    {
         ui.treeWidget->initDicts(_settings->dictDirs());
+        trayIcon->setVisible(_settings->showTrayIcon());
+    }
 }
 
 
@@ -118,31 +94,44 @@ void MainWindow::slotTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 
 
-void MainWindow::setupActions()
+void MainWindow::createConnections()
 {
-//    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
-//    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
     connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui.actionShowTrayIcon, SIGNAL(triggered(bool)), this, SLOT(slotShowTrayIcon(bool)));
+    connect(ui.actionShowTrayIcon, SIGNAL(triggered(bool)), trayIcon, SLOT(setVisible(bool)));
+    connect(ui.actionScan, SIGNAL(triggered(bool)), popupWidget, SLOT(slotScan(bool)));
     connect(ui.actionSettings, SIGNAL(triggered()), this, SLOT(slotSettings()));
     connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(slotAbout()));
     connect(ui.actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotTrayIconActivated(QSystemTrayIcon::ActivationReason)));
+
+    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
+    connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+    connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+
+    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), popupWidget, SLOT(slotSetDictionary(Dictionary*)));
+
+    ui.menu_Tools->insertAction(ui.actionSettings, ui.dockWidget->toggleViewAction());
+    ui.menu_Tools->insertSeparator(ui.actionSettings);
 }
 
 
 void MainWindow::createTrayIcon()
 {
-    trayIconMenu = new QMenu(this);
+    QMenu *trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(ui.actionScan);
+    trayIconMenu->addSeparator();
 /*     trayIconMenu->addAction(minimizeAction);
-     trayIconMenu->addAction(maximizeAction);
-     trayIconMenu->addAction(restoreAction);
-     trayIconMenu->addSeparator();*/
+     trayIconMenu->addAction(maximizeAction);*/
+    trayIconMenu->addAction(ui.actionSettings);
+    trayIconMenu->addSeparator();
     trayIconMenu->addAction(ui.actionQuit);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/resources/qdictionary.png"));
     trayIcon->setToolTip(tr("QDictionary"));
+    trayIcon->setVisible(_settings->showTrayIcon());
 }
 
 
@@ -153,15 +142,18 @@ void MainWindow::readSettings()
     settings.beginGroup("MainWindow");
     restoreState(settings.value("state", saveState()).toByteArray());
     restoreGeometry(settings.value("geometry", saveGeometry()).toByteArray());
+    ui.actionShowTrayIcon->setChecked(settings.value("trayIcon", true).toBool());
+    ui.actionScan->setChecked(settings.value("scan", true).toBool());
     settings.endGroup();
+
+    trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());
+    ui.actionScan->setEnabled(ui.actionShowTrayIcon->isChecked());
+    slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
 
     settings.beginGroup("Dictionary");
     _settings->setDictDirs(settings.value("dirs", _settings->dictDirs()).toStringList());
     _settings->setFirstColor(settings.value("firstColor", _settings->firstColor()).value<QColor>());
     _settings->setSecondColor(settings.value("secondColor", _settings->secondColor()).value<QColor>());
-    settings.endGroup();
-
-    settings.beginGroup("TrayIcon");
     settings.endGroup();
 }
 
@@ -173,6 +165,8 @@ void MainWindow::writeSettings()
     settings.beginGroup("MainWindow");
     settings.setValue("state", saveState());
     settings.setValue("geometry", saveGeometry());
+    settings.setValue("trayIcon", ui.actionShowTrayIcon->isChecked());
+    settings.setValue("scan", ui.actionScan->isChecked());
     settings.endGroup();
 
     settings.beginGroup("Dictionary");
@@ -180,7 +174,9 @@ void MainWindow::writeSettings()
     settings.setValue("firstColor", _settings->firstColor());
     settings.setValue("secondColor", _settings->secondColor());
     settings.endGroup();
+    ui.treeWidget->initDicts(_settings->dictDirs());
 
-    settings.beginGroup("TrayIcon");
-    settings.endGroup();
+//    settings.beginGroup("Scan");
+
+//    settings.endGroup();
 }

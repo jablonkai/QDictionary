@@ -35,28 +35,6 @@ Dictionary::~Dictionary()
 }
 
 
-/*QVariant Dictionary::data(const QModelIndex &index, int role) const
-{
-    if (!index.isValid() || role != Qt::DisplayRole)
-        return QVariant();
-
-    if (index.column() == 0)
-        return dictionary.at(index.row()).original;
-    else if (index.column() == 1)
-        return dictionary.at(index.row()).translated;
-}
-
-
-QVariant Dictionary::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    if (section == 0)
-        return _oLang;
-    else if (section == 1)
-        return _tLang;
-    else return 0;
-}*/
-
-
 bool Dictionary::readInfo()
 {
     QFile file(_fileName);
@@ -102,4 +80,36 @@ QList<Entry> Dictionary::search(const QString &string, int index) const
                 list << i;
 
     return list;
+}
+
+
+QString Dictionary::popupSearch(const QString &string) const
+{
+    QString text = QString("<strong>%1</strong><hr/>").arg(string);
+
+    QList<Entry> firstList;
+    QList<Entry> secondList;
+    foreach (Entry i, dictionary)
+    {
+        if (i.original == string)
+            firstList << i;
+        if (i.translated == string)
+            secondList << i;
+    }
+
+    if (!firstList.empty())
+    {
+        text += QString("<em><u>%1 - %2</u></em><br/>").arg(_oLang).arg(_tLang);
+        foreach (Entry i, firstList)
+            text += QString("%1<br/>").arg(i.translated);
+    }
+
+    if (!secondList.empty())
+    {
+        text += QString("<em><u>%1 - %2</u></em><br/>").arg(_tLang).arg(_oLang);
+        foreach (Entry i, secondList)
+            text += QString("%1<br/>").arg(i.original);
+    }
+
+    return text;
 }

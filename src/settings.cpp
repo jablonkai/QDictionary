@@ -19,12 +19,26 @@
  ***************************************************************************/
 #include "settings.h"
 
+#include <QSettings>
 
-Settings::Settings() : _firstColor("#DCDCDC"), _secondColor("#C3C3C3")
+
+Settings::Settings() : _showTrayIcon(true), _firstColor("#DCDCDC"), _secondColor("#C3C3C3")
 {
+    load();
 }
 
 
 Settings::~Settings()
+{
+    save();
+}
+
+
+void Settings::save()
+{
+}
+
+
+void Settings::load()
 {
 }

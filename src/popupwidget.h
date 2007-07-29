@@ -23,14 +23,32 @@
 #include <QWidget>
 
 
+class QTextBrowser;
+class Dictionary;
+
+
 class PopupWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     PopupWidget(QWidget *parent = 0);
-
     ~PopupWidget();
+
+public slots:
+    void slotSetDictionary(Dictionary*);
+    void slotScan(bool);
+
+protected:
+    void timerEvent(QTimerEvent*);
+
+private:
+    void search();
+
+    Dictionary *dict;
+    QTextBrowser *textBrowser;
+    QString prevSelection;
+    int timerId;
 };/*#include <QWidget>
 
 class QAction;
@@ -81,6 +99,26 @@ class PopupWindow: public QWidget
         bool m_showIfNotFound;
         QString lastSelection;
         int timerId;
+};*/
+/*class Widget : public QWidget
+{
+    Q_OBJECT
+public:
+    Widget();
+
+protected:
+    virtual void paintEvent(QPaintEvent *e);
+    virtual void resizeEvent(QResizeEvent *e);
+
+private slots:
+    void showIcon(bool s);
+private:
+    QSvgRenderer *renderer;
+    QPixmap       cache;
+    QPixmap       icon;
+    bool          dirty;
+    bool          iconShown;
+    QCheckBox    *cbox;
 };*/
 
 #endif

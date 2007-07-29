@@ -38,6 +38,8 @@ SettingsDialog::SettingsDialog(Settings *s, QWidget *parent) : settings(s), QDia
     palette.setColor(QPalette::Window, settings->secondColor());
     ui.secondColorButton->setPalette(palette);
 
+    ui.trayIconCheckBox->setChecked(settings->showTrayIcon());
+
     connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
     connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
     connect(ui.firstColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
@@ -54,7 +56,9 @@ void SettingsDialog::accept()
 {
     settings->dictDirs().clear();
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->addDictDir(ui.dirListWidget->item(i)->text());
+        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
+
+    settings->setShowTrayIcon(ui.trayIconCheckBox->checkState());
 
     settings->setFirstColor(ui.firstColorButton->palette().color(QPalette::Window));
     settings->setSecondColor(ui.secondColorButton->palette().color(QPalette::Window));

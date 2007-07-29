@@ -35,7 +35,6 @@ int main(int argc, char **argv)
     app.setApplicationName("QDictionary");
 
     MainWindow mainWindow;
-    mainWindow.show();
 
     return app.exec();
 }

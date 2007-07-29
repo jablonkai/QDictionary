@@ -1,5 +1,4 @@
-SOURCES += dictionaryreader.cpp \
-dictionarytree.cpp \
+SOURCES += dictionarytree.cpp \
 dictionarywidget.cpp \
 mainwindow.cpp \
 searchline.cpp \
@@ -16,8 +15,7 @@ CONFIG += warn_on \
 	  release
 TARGET = ../bin/qdictionary
 
-HEADERS += dictionaryreader.h \
-dictionarytree.h \
+HEADERS += dictionarytree.h \
 dictionarywidget.h \
 mainwindow.h \
 searchline.h \

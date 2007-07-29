@@ -26,7 +26,6 @@
 class QSortFilterProxyModel;
 class QUndoStack;
 class Dictionary;
-class Settings;
 
 
 class DictionaryWidget : public QWidget
@@ -37,7 +36,6 @@ public:
     DictionaryWidget(QWidget*);
 
     void search(const QString&, const int&);
-    void init(Settings*);
 
 signals:
     void statusBarMessage(QString, int);

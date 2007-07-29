@@ -38,20 +38,13 @@ public:
 class Dictionary
 {
 public:
-//    DictionaryModel(QObject *parent = 0);
     Dictionary(const QString&);
     ~Dictionary();
-
-/*    int rowCount(const QModelIndex &parent = QModelIndex()) const { return parent.isValid() ? 0 : dictionary.size(); }
-    int columnCount(const QModelIndex &parent = QModelIndex()) const { return parent.isValid() ? 0 : 2; }
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    QModelIndex parent(const QModelIndex & index) const { return QModelIndex(); }
-    QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const { return hasIndex(row, column, parent) ? createIndex(row, column, 0) : QModelIndex(); }*/
 
     bool readInfo();
     void load();
     QList<Entry> search(const QString&, int) const;
+    QString popupSearch(const QString&) const;
 
     void setDictName(const QString &s) { _dictName = s; }
     QString dictName() const { return _dictName; }

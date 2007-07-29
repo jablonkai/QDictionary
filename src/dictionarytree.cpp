@@ -41,8 +41,6 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
     dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")));
     insertTopLevelItem(0, dictionaries);
 
-//    initDicts();
-
     connect(this, SIGNAL(itemActivated(QTreeWidgetItem*, int)), this, SLOT(itemActivate(QTreeWidgetItem*, int)));
 }
 

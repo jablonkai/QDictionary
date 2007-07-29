@@ -30,9 +30,11 @@ public:
     Settings();
     ~Settings();
 
+    void save();
+    void load();
+
     void setDictDirs(const QStringList &stringList) { _dictDirs = stringList; }
-    QStringList dictDirs() const { return _dictDirs; }
-    void addDictDir(const QString &s) { _dictDirs << s; }
+    QStringList &dictDirs() { return _dictDirs; }
 
     void setShowTrayIcon(bool b) { _showTrayIcon = b; }
     bool showTrayIcon() { return _showTrayIcon; }
@@ -49,6 +51,10 @@ public:
     QString secondColorName() const { return _secondColor.name(); }
 
 private:
+/*  MainWindow
+    SystemTrayIcon
+    DictionaryList
+    DictionaryWidget */
     QStringList _dictDirs;
 
     bool _showTrayIcon;

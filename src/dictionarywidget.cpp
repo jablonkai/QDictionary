@@ -22,7 +22,6 @@
 #include <QtGui>
 
 #include "dictionary.h"
-#include "settings.h"
 
 
 class SearchCommand : public QUndoCommand
@@ -67,15 +66,6 @@ DictionaryWidget::DictionaryWidget(QWidget *parent) : QWidget(parent), dict(0), 
     connect(undoStack, SIGNAL(canRedoChanged(bool)), ui.forwardButton, SLOT(setEnabled(bool)));
 
     ui.filterWidget->setVisible(false);
-}
-
-
-void DictionaryWidget::init(Settings *settings)
-{
-    QPalette palette = ui.tableView->palette();                         // nem jó !!!!!!!!!!!
-    palette.setColor(QPalette::Base, settings->firstColor());
-    palette.setColor(QPalette::AlternateBase, settings->firstColor());
-    ui.tableView->setPalette(palette);
 }
 
 

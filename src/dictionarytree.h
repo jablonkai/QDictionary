@@ -40,12 +40,12 @@ signals:
     void statusBarMessage(QString, int);
     void activateDictionary(Dictionary*);
 
+private slots:
+    void itemActivate(QTreeWidgetItem*, int);
+
 private:
     QTreeWidgetItem *dictionaries;
     QTreeWidgetItem *vocabulary;
-
-private slots:
-    void itemActivate(QTreeWidgetItem*, int);
 };
 
 

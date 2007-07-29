@@ -13,7 +13,7 @@
    <string>QDictionary</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="qdictionary.qrc" >:/new/prefix1/resources/qdictionary.png</iconset>
+   <iconset resource="qdictionary.qrc" >:/resources/qdictionary.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QVBoxLayout" >
@@ -43,18 +43,10 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_File" >
-    <property name="title" >
-     <string>&amp;File</string>
-    </property>
-    <addaction name="separator" />
-    <addaction name="actionQuit" />
-   </widget>
    <widget class="QMenu" name="menu_Help" >
     <property name="title" >
      <string>&amp;Help</string>
     </property>
-    <addaction name="separator" />
     <addaction name="actionAbout" />
     <addaction name="actionAboutQt" />
    </widget>
@@ -62,10 +54,17 @@
     <property name="title" >
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionDictionary" />
-    <addaction name="actionEdit" />
+    <addaction name="actionShowTrayIcon" />
+    <addaction name="actionScan" />
+    <addaction name="separator" />
     <addaction name="separator" />
     <addaction name="actionSettings" />
+   </widget>
+   <widget class="QMenu" name="menu_File" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionQuit" />
    </widget>
    <addaction name="menu_File" />
    <addaction name="menu_Tools" />
@@ -77,7 +76,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
-    <string>Dictionaries</string>
+    <string>Dictionary List</string>
    </property>
    <attribute name="dockWidgetArea" >
     <number>1</number>
@@ -123,19 +122,25 @@
     <string>About Qt</string>
    </property>
   </action>
-  <action name="actionDictionary" >
-   <property name="text" >
-    <string>&amp;Dictionary</string>
-   </property>
-  </action>
-  <action name="actionEdit" >
-   <property name="text" >
-    <string>&amp;Edit</string>
-   </property>
-  </action>
   <action name="actionSettings" >
    <property name="text" >
     <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="actionShowTrayIcon" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Tray Icon</string>
+   </property>
+  </action>
+  <action name="actionScan" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Scan</string>
    </property>
   </action>
  </widget>
@@ -155,5 +160,38 @@
  <resources>
   <include location="qdictionary.qrc" />
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionDictionaryList</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>dockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>128</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowTrayIcon</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>actionScan</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
