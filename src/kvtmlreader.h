@@ -44,65 +44,6 @@ private:
     bool firstO;
     bool firstT;
 };
-/*<!--
-This is a machine generated file.
-Be careful when editing here.
-
-Short definition:
-
-lesson       lesson group
- desc        name
-   %no       its index
-   %query    is in query selection
-   %current  is current lesson
-type         type group
- desc        name
-   %no       its index
-e            entry of dictionary
-  %s         is selected
-  %m         lesson member
-  %t         common expression type
- o           original
-   %q        in query ("o" is given, "t" is wanted)
-   %l        language code
-   %r        remark
-   %p        pronunciation
-   %width    column width
-   %t        expression type (see QueryManager.h)
-   %tf       false friend from
-   %ff       false friend to
-   %a        antonym
-   %y        synonym
-   %x        example
-   %u        usage label
-   %h        paraphrase
- t           translation ..
-   %q        in query ("t" is given, "o" is wanted)
-   %l        language code
-   %r        remark
-   %p        pronunciation
-   %width    column width
-   %t        expression type
-   %tf       false friend from
-   %ff       false friend to
-   %a        antonym
-   %y        synonym
-   %x        example
-   %u        usage label
-   %h        paraphrase
-
-   %d        last query date (from;to)
-   %w        dito, compressed and deprecated
-   %g        grade (from;to)
-   %c        count (from;to)
-   %b        bad count (from;to)
-
-
-Valid xml means:
- - Close all tags
- - Keep proper hierarchy
- - All attributes are quoted
--->*/
 
 
 #endif

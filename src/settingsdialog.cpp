@@ -21,14 +21,12 @@
 
 #include <QtGui>
 
-#include "settings.h"
 
-
-SettingsDialog::SettingsDialog(Settings *s, QWidget *parent) : settings(s), QDialog(parent)
+SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
 
-    ui.dirListWidget->addItems(settings->dictDirs());
+/*    ui.dirListWidget->addItems(settings->dictDirs());
 
     QPalette palette = ui.firstColorButton->palette();
     palette.setColor(QPalette::Window, settings->firstColor());
@@ -39,7 +37,7 @@ SettingsDialog::SettingsDialog(Settings *s, QWidget *parent) : settings(s), QDia
     ui.secondColorButton->setPalette(palette);
 
     ui.trayIconCheckBox->setChecked(settings->showTrayIcon());
-
+*/
     connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
     connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
     connect(ui.firstColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
@@ -54,7 +52,7 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::accept()
 {
-    settings->dictDirs().clear();
+  /*  settings->dictDirs().clear();
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
         settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
 
@@ -62,7 +60,7 @@ void SettingsDialog::accept()
 
     settings->setFirstColor(ui.firstColorButton->palette().color(QPalette::Window));
     settings->setSecondColor(ui.secondColorButton->palette().color(QPalette::Window));
-
+*/
     QDialog::accept();
 }
 
@@ -78,18 +76,4 @@ void SettingsDialog::slotAddDir()
 void SettingsDialog::slotRemoveDir()
 {
     ui.dirListWidget->takeItem(ui.dirListWidget->currentRow());
-}
-
-
-void SettingsDialog::slotChangeColor()
-{
-    QWidget *widget = qobject_cast<QWidget*>(sender());
-
-    QColor color = QColorDialog::getColor(widget->palette().color(QPalette::Window), this);
-    if (color.isValid())
-    {
-        QPalette palette = widget->palette();
-        palette.setColor(QPalette::Window, color);
-        widget->setPalette(palette);
-    }
 }

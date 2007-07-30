@@ -33,6 +33,7 @@ int main(int argc, char **argv)
 
     app.setOrganizationName("Jablonkai");
     app.setApplicationName("QDictionary");
+    app.setQuitOnLastWindowClosed(false);
 
     MainWindow mainWindow;
 

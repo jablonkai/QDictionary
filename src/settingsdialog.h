@@ -25,7 +25,17 @@
 #include "ui_settingsdialog.h"
 
 
-class Settings;
+class Settings
+{
+public:
+    Settings() {}
+
+    void setDictDirs(const QStringList &list) { _dictDirs = list; }
+    QStringList dictDirs() const { return _dictDirs; }
+
+private:
+    QStringList _dictDirs;
+};
 
 
 class SettingsDialog : public QDialog
@@ -33,7 +43,7 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    SettingsDialog(Settings*, QWidget *parent = 0);
+    SettingsDialog(QWidget *parent = 0);
     ~SettingsDialog();
 
 public slots:
@@ -42,11 +52,9 @@ public slots:
 private slots:
     void slotAddDir();
     void slotRemoveDir();
-    void slotChangeColor();
 
 private:
     Ui::SettingsDialog ui;
-    Settings *settings;
 };
 
 

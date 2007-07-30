@@ -40,6 +40,8 @@ public slots:
     void slotScan(bool);
 
 protected:
+    void enterEvent(QEvent*);
+    void leaveEvent(QEvent*);
     void timerEvent(QTimerEvent*);
 
 private:
@@ -47,6 +49,7 @@ private:
 
     Dictionary *dict;
     QTextBrowser *textBrowser;
+    QTimer *closeTimer;
     QString prevSelection;
     int timerId;
 };/*#include <QWidget>
@@ -82,8 +85,7 @@ class PopupWindow: public QWidget
         void scanChanged(bool);
 
     protected:
-        void enterEvent(QEvent*);
-        void leaveEvent(QEvent*);
+
         void timerEvent(QTimerEvent*);
 
     private slots:

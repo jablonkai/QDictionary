@@ -58,8 +58,8 @@ private:
 
     Ui::MainWindow ui;
     QSystemTrayIcon *trayIcon;
-    Settings *_settings;
     PopupWidget *popupWidget;
+    Settings *settings;
 };
 
 

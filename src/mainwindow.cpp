@@ -24,15 +24,12 @@
 #include "dictionary.h"
 #include "dictionarywidget.h"
 #include "popupwidget.h"
-#include "settings.h"
 #include "settingsdialog.h"
 
 
 MainWindow::MainWindow() : QMainWindow()
 {
     ui.setupUi(this);
-
-    _settings = new Settings;
 
     createTrayIcon();
     popupWidget = new PopupWidget(this);
@@ -71,12 +68,12 @@ void MainWindow::slotShowTrayIcon(bool b)
 
 void MainWindow::slotSettings()
 {
-    SettingsDialog *dialog = new SettingsDialog(_settings, this);
+    SettingsDialog *dialog = new SettingsDialog(this);
 
     if (dialog->exec() == QDialog::Accepted)
     {
-        ui.treeWidget->initDicts(_settings->dictDirs());
-        trayIcon->setVisible(_settings->showTrayIcon());
+//        ui.treeWidget->initDicts(_settings->dictDirs());
+//        trayIcon->setVisible(_settings->showTrayIcon());
     }
 }
 
@@ -121,8 +118,6 @@ void MainWindow::createTrayIcon()
     QMenu *trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(ui.actionScan);
     trayIconMenu->addSeparator();
-/*     trayIconMenu->addAction(minimizeAction);
-     trayIconMenu->addAction(maximizeAction);*/
     trayIconMenu->addAction(ui.actionSettings);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(ui.actionQuit);
@@ -131,52 +126,46 @@ void MainWindow::createTrayIcon()
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/resources/qdictionary.png"));
     trayIcon->setToolTip(tr("QDictionary"));
-    trayIcon->setVisible(_settings->showTrayIcon());
 }
 
 
 void MainWindow::readSettings()
 {
-    QSettings settings;
+    QSettings conf;
 
-    settings.beginGroup("MainWindow");
-    restoreState(settings.value("state", saveState()).toByteArray());
-    restoreGeometry(settings.value("geometry", saveGeometry()).toByteArray());
-    ui.actionShowTrayIcon->setChecked(settings.value("trayIcon", true).toBool());
-    ui.actionScan->setChecked(settings.value("scan", true).toBool());
-    settings.endGroup();
+    conf.beginGroup("MainWindow");
+    restoreState(conf.value("state", saveState()).toByteArray());
+    restoreGeometry(conf.value("geometry", saveGeometry()).toByteArray());
+    ui.actionShowTrayIcon->setChecked(conf.value("trayIcon", true).toBool());
+    conf.value("hide", false).toBool() ? hide() : show();
+    ui.actionScan->setChecked(conf.value("scan", true).toBool());
+    conf.endGroup();
 
     trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());
     ui.actionScan->setEnabled(ui.actionShowTrayIcon->isChecked());
     slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
 
-    settings.beginGroup("Dictionary");
-    _settings->setDictDirs(settings.value("dirs", _settings->dictDirs()).toStringList());
-    _settings->setFirstColor(settings.value("firstColor", _settings->firstColor()).value<QColor>());
-    _settings->setSecondColor(settings.value("secondColor", _settings->secondColor()).value<QColor>());
-    settings.endGroup();
+    conf.beginGroup("Dictionary");
+    settings->setDictDirs(conf.value("dirs").toStringList());
+    conf.endGroup();
+
+    ui.treeWidget->initDicts(settings->dictDirs());
 }
 
 
 void MainWindow::writeSettings()
 {
-    QSettings settings;
+    QSettings conf;
 
-    settings.beginGroup("MainWindow");
-    settings.setValue("state", saveState());
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("trayIcon", ui.actionShowTrayIcon->isChecked());
-    settings.setValue("scan", ui.actionScan->isChecked());
-    settings.endGroup();
+    conf.beginGroup("MainWindow");
+    conf.setValue("state", saveState());
+    conf.setValue("geometry", saveGeometry());
+    conf.setValue("trayIcon", ui.actionShowTrayIcon->isChecked());
+    conf.setValue("hide", isHidden());
+    conf.setValue("scan", ui.actionScan->isChecked());
+    conf.endGroup();
 
-    settings.beginGroup("Dictionary");
-    settings.setValue("dirs", _settings->dictDirs());
-    settings.setValue("firstColor", _settings->firstColor());
-    settings.setValue("secondColor", _settings->secondColor());
-    settings.endGroup();
-    ui.treeWidget->initDicts(_settings->dictDirs());
-
-//    settings.beginGroup("Scan");
-
-//    settings.endGroup();
+    conf.beginGroup("Dictionary");
+    conf.setValue("dirs", settings->dictDirs());
+    conf.endGroup();
 }

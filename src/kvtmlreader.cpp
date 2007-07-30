@@ -59,20 +59,9 @@ bool KvtmlReader::readHeader(QIODevice *device)
         {
             if (name() == "kvtml")
             {
-//                dict->setDictName(attributes().value("encoding").toString());
-//                dict->setDictName(attributes().value("generator").toString());
-//                dict->setDictName(attributes().value("cols").toString());
-//                dict->setDictName(attributes().value("lines").toString());
                 dict->setDictName(attributes().value("title").toString());
-//                dict->setDictName(attributes().value("author").toString());
                 return true;
             }
-/*  encoding="UTF-8"
-  generator="kvoctrain v0.8.2"
-  cols="2"
-  lines="5014"
-  title="SAT"
-  author="http://www.freevocabulary.com">*/
             else
                 raiseError(QObject::tr("The file is not a KVTML file."));
         }
@@ -92,15 +81,7 @@ bool KvtmlReader::read(QIODevice *device)
         if (isStartElement())
         {
             if (name() == "kvtml")
-            {
-//                dict->setDictName(attributes().value("encoding").toString());
-//                dict->setDictName(attributes().value("generator").toString());
-//                dict->setDictName(attributes().value("cols").toString());
-//                dict->setDictName(attributes().value("lines").toString());
-//                dict->setDictName(attributes().value("title").toString());
-//                dict->setDictName(attributes().value("author").toString());
                 readRoot();
-            }
             else
                 raiseError(QObject::tr("The file is not a KVTML file."));
         }

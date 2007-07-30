@@ -24,7 +24,6 @@
 #include "kvtmlreader.h"
 
 
-
 Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false)
 {
 }

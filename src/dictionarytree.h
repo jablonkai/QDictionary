@@ -33,7 +33,6 @@ class DictionaryTree : public QTreeWidget
 public:
     DictionaryTree(QWidget*);
 
-    void addNewDictionary(Dictionary*);
     void initDicts(const QStringList&);
 
 signals:

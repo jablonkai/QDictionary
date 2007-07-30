@@ -45,11 +45,15 @@ DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 }
 
 
-
-void DictionaryTree::addNewDictionary(Dictionary *dict)
+void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
 {
-    DictionaryItem *item = new DictionaryItem(dictionaries, dict->dictName(), dict);
-    item->setIcon(0, QIcon(":resources/save.png"));                                   // még nem jó
+    if (dictionaries == item)
+        return;
+
+    Dictionary *dict = static_cast<DictionaryItem*>(item)->dictionary;
+    if (!dict->loaded())
+        dict->load();
+
     emit activateDictionary(dict);
 }
 
@@ -74,17 +78,4 @@ void DictionaryTree::initDicts(const QStringList &dictDirs)
     expandItem(dictionaries);
 
     emit statusBarMessage(tr("%1 dictionaries loaded").arg(i), 0);
-}
-
-
-void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
-{
-    if (dictionaries == item)
-        return;
-
-    Dictionary *dict = static_cast<DictionaryItem*>(item)->dictionary;
-    if (!dict->loaded())
-        dict->load();
-
-    emit activateDictionary(dict);
 }

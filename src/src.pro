@@ -5,7 +5,6 @@ searchline.cpp \
 main.cpp \
 settingsdialog.cpp \
 kvtmlreader.cpp \
-settings.cpp \
 dictionary.cpp \
 popupwidget.cpp
 TEMPLATE = app
@@ -21,7 +20,6 @@ mainwindow.h \
 searchline.h \
 settingsdialog.h \
 kvtmlreader.h \
-settings.h \
 dictionary.h \
 popupwidget.h
 FORMS += dictionarywidget.ui \
