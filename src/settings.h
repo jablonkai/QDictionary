@@ -17,32 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KVTMLREADER_H
-#define KVTMLREADER_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
-#include <QXmlStreamReader>
-
-
-class Dictionary;
+#include <QStringList>
 
 
-class KvtmlReader : public QXmlStreamReader
+class Settings
 {
 public:
-    KvtmlReader(Dictionary*);
-    ~KvtmlReader();
+    static Settings* Instance() { static Settings _instance; return &_instance; }
 
-    bool readHeader(QIODevice*);
-    bool read(QIODevice*);
+    void setDictDirs(const QStringList &list) { _dictDirs = list; }
+    QStringList& dictDirs() { return _dictDirs; }
 
 private:
-    void readUnknownElement();
-    void readRoot();
-    void readElement();
+    Settings();
+    ~Settings();
 
-    Dictionary *dict;
-    bool firstO;
-    bool firstT;
+    void write();
+    void read();
+//    class Private;
+//    static Private *p;
+
+    QStringList _dictDirs;
 };
 
 

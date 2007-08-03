@@ -21,14 +21,18 @@
 
 #include <QtGui>
 
+#include "settings.h"
+
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
 
-/*    ui.dirListWidget->addItems(settings->dictDirs());
+//    settings = Settings::Instance();
 
-    QPalette palette = ui.firstColorButton->palette();
+    ui.dirListWidget->addItems(Settings::Instance()->dictDirs());
+
+/*    QPalette palette = ui.firstColorButton->palette();
     palette.setColor(QPalette::Window, settings->firstColor());
     ui.firstColorButton->setPalette(palette);
 
@@ -52,10 +56,10 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::accept()
 {
-  /*  settings->dictDirs().clear();
+    Settings::Instance()->dictDirs().clear();
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
-
+        Settings::Instance()->dictDirs().push_back(ui.dirListWidget->item(i)->text());
+/*
     settings->setShowTrayIcon(ui.trayIconCheckBox->checkState());
 
     settings->setFirstColor(ui.firstColorButton->palette().color(QPalette::Window));

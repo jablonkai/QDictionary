@@ -17,47 +17,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DICTIONARYREADER_H
+#define DICTIONARYREADER_H
 
-#include <QMainWindow>
-#include <QSystemTrayIcon>
-
-#include "ui_mainwindow.h"
-
-#define QDICTIONARY_VERSION "0.2.0"
+#include <QXmlStreamReader>
 
 
-class PopupWidget;
+class Dictionary;
 
 
-class MainWindow : public QMainWindow
+class DictionaryReader : public QXmlStreamReader
 {
-    Q_OBJECT
-
 public:
-    MainWindow();
-    ~MainWindow();
+    DictionaryReader(Dictionary*);
 
-protected:
-    void closeEvent(QCloseEvent*);
-
-private slots:
-    void slotShowTrayIcon(bool);
-    void slotSettings();
-    void slotAbout();
-    void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
+    bool readHeader(QIODevice*);
+    bool read(QIODevice*);
 
 private:
-    void createConnections();
-    void createTrayIcon();
+    void readUnknownElement();
+    void readRoot();
+    void readHeader();
+    void readLang();
+    void readDict();
+    void readWord();
 
-    void readSettings();
-    void writeSettings();
-
-    Ui::MainWindow ui;
-    QSystemTrayIcon *trayIcon;
-    PopupWidget *popupWidget;
+    Dictionary *dict;
 };
 
 

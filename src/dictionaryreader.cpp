@@ -17,22 +17,75 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kvtmlreader.h"
+#include "dictionaryreader.h"
 
 #include "dictionary.h"
 
 
-KvtmlReader::KvtmlReader(Dictionary *d) : dict(d), firstO(true), firstT(true)
+DictionaryReader::DictionaryReader(Dictionary *d) : dict(d)
 {
 }
 
 
-KvtmlReader::~KvtmlReader()
+bool DictionaryReader::readHeader(QIODevice *device)
 {
+    setDevice(device);
+
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isStartElement())
+        {
+            if (name() == "xdict")
+                while (!atEnd())
+                {
+                    readNext();
+
+                    if (isEndElement())
+                        break;
+
+                    if (isStartElement())
+                    {
+                        if (name() == "header")
+                            readHeader();
+                        else if (name() == "dict")
+                            break;
+                        else
+                            readUnknownElement();
+                    }
+                }
+            else
+                raiseError(QObject::tr("The file is not an XDICT file."));
+        }
+    }
+    return !error();
 }
 
 
-void KvtmlReader::readUnknownElement()
+bool DictionaryReader::read(QIODevice *device)
+{
+    setDevice(device);
+
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isStartElement())
+        {
+            if (name() == "xdict")
+                readRoot();
+            else
+                raiseError(QObject::tr("The file is not an XDICT file."));
+        }
+    }
+
+//  QMessageBox::information(0, QString("%1").arg(error()), errorString());
+    return !error();
+}
+
+
+void DictionaryReader::readUnknownElement()
 {
     while (!atEnd())
     {
@@ -47,50 +100,7 @@ void KvtmlReader::readUnknownElement()
 }
 
 
-bool KvtmlReader::readHeader(QIODevice *device)
-{
-    setDevice(device);
-
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isStartElement())
-        {
-            if (name() == "kvtml")
-            {
-                dict->setDictName(attributes().value("title").toString());
-                return true;
-            }
-            else
-                raiseError(QObject::tr("The file is not a KVTML file."));
-        }
-    }
-    return !error();
-}
-
-
-bool KvtmlReader::read(QIODevice *device)
-{
-    setDevice(device);
-
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isStartElement())
-        {
-            if (name() == "kvtml")
-                readRoot();
-            else
-                raiseError(QObject::tr("The file is not a KVTML file."));
-        }
-    }
-    return !error();
-}
-
-
-void KvtmlReader::readRoot()
+void DictionaryReader::readRoot()
 {
     while (!atEnd())
     {
@@ -101,10 +111,10 @@ void KvtmlReader::readRoot()
 
         if (isStartElement())
         {
-            if (name() == "e")
-                readElement();
-            else if (name() == "lesson");
-            else if (name() == "options");
+            if (name() == "header")
+                readHeader();
+            else if (name() == "dict")
+                readDict();
             else
                 readUnknownElement();
         }
@@ -112,7 +122,60 @@ void KvtmlReader::readRoot()
 }
 
 
-void KvtmlReader::readElement()
+void DictionaryReader::readHeader()
+{
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isEndElement())
+            break;
+
+        if (isStartElement())
+        {
+            if (name() == "doc_type")
+                QString type = readElementText();
+            else if (name() == "lang")
+                readLang();
+            else if (name() == "dict_name")
+                dict->setDictName(readElementText());
+            else
+                readUnknownElement();
+        }
+    }
+}
+
+
+void DictionaryReader::readLang()
+{
+    dict->setOLang(attributes().value("from").toString());
+    dict->setTLang(attributes().value("to").toString());
+
+    readNext();
+}
+
+
+void DictionaryReader::readDict()
+{
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isEndElement())
+            break;
+
+        if (isStartElement())
+        {
+            if (name() == "w" || name() == "e")
+                readWord();
+            else
+                readUnknownElement();
+        }
+    }
+}
+
+
+void DictionaryReader::readWord()
 {
     QString o, t;
     while (!atEnd())
@@ -122,26 +185,12 @@ void KvtmlReader::readElement()
         if (isEndElement())
             break;
 
-        else if (isStartElement())          // ha egysorban van minden akkor nem olvasa be !!!
+        else if (isStartElement())
         {
             if (name() == "o")
-            {
-                if (firstO)
-                {
-                    dict->setOLang(attributes().value("l").toString());
-                    firstO = false;
-                }
                 o = readElementText();
-            }
             else if (name() == "t")
-            {
-                if (firstT)
-                {
-                    dict->setTLang(attributes().value("l").toString());
-                    firstT = false;
-                }
                 t = readElementText();
-            }
             else
                 readUnknownElement();
         }

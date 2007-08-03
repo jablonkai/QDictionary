@@ -4,9 +4,10 @@ mainwindow.cpp \
 searchline.cpp \
 main.cpp \
 settingsdialog.cpp \
-kvtmlreader.cpp \
 dictionary.cpp \
-popupwidget.cpp
+popupwidget.cpp \
+settings.cpp \
+dictionaryreader.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -19,9 +20,10 @@ dictionarywidget.h \
 mainwindow.h \
 searchline.h \
 settingsdialog.h \
-kvtmlreader.h \
 dictionary.h \
-popupwidget.h
+popupwidget.h \
+settings.h \
+dictionaryreader.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 settingsdialog.ui

@@ -33,7 +33,7 @@ class DictionaryTree : public QTreeWidget
 public:
     DictionaryTree(QWidget*);
 
-    void initDicts(const QStringList&);
+    void updateSettings();
 
 signals:
     void statusBarMessage(QString, int);

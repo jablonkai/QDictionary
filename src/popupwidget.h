@@ -52,75 +52,7 @@ private:
     QTimer *closeTimer;
     QString prevSelection;
     int timerId;
-};/*#include <QWidget>
+};
 
-class QAction;
-class QEvent;
-class QTextBrowser;
-class QTimer;
-class QClipboard;
-
-class DictCore;
-
-class PopupWindow: public QWidget
-{
-        Q_OBJECT
-
-    public:
-        PopupWindow(DictCore *dict = NULL, QWidget *parent = 0);
-        ~PopupWindow();
-
-        bool isScan() const;
-        int modifierKey() const;
-        bool showIfNotFound() const;
-
-        DictCore* dict() const;
-
-    public slots:
-        void setScan(bool scan);
-        void setModifierKey(int key);
-        void setShowIfNotFound(bool mode);
-
-    signals:
-        void scanChanged(bool);
-
-    protected:
-
-        void timerEvent(QTimerEvent*);
-
-    private slots:
-        void xSelectionChanged();
-
-    private:
-        QTextBrowser *translationView;
-        QTimer *closeTimer;
-        DictCore* m_dict;
-        QString m_source;
-        bool m_scan;
-        int m_modifierKey;
-        bool m_showIfNotFound;
-        QString lastSelection;
-        int timerId;
-};*/
-/*class Widget : public QWidget
-{
-    Q_OBJECT
-public:
-    Widget();
-
-protected:
-    virtual void paintEvent(QPaintEvent *e);
-    virtual void resizeEvent(QResizeEvent *e);
-
-private slots:
-    void showIcon(bool s);
-private:
-    QSvgRenderer *renderer;
-    QPixmap       cache;
-    QPixmap       icon;
-    bool          dirty;
-    bool          iconShown;
-    QCheckBox    *cbox;
-};*/
 
 #endif

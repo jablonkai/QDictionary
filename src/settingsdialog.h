@@ -25,19 +25,6 @@
 #include "ui_settingsdialog.h"
 
 
-class Settings
-{
-public:
-    Settings() {}
-
-    void setDictDirs(const QStringList &list) { _dictDirs = list; }
-    QStringList dictDirs() const { return _dictDirs; }
-
-private:
-    QStringList _dictDirs;
-};
-
-
 class SettingsDialog : public QDialog
 {
     Q_OBJECT

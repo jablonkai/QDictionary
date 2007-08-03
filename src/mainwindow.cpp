@@ -24,10 +24,11 @@
 #include "dictionary.h"
 #include "dictionarywidget.h"
 #include "popupwidget.h"
+#include "settings.h"
 #include "settingsdialog.h"
 
 
-MainWindow::MainWindow() : QMainWindow()
+MainWindow::MainWindow() : QMainWindow()//, settings(Settings::instance())
 {
     ui.setupUi(this);
 
@@ -72,7 +73,8 @@ void MainWindow::slotSettings()
 
     if (dialog->exec() == QDialog::Accepted)
     {
-//        ui.treeWidget->initDicts(_settings->dictDirs());
+        ui.treeWidget->updateSettings();
+//        QMessageBox::information(0,"",QString("%1").arg(settings->dictDirs().size()));
 //        trayIcon->setVisible(_settings->showTrayIcon());
     }
 }
@@ -131,6 +133,7 @@ void MainWindow::createTrayIcon()
 
 void MainWindow::readSettings()
 {
+    Settings::Instance();
     QSettings conf;
 
     conf.beginGroup("MainWindow");
@@ -145,11 +148,7 @@ void MainWindow::readSettings()
     ui.actionScan->setEnabled(ui.actionShowTrayIcon->isChecked());
     slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
 
-    conf.beginGroup("Dictionary");
-    settings->setDictDirs(conf.value("dirs").toStringList());
-    conf.endGroup();
-
-    ui.treeWidget->initDicts(settings->dictDirs());
+    ui.treeWidget->updateSettings();
 }
 
 
@@ -162,10 +161,5 @@ void MainWindow::writeSettings()
     conf.setValue("geometry", saveGeometry());
     conf.setValue("trayIcon", ui.actionShowTrayIcon->isChecked());
     conf.setValue("hide", isHidden());
-    conf.setValue("scan", ui.actionScan->isChecked());
-    conf.endGroup();
-
-    conf.beginGroup("Dictionary");
-    conf.setValue("dirs", settings->dictDirs());
     conf.endGroup();
 }

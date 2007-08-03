@@ -22,6 +22,7 @@
 #include <QtGui>
 
 #include "dictionary.h"
+#include "settings.h"
 
 
 class DictionaryItem : public QTreeWidgetItem
@@ -58,10 +59,10 @@ void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
 }
 
 
-void DictionaryTree::initDicts(const QStringList &dictDirs)
+void DictionaryTree::updateSettings()
 {
     int i = 0;
-    foreach (QString dir, dictDirs)
+    foreach (QString dir, Settings::Instance()->dictDirs())
     {
         QDir dictDir = QDir(dir);
 

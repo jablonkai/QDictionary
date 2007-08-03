@@ -17,48 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "settings.h"
 
-#include <QMainWindow>
-#include <QSystemTrayIcon>
-
-#include "ui_mainwindow.h"
-
-#define QDICTIONARY_VERSION "0.2.0"
+#include <QSettings>
 
 
-class PopupWidget;
-
-
-class MainWindow : public QMainWindow
+Settings::Settings()
 {
-    Q_OBJECT
-
-public:
-    MainWindow();
-    ~MainWindow();
-
-protected:
-    void closeEvent(QCloseEvent*);
-
-private slots:
-    void slotShowTrayIcon(bool);
-    void slotSettings();
-    void slotAbout();
-    void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
-
-private:
-    void createConnections();
-    void createTrayIcon();
-
-    void readSettings();
-    void writeSettings();
-
-    Ui::MainWindow ui;
-    QSystemTrayIcon *trayIcon;
-    PopupWidget *popupWidget;
-};
+    read();
+}
 
 
-#endif
+Settings::~Settings()
+{
+    write();
+}
+
+
+void Settings::read()
+{
+    QSettings settings;
+
+    settings.beginGroup("Dictionary");
+    _dictDirs = settings.value("dirs").toStringList();
+    settings.endGroup();
+}
+
+
+void Settings::write()
+{
+    QSettings settings;
+
+    settings.beginGroup("Dictionary");
+    settings.setValue("dirs", _dictDirs);
+    settings.endGroup();
+}
