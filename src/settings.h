@@ -31,6 +31,12 @@ public:
     void setDictDirs(const QStringList &list) { _dictDirs = list; }
     QStringList& dictDirs() { return _dictDirs; }
 
+    void setTrayIconVisible(bool b) { _trayIconVisible = b; }
+    bool trayIconVisible() { return _trayIconVisible; }
+
+    void setScan(bool b) { _scan = b; }
+    bool scan() { return _scan; }
+
 private:
     Settings();
     ~Settings();
@@ -41,6 +47,8 @@ private:
 //    static Private *p;
 
     QStringList _dictDirs;
+    bool _trayIconVisible;
+    bool _scan;
 };
 
 

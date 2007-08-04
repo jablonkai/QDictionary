@@ -44,7 +44,6 @@ private slots:
 
 private:
     QTreeWidgetItem *dictionaries;
-    QTreeWidgetItem *vocabulary;
 };
 
 

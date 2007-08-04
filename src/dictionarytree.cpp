@@ -61,6 +61,8 @@ void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
 
 void DictionaryTree::updateSettings()
 {
+    dictionaries->takeChildren();
+
     int i = 0;
     foreach (QString dir, Settings::Instance()->dictDirs())
     {

@@ -27,6 +27,26 @@ DictionaryReader::DictionaryReader(Dictionary *d) : dict(d)
 }
 
 
+DictionaryReader::~DictionaryReader()
+{
+}
+
+
+void DictionaryReader::readUnknownElement()
+{
+    while (!atEnd())
+    {
+        readNext();
+
+        if (isEndElement())
+            break;
+
+        if (isStartElement())
+            readUnknownElement();
+    }
+}
+
+
 bool DictionaryReader::readHeader(QIODevice *device)
 {
     setDevice(device);
@@ -38,25 +58,12 @@ bool DictionaryReader::readHeader(QIODevice *device)
         if (isStartElement())
         {
             if (name() == "xdict")
-                while (!atEnd())
-                {
-                    readNext();
-
-                    if (isEndElement())
-                        break;
-
-                    if (isStartElement())
-                    {
-                        if (name() == "header")
-                            readHeader();
-                        else if (name() == "dict")
-                            break;
-                        else
-                            readUnknownElement();
-                    }
-                }
+            {
+                dict->setDictName(attributes().value("title").toString());
+                return true;
+            }
             else
-                raiseError(QObject::tr("The file is not an XDICT file."));
+                raiseError(QObject::tr("The file is not a XDICT file."));
         }
     }
     return !error();
@@ -76,27 +83,10 @@ bool DictionaryReader::read(QIODevice *device)
             if (name() == "xdict")
                 readRoot();
             else
-                raiseError(QObject::tr("The file is not an XDICT file."));
+                raiseError(QObject::tr("The file is not a XDICT file."));
         }
     }
-
-//  QMessageBox::information(0, QString("%1").arg(error()), errorString());
     return !error();
-}
-
-
-void DictionaryReader::readUnknownElement()
-{
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isEndElement())
-            break;
-
-        if (isStartElement())
-            readUnknownElement();
-    }
 }
 
 
@@ -111,34 +101,15 @@ void DictionaryReader::readRoot()
 
         if (isStartElement())
         {
-            if (name() == "header")
-                readHeader();
-            else if (name() == "dict")
-                readDict();
-            else
-                readUnknownElement();
-        }
-    }
-}
-
-
-void DictionaryReader::readHeader()
-{
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isEndElement())
-            break;
-
-        if (isStartElement())
-        {
-            if (name() == "doc_type")
-                QString type = readElementText();
+            if (name() == "e")
+                readElement();
+            else if (name() == "lesson")
+                ;
             else if (name() == "lang")
-                readLang();
-            else if (name() == "dict_name")
-                dict->setDictName(readElementText());
+            {
+                dict->setOLang(attributes().value("original").toString());
+                dict->setTLang(attributes().value("translated").toString());
+            }
             else
                 readUnknownElement();
         }
@@ -146,38 +117,10 @@ void DictionaryReader::readHeader()
 }
 
 
-void DictionaryReader::readLang()
-{
-    dict->setOLang(attributes().value("from").toString());
-    dict->setTLang(attributes().value("to").toString());
-
-    readNext();
-}
-
-
-void DictionaryReader::readDict()
-{
-    while (!atEnd())
-    {
-        readNext();
-
-        if (isEndElement())
-            break;
-
-        if (isStartElement())
-        {
-            if (name() == "w" || name() == "e")
-                readWord();
-            else
-                readUnknownElement();
-        }
-    }
-}
-
-
-void DictionaryReader::readWord()
+void DictionaryReader::readElement()
 {
     QString o, t;
+
     while (!atEnd())
     {
         readNext();

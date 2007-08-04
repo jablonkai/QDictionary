@@ -21,7 +21,7 @@
 
 #include <QtGui>
 
-#include "kvtmlreader.h"
+#include "dictionaryreader.h"
 
 
 Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false)
@@ -43,7 +43,7 @@ bool Dictionary::readInfo()
         return false;
     }
 
-    KvtmlReader reader(this);
+    DictionaryReader reader(this);
     return reader.readHeader(&file);
 }
 
@@ -59,7 +59,7 @@ void Dictionary::load()
         return;
     }
 
-    KvtmlReader reader(this);
+    DictionaryReader reader(this);
     reader.read(&file);
     _loaded = true;
 }

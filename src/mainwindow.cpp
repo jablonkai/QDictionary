@@ -28,7 +28,7 @@
 #include "settingsdialog.h"
 
 
-MainWindow::MainWindow() : QMainWindow()//, settings(Settings::instance())
+MainWindow::MainWindow() : QMainWindow()
 {
     ui.setupUi(this);
 
@@ -54,7 +54,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore();
     }
     else
-        event->accept();
+        qApp->quit();
 }
 
 
@@ -69,20 +69,29 @@ void MainWindow::slotShowTrayIcon(bool b)
 
 void MainWindow::slotSettings()
 {
+    Settings *settings = Settings::Instance();
+
+    settings->setTrayIconVisible(trayIcon->isVisible());
+    settings->setScan(ui.actionScan->isChecked());
+
     SettingsDialog *dialog = new SettingsDialog(this);
 
     if (dialog->exec() == QDialog::Accepted)
     {
         ui.treeWidget->updateSettings();
-//        QMessageBox::information(0,"",QString("%1").arg(settings->dictDirs().size()));
-//        trayIcon->setVisible(_settings->showTrayIcon());
+        ui.actionShowTrayIcon->setChecked(settings->trayIconVisible());
+        ui.actionScan->setChecked(settings->scan());
+
+        trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());
+        ui.actionScan->setEnabled(ui.actionShowTrayIcon->isChecked());
+        slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
     }
 }
 
 
 void MainWindow::slotAbout()
 {
-    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("QDictionary\nVersion " QDICTIONARY_VERSION "\nCopyright (C) 2007 by Tamás Jablonkai\ntamas.jablonkai@gmail.com"));
+    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("<b>QDictionary</b><br>Version " QDICTIONARY_VERSION "<br>Copyright (C) 2007 by Tamás Jablonkai<br><a href=\"mailto:tamas.jablonkai@gmail.com\">tamas.jablonkai@gmail.com</a>"));
 }
 
 
@@ -147,6 +156,8 @@ void MainWindow::readSettings()
     trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());
     ui.actionScan->setEnabled(ui.actionShowTrayIcon->isChecked());
     slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
+    if (!ui.actionShowTrayIcon->isChecked())
+        show();
 
     ui.treeWidget->updateSettings();
 }
@@ -161,5 +172,6 @@ void MainWindow::writeSettings()
     conf.setValue("geometry", saveGeometry());
     conf.setValue("trayIcon", ui.actionShowTrayIcon->isChecked());
     conf.setValue("hide", isHidden());
+    conf.setValue("scan", ui.actionScan->isChecked());
     conf.endGroup();
 }

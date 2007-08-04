@@ -31,7 +31,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_2" >
+           <widget class="QCheckBox" name="scanCheckBox" >
             <property name="text" >
              <string>Enable Scan</string>
             </property>
@@ -205,7 +205,7 @@
   <connection>
    <sender>trayIconCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>checkBox_2</receiver>
+   <receiver>scanCheckBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >

@@ -28,9 +28,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
 
-//    settings = Settings::Instance();
+    Settings *settings = Settings::Instance();
 
-    ui.dirListWidget->addItems(Settings::Instance()->dictDirs());
+    ui.dirListWidget->addItems(settings->dictDirs());
+    ui.trayIconCheckBox->setChecked(settings->trayIconVisible());
+    ui.scanCheckBox->setChecked(settings->scan());
 
 /*    QPalette palette = ui.firstColorButton->palette();
     palette.setColor(QPalette::Window, settings->firstColor());
@@ -44,8 +46,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 */
     connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
     connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
-    connect(ui.firstColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
-    connect(ui.secondColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
+//    connect(ui.firstColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
+//    connect(ui.secondColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
 }
 
 
@@ -56,14 +58,17 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::accept()
 {
-    Settings::Instance()->dictDirs().clear();
-    for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        Settings::Instance()->dictDirs().push_back(ui.dirListWidget->item(i)->text());
-/*
-    settings->setShowTrayIcon(ui.trayIconCheckBox->checkState());
+    Settings *settings = Settings::Instance();
 
+    settings->dictDirs().clear();
+    for (int i = 0; i < ui.dirListWidget->count(); ++i)
+        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
+
+    settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
+    settings->setScan(ui.scanCheckBox->checkState());
+/*
     settings->setFirstColor(ui.firstColorButton->palette().color(QPalette::Window));
-    settings->setSecondColor(ui.secondColorButton->palette().color(QPalette::Window));
+    settings->setSecondColor(ui.secondColorButton->palette().colour(QPalette::Window));
 */
     QDialog::accept();
 }
