@@ -34,20 +34,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     ui.trayIconCheckBox->setChecked(settings->trayIconVisible());
     ui.scanCheckBox->setChecked(settings->scan());
 
-/*    QPalette palette = ui.firstColorButton->palette();
-    palette.setColor(QPalette::Window, settings->firstColor());
-    ui.firstColorButton->setPalette(palette);
-
-    palette = ui.secondColorButton->palette();
-    palette.setColor(QPalette::Window, settings->secondColor());
-    ui.secondColorButton->setPalette(palette);
-
-    ui.trayIconCheckBox->setChecked(settings->showTrayIcon());
-*/
     connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
     connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
-//    connect(ui.firstColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
-//    connect(ui.secondColorButton, SIGNAL(clicked()), this, SLOT(slotChangeColor()));
 }
 
 
@@ -66,10 +54,7 @@ void SettingsDialog::accept()
 
     settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
     settings->setScan(ui.scanCheckBox->checkState());
-/*
-    settings->setFirstColor(ui.firstColorButton->palette().color(QPalette::Window));
-    settings->setSecondColor(ui.secondColorButton->palette().colour(QPalette::Window));
-*/
+
     QDialog::accept();
 }
 
