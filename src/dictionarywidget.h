@@ -33,7 +33,7 @@ class DictionaryWidget : public QWidget
     Q_OBJECT
 
 public:
-    DictionaryWidget(QWidget*);
+    DictionaryWidget();
 
     void search(const QString&, const int&);
 

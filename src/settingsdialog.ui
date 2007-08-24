@@ -42,12 +42,12 @@
             <item>
              <widget class="QLabel" name="label_3" >
               <property name="text" >
-               <string>TextLabel</string>
+               <string>Dictionary:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox" />
+             <widget class="QComboBox" name="dictionaryComboBox" />
             </item>
            </layout>
           </item>
@@ -57,36 +57,29 @@
        <item>
         <widget class="QGroupBox" name="groupBox_2" >
          <property name="title" >
-          <string>Colours</string>
+          <string>Translation</string>
          </property>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QCheckBox" name="automaticTranslationcheckBox" >
             <property name="text" >
-             <string>First colour:</string>
+             <string>Automatic</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" >
-           <widget class="QToolButton" name="firstColorButton" >
-            <property name="text" >
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label_2" >
-            <property name="text" >
-             <string>Second colour:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QToolButton" name="secondColorButton" >
-            <property name="text" >
-             <string/>
-            </property>
-           </widget>
+          <item>
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QLabel" name="label" >
+              <property name="text" >
+               <string>Selected:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="translationComboBox" />
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -215,6 +208,70 @@
     <hint type="destinationlabel" >
      <x>103</x>
      <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>automaticTranslationcheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>103</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>61</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>automaticTranslationcheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>translationComboBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>103</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>144</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scanCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_3</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>103</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>61</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scanCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dictionaryComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>103</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>144</x>
+     <y>100</y>
     </hint>
    </hints>
   </connection>

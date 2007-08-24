@@ -7,7 +7,10 @@ settingsdialog.cpp \
 dictionary.cpp \
 popupwidget.cpp \
 settings.cpp \
-dictionaryreader.cpp
+dictionaryreader.cpp \
+editwidget.cpp \
+newdictionarydialog.cpp \
+dictionarywriter.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -23,10 +26,15 @@ settingsdialog.h \
 dictionary.h \
 popupwidget.h \
 settings.h \
-dictionaryreader.h
+dictionaryreader.h \
+editwidget.h \
+newdictionarydialog.h \
+dictionarywriter.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
-settingsdialog.ui
+settingsdialog.ui \
+editwidget.ui \
+newdictionarydialog.ui
 QT += core \
 xml \
 gui

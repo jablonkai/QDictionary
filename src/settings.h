@@ -26,16 +26,22 @@
 class Settings
 {
 public:
-    static Settings* Instance() { static Settings _instance; return &_instance; }
+    static Settings *instance() { static Settings instance; return &instance; }
 
     void setDictDirs(const QStringList &list) { _dictDirs = list; }
     QStringList& dictDirs() { return _dictDirs; }
 
     void setTrayIconVisible(bool b) { _trayIconVisible = b; }
-    bool trayIconVisible() { return _trayIconVisible; }
+    bool isTrayIconVisible() { return _trayIconVisible; }
 
     void setScan(bool b) { _scan = b; }
     bool scan() { return _scan; }
+
+    void setAutomaticTranslation(bool b) { _automaticTranslation = b; }
+    bool isAutomaticTranslation() { return _automaticTranslation; }
+
+    void setTranslation(const QString &s) { _translation = s; }
+    QString translation() const { return _translation; }
 
 private:
     Settings();
@@ -43,12 +49,12 @@ private:
 
     void write();
     void read();
-//    class Private;
-//    static Private *p;
 
     QStringList _dictDirs;
     bool _trayIconVisible;
     bool _scan;
+    bool _automaticTranslation;
+    QString _translation;
 };
 
 

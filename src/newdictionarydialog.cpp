@@ -17,59 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "settingsdialog.h"
+#include "newdictionarydialog.h"
 
 #include <QtGui>
 
-#include "settings.h"
+#include "dictionary.h"
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+NewDictionaryDialog::NewDictionaryDialog(QWidget *parent) : QDialog(parent), dict(0)
 {
     ui.setupUi(this);
 
-    Settings *settings = Settings::instance();
-
-    ui.dirListWidget->addItems(settings->dictDirs());
-    ui.trayIconCheckBox->setChecked(settings->isTrayIconVisible());
-    ui.scanCheckBox->setChecked(settings->scan());
-    ui.automaticTranslationcheckBox->setChecked(settings->isAutomaticTranslation());
-
-    connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
-    connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
+    connect(ui.fileToolButton, SIGNAL(clicked()), this, SLOT(slotFile()));
 }
 
 
-SettingsDialog::~SettingsDialog()
+NewDictionaryDialog::~NewDictionaryDialog()
 {
 }
 
 
-void SettingsDialog::accept()
+Dictionary *NewDictionaryDialog::newDictionary()
 {
-    Settings *settings = Settings::instance();
+    return dict;
+}
 
-    settings->dictDirs().clear();
-    for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
 
-    settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
-    settings->setScan(ui.scanCheckBox->checkState());
-    settings->setAutomaticTranslation(ui.automaticTranslationcheckBox->checkState());
+void NewDictionaryDialog::accept()
+{
+    dict = new Dictionary;
+
+    dict->setTitle(ui.titleLineEdit->text());
+    dict->setAuthor(ui.authorLineEdit->text());
+    dict->setFileName(ui.fileLineEdit->text());
+    dict->setOLang(ui.oLangLineEdit->text());
+    dict->setTLang(ui.tLangLineEdit->text());
 
     QDialog::accept();
 }
 
 
-void SettingsDialog::slotAddDir()
+void NewDictionaryDialog::slotFile()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Select dictionaries directory"));
-    if (!dirName.isEmpty())
-        ui.dirListWidget->addItem(dirName);
-}
+    QString fileName = QFileDialog::getSaveFileName(this);
+    if (fileName.isEmpty())
+        return;
 
-
-void SettingsDialog::slotRemoveDir()
-{
-    ui.dirListWidget->takeItem(ui.dirListWidget->currentRow());
+    ui.fileLineEdit->setText(fileName);
 }

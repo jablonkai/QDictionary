@@ -25,16 +25,6 @@
 #include "settings.h"
 
 
-class DictionaryItem : public QTreeWidgetItem
-{
-public:
-    DictionaryItem(QTreeWidgetItem *parent, QString text, Dictionary *d) : QTreeWidgetItem(parent, QStringList(text)), dictionary(d) {}
-    ~DictionaryItem() { delete dictionary; }
-
-    Dictionary *dictionary;
-};
-
-
 DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 {
     header()->hide();
@@ -51,9 +41,8 @@ void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
     if (dictionaries == item)
         return;
 
-    Dictionary *dict = static_cast<DictionaryItem*>(item)->dictionary;
-    if (!dict->loaded())
-        dict->load();
+    Dictionary *dict = static_cast<Dictionary*>(item);
+    dict->load();
 
     emit activateDictionary(dict);
 }
@@ -64,7 +53,7 @@ void DictionaryTree::updateSettings()
     dictionaries->takeChildren();
 
     int i = 0;
-    foreach (QString dir, Settings::Instance()->dictDirs())
+    foreach (QString dir, Settings::instance()->dictDirs())
     {
         QDir dictDir = QDir(dir);
 
@@ -73,7 +62,7 @@ void DictionaryTree::updateSettings()
             Dictionary *d = new Dictionary(dictDir.absoluteFilePath(fileName));
             if (d->readInfo())
             {
-                new DictionaryItem(dictionaries, d->dictName(), d);
+                dictionaries->addChild(d);
                 ++i;
             }
         }
@@ -81,4 +70,11 @@ void DictionaryTree::updateSettings()
     expandItem(dictionaries);
 
     emit statusBarMessage(tr("%1 dictionaries loaded").arg(i), 0);
+}
+
+
+void DictionaryTree::addDictionary(Dictionary *dict)
+{
+    dictionaries->addChild(dict);
+    emit activateDictionary(dict);
 }

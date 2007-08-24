@@ -22,7 +22,7 @@
 #include "dictionary.h"
 
 
-DictionaryReader::DictionaryReader(Dictionary *d) : dict(d)
+DictionaryReader::DictionaryReader(QIODevice *device, Dictionary *d) : QXmlStreamReader(device), dict(d)
 {
 }
 
@@ -47,10 +47,8 @@ void DictionaryReader::readUnknownElement()
 }
 
 
-bool DictionaryReader::readHeader(QIODevice *device)
+bool DictionaryReader::readHeader()
 {
-    setDevice(device);
-
     while (!atEnd())
     {
         readNext();
@@ -59,7 +57,10 @@ bool DictionaryReader::readHeader(QIODevice *device)
         {
             if (name() == "xdict")
             {
-                dict->setDictName(attributes().value("title").toString());
+                dict->setTitle(attributes().value("title").toString());
+                dict->setAuthor(attributes().value("author").toString());
+                dict->setOLang(attributes().value("original").toString());
+                dict->setTLang(attributes().value("translated").toString());
                 return true;
             }
             else
@@ -70,10 +71,8 @@ bool DictionaryReader::readHeader(QIODevice *device)
 }
 
 
-bool DictionaryReader::read(QIODevice *device)
+bool DictionaryReader::read()
 {
-    setDevice(device);
-
     while (!atEnd())
     {
         readNext();
@@ -102,14 +101,9 @@ void DictionaryReader::readRoot()
         if (isStartElement())
         {
             if (name() == "e")
-                readElement();
+                readEntry();
             else if (name() == "lesson")
                 ;
-            else if (name() == "lang")
-            {
-                dict->setOLang(attributes().value("original").toString());
-                dict->setTLang(attributes().value("translated").toString());
-            }
             else
                 readUnknownElement();
         }
@@ -117,7 +111,7 @@ void DictionaryReader::readRoot()
 }
 
 
-void DictionaryReader::readElement()
+void DictionaryReader::readEntry()
 {
     QString o, t;
 
@@ -138,5 +132,5 @@ void DictionaryReader::readElement()
                 readUnknownElement();
         }
     }
-    dict->push_back(Entry(o, t));
+    dict->entryList().append(Entry(o, t));
 }

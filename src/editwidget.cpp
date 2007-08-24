@@ -17,59 +17,64 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "settingsdialog.h"
+#include "editwidget.h"
 
 #include <QtGui>
 
-#include "settings.h"
+#include "dictionary.h"
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+EditWidget::EditWidget()
 {
     ui.setupUi(this);
 
-    Settings *settings = Settings::instance();
-
-    ui.dirListWidget->addItems(settings->dictDirs());
-    ui.trayIconCheckBox->setChecked(settings->isTrayIconVisible());
-    ui.scanCheckBox->setChecked(settings->scan());
-    ui.automaticTranslationcheckBox->setChecked(settings->isAutomaticTranslation());
-
-    connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
-    connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
+    connect(ui.addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
+    connect(ui.resetButton, SIGNAL(clicked()), this, SLOT(slotReset()));
 }
 
 
-SettingsDialog::~SettingsDialog()
+void EditWidget::activateDictionary(Dictionary *d)
 {
+    dict = d;
+
+    ui.label1->setText(dict->oLang() + ":");
+    ui.label2->setText(dict->tLang() + ":");
+    ui.lineEdit1->clear();
+    ui.lineEdit2->clear();
+
+    updateList();
 }
 
 
-void SettingsDialog::accept()
+
+void EditWidget::slotAdd()
 {
-    Settings *settings = Settings::instance();
+    dict->entryList().append(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
+    ui.lineEdit1->clear();
+    ui.lineEdit2->clear();
 
-    settings->dictDirs().clear();
-    for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
-
-    settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
-    settings->setScan(ui.scanCheckBox->checkState());
-    settings->setAutomaticTranslation(ui.automaticTranslationcheckBox->checkState());
-
-    QDialog::accept();
+    updateList();
 }
 
 
-void SettingsDialog::slotAddDir()
+void EditWidget::slotReset()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Select dictionaries directory"));
-    if (!dirName.isEmpty())
-        ui.dirListWidget->addItem(dirName);
+/*    int row = ui.tableView->selectedIndexes().first().row();
+    dict->entryList().removeAll(Entry(dict->entryList().at(row).original, dict->entryList().at(row).translated));
+    updateList();*/
+//    removeAt();
 }
 
 
-void SettingsDialog::slotRemoveDir()
+void EditWidget::updateList()
 {
-    ui.dirListWidget->takeItem(ui.dirListWidget->currentRow());
+    model = new QStandardItemModel(dict->entryList().size(), 2, this);
+    model->setHeaderData(0, Qt::Horizontal, dict->oLang());
+    model->setHeaderData(1, Qt::Horizontal, dict->tLang());
+    for (int i = 0; i < dict->entryList().size(); ++i)
+    {
+        model->setData(model->index(i, 0, QModelIndex()), dict->entryList().at(i).original);
+        model->setData(model->index(i, 1, QModelIndex()), dict->entryList().at(i).translated);
+    }
+    ui.tableView->setModel(model);
 }

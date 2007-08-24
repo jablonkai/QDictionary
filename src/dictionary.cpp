@@ -22,29 +22,45 @@
 #include <QtGui>
 
 #include "dictionaryreader.h"
+#include "dictionarywriter.h"
 
 
-Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false)
+Dictionary::Dictionary() : _loaded(true), _saved(false)
+{
+}
+
+
+Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false), _saved(true)
 {
 }
 
 
 Dictionary::~Dictionary()
 {
+    if (!_saved)
+        save();
 }
 
 
 bool Dictionary::readInfo()
 {
     QFile file(_fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.open(QIODevice::ReadOnly | QFile::Text))
     {
         QMessageBox::warning(0, QObject::tr("QVocabulary"), QObject::tr("Cannot read file %1:\n%2.").arg(_fileName).arg(file.errorString()));
         return false;
     }
 
-    DictionaryReader reader(this);
-    return reader.readHeader(&file);
+    DictionaryReader reader(&file, this);
+    bool b = reader.readHeader();
+
+    if (b)
+    {
+        setText(0, _title);
+        setToolTip(0, QString("<b>%1</b><br>Author: %2<br>Original: %3<br>Translated: %4").arg(_title).arg(_author).arg(_oLang).arg(_tLang));
+    }
+
+    return b;
 }
 
 
@@ -53,15 +69,32 @@ void Dictionary::load()
     dictionary.clear();
 
     QFile file(_fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.open(QIODevice::ReadOnly | QFile::Text))
     {
         QMessageBox::warning(0, QObject::tr("QVocabulary"), QObject::tr("Cannot read file %1:\n%2.").arg(_fileName).arg(file.errorString()));
         return;
     }
 
-    DictionaryReader reader(this);
-    reader.read(&file);
+    DictionaryReader reader(&file, this);
+    reader.read();
     _loaded = true;
+
+    setIcon(0, QIcon(":/resources/qdictionary.png"));
+}
+
+
+void Dictionary::save()
+{
+    QFile file(_fileName);
+    if (!file.open(QIODevice::WriteOnly | QFile::Text))
+    {
+        QMessageBox::warning(0, QObject::tr("QVocabulary"), QObject::tr("Cannot write file %1:\n%2.").arg(_fileName).arg(file.errorString()));
+        return;
+    }
+
+    DictionaryWriter writer(&file, this);
+    writer.write();
+    _saved = true;
 }
 
 

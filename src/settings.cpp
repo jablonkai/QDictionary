@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "settings.h"
 
+#include <QApplication>
 #include <QSettings>
 
 
@@ -38,8 +39,13 @@ void Settings::read()
 {
     QSettings settings;
 
+    settings.beginGroup("Translation");
+    _automaticTranslation = settings.value("automatic", true).toBool();
+    _translation = settings.value("selected", "en").toString();
+    settings.endGroup();
+
     settings.beginGroup("Dictionary");
-    _dictDirs = settings.value("dirs").toStringList();
+    _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
     settings.endGroup();
 }
 
@@ -47,6 +53,11 @@ void Settings::read()
 void Settings::write()
 {
     QSettings settings;
+
+    settings.beginGroup("Translation");
+    settings.setValue("automatic", _automaticTranslation);
+    settings.setValue("selected", _translation);
+    settings.endGroup();
 
     settings.beginGroup("Dictionary");
     settings.setValue("dirs", _dictDirs);

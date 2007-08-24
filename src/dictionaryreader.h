@@ -29,16 +29,16 @@ class Dictionary;
 class DictionaryReader : public QXmlStreamReader
 {
 public:
-    DictionaryReader(Dictionary*);
+    DictionaryReader(QIODevice*, Dictionary*);
     ~DictionaryReader();
 
-    bool readHeader(QIODevice*);
-    bool read(QIODevice*);
+    bool readHeader();
+    bool read();
 
 private:
     void readUnknownElement();
     void readRoot();
-    void readElement();
+    void readEntry();
 
     Dictionary *dict;
 };

@@ -20,9 +20,9 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
-#include <QColor>
-#include <QList>
-#include <QString>
+//#include <QList>
+//#include <QString>
+#include <QTreeWidgetItem>
 
 
 class Entry
@@ -35,33 +35,48 @@ public:
 };
 
 
-class Dictionary
+class Dictionary : public QTreeWidgetItem
 {
 public:
+    Dictionary();
     Dictionary(const QString&);
     ~Dictionary();
 
     bool readInfo();
     void load();
+    void save();
     QList<Entry> search(const QString&, int) const;
     QString popupSearch(const QString&) const;
+    QTreeWidgetItem *getTreeWidgetItem();
 
-    void setDictName(const QString &s) { _dictName = s; }
-    QString dictName() const { return _dictName; }
+    void setFileName(const QString &s) { _fileName = s; }
+
+    void setTitle(const QString &s) { _title = s; }
+    QString title() const { return _title; }
+
+    void setAuthor(const QString &s) { _author = s; }
+    QString author() const { return _author; }
+
     void setOLang(const QString &s) { _oLang = s; }
     QString oLang() const { return _oLang; }
+
     void setTLang(const QString &s) { _tLang = s; }
     QString tLang() const { return _tLang; }
+
     bool loaded() const { return _loaded; }
     void setLoaded(bool b) { _loaded = b; }
-    void push_back(const Entry &e) { dictionary << e; }
+
+    QList<Entry> &entryList() { return dictionary; }
 
 private:
-    QString _fileName;
+    QString _title;
+    QString _author;
     QString _oLang;
     QString _tLang;
-    QString _dictName;
+
+    QString _fileName;
     bool _loaded;
+    bool _saved;
 
     QList<Entry> dictionary;
 };

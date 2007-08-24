@@ -30,7 +30,10 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="DictionaryWidget" native="1" name="dictionaryWidget" />
+     <widget class="QStackedWidget" name="stackedWidget" >
+      <widget class="DictionaryWidget" name="dictionaryWidget" />
+      <widget class="EditWidget" name="editWidget" />
+     </widget>
     </item>
    </layout>
   </widget>
@@ -63,9 +66,20 @@
     <property name="title" >
      <string>&amp;File</string>
     </property>
+    <addaction name="actionNew" />
+    <addaction name="actionSave" />
+    <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
+   <widget class="QMenu" name="menu_Mode" >
+    <property name="title" >
+     <string>&amp;Mode</string>
+    </property>
+    <addaction name="actionDictionary" />
+    <addaction name="actionEdit" />
+   </widget>
    <addaction name="menu_File" />
+   <addaction name="menu_Mode" />
    <addaction name="menu_Tools" />
    <addaction name="menu_Help" />
   </widget>
@@ -107,6 +121,9 @@
    </widget>
   </widget>
   <action name="actionQuit" >
+   <property name="icon" >
+    <iconset resource="qdictionary.qrc" >:/resources/close.png</iconset>
+   </property>
    <property name="text" >
     <string>&amp;Quit</string>
    </property>
@@ -131,7 +148,7 @@
     <bool>true</bool>
    </property>
    <property name="text" >
-    <string>Show Tray Icon</string>
+    <string>Show &amp;Tray Icon</string>
    </property>
   </action>
   <action name="actionScan" >
@@ -139,7 +156,33 @@
     <bool>true</bool>
    </property>
    <property name="text" >
-    <string>Scan</string>
+    <string>S&amp;can</string>
+   </property>
+  </action>
+  <action name="actionDictionary" >
+   <property name="text" >
+    <string>&amp;Dictionary</string>
+   </property>
+  </action>
+  <action name="actionEdit" >
+   <property name="text" >
+    <string>&amp;Edit</string>
+   </property>
+  </action>
+  <action name="actionNew" >
+   <property name="icon" >
+    <iconset resource="qdictionary.qrc" >:/resources/new.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;New...</string>
+   </property>
+  </action>
+  <action name="actionSave" >
+   <property name="icon" >
+    <iconset resource="qdictionary.qrc" >:/resources/save.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Save</string>
    </property>
   </action>
  </widget>
@@ -153,6 +196,12 @@
    <class>DictionaryWidget</class>
    <extends>QWidget</extends>
    <header>dictionarywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EditWidget</class>
+   <extends>QWidget</extends>
+   <header>editwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

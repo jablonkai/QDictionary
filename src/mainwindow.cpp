@@ -23,6 +23,7 @@
 
 #include "dictionary.h"
 #include "dictionarywidget.h"
+#include "newdictionarydialog.h"
 #include "popupwidget.h"
 #include "settings.h"
 #include "settingsdialog.h"
@@ -58,6 +59,33 @@ void MainWindow::closeEvent(QCloseEvent *event)
 }
 
 
+void MainWindow::slotNew()
+{
+    NewDictionaryDialog *dialog = new NewDictionaryDialog(this);
+
+    if (dialog->exec() == QDialog::Accepted)
+        ui.treeWidget->addDictionary(dialog->newDictionary());
+
+    delete dialog;
+}
+
+
+void MainWindow::slotSave()
+{
+}
+
+
+void MainWindow::slotSetMode(QAction *action)
+{
+    if (action == ui.actionDictionary)
+        ui.stackedWidget->setCurrentIndex(0);
+//    else if (action == ui.actionVocabulary)
+//        stackedWidget->setCurrentIndex(1);
+    else if (action == ui.actionEdit)
+        ui.stackedWidget->setCurrentIndex(1);
+}
+
+
 void MainWindow::slotShowTrayIcon(bool b)
 {
     if (b && ui.actionScan->isChecked())
@@ -69,7 +97,7 @@ void MainWindow::slotShowTrayIcon(bool b)
 
 void MainWindow::slotSettings()
 {
-    Settings *settings = Settings::Instance();
+    Settings *settings = Settings::instance();
 
     settings->setTrayIconVisible(trayIcon->isVisible());
     settings->setScan(ui.actionScan->isChecked());
@@ -79,13 +107,14 @@ void MainWindow::slotSettings()
     if (dialog->exec() == QDialog::Accepted)
     {
         ui.treeWidget->updateSettings();
-        ui.actionShowTrayIcon->setChecked(settings->trayIconVisible());
+        ui.actionShowTrayIcon->setChecked(settings->isTrayIconVisible());
         ui.actionScan->setChecked(settings->scan());
 
         trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());
         ui.actionScan->setEnabled(ui.actionShowTrayIcon->isChecked());
         slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
     }
+    delete dialog;
 }
 
 
@@ -104,7 +133,14 @@ void MainWindow::slotTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::createConnections()
 {
+    connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
+    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(slotSave()));
     connect(ui.actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    QActionGroup *modeGroup = new QActionGroup(this);
+    modeGroup->addAction(ui.actionDictionary);
+//    modeGroup->addAction(ui.actionVocabulary);
+    modeGroup->addAction(ui.actionEdit);
+    connect(modeGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotSetMode(QAction*)));
     connect(ui.actionShowTrayIcon, SIGNAL(triggered(bool)), this, SLOT(slotShowTrayIcon(bool)));
     connect(ui.actionShowTrayIcon, SIGNAL(triggered(bool)), trayIcon, SLOT(setVisible(bool)));
     connect(ui.actionScan, SIGNAL(triggered(bool)), popupWidget, SLOT(slotScan(bool)));
@@ -114,8 +150,11 @@ void MainWindow::createConnections()
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
+    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.editWidget, SLOT(activateDictionary(Dictionary*)));
+
     connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
     connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+    connect(ui.editWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
 
     connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), popupWidget, SLOT(slotSetDictionary(Dictionary*)));
 
@@ -142,7 +181,6 @@ void MainWindow::createTrayIcon()
 
 void MainWindow::readSettings()
 {
-    Settings::Instance();
     QSettings conf;
 
     conf.beginGroup("MainWindow");
@@ -150,7 +188,7 @@ void MainWindow::readSettings()
     restoreGeometry(conf.value("geometry", saveGeometry()).toByteArray());
     ui.actionShowTrayIcon->setChecked(conf.value("trayIcon", true).toBool());
     conf.value("hide", false).toBool() ? hide() : show();
-    ui.actionScan->setChecked(conf.value("scan", true).toBool());
+    ui.actionScan->setChecked(conf.value("scan", false).toBool());
     conf.endGroup();
 
     trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());

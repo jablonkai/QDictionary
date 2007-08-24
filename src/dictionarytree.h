@@ -34,6 +34,7 @@ public:
     DictionaryTree(QWidget*);
 
     void updateSettings();
+    void addDictionary(Dictionary*);
 
 signals:
     void statusBarMessage(QString, int);

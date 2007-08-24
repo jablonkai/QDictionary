@@ -1,9 +1,12 @@
 <RCC>
     <qresource prefix="/" >
+        <file>resources/close.png</file>
         <file>resources/minus.png</file>
+        <file>resources/new.png</file>
         <file>resources/next.png</file>
         <file>resources/plus.png</file>
         <file>resources/prev.png</file>
         <file>resources/qdictionary.png</file>
+        <file>resources/save.png</file>
     </qresource>
 </RCC>

@@ -17,59 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "settingsdialog.h"
+#ifndef DICTIONARYWRITER_H
+#define DICTIONARYWRITER_H
 
-#include <QtGui>
-
-#include "settings.h"
+#include <QXmlStreamWriter>
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+class Dictionary;
+class Entry;
+
+
+class DictionaryWriter : public QXmlStreamWriter
 {
-    ui.setupUi(this);
+public:
+    DictionaryWriter(QIODevice*, Dictionary*);
+    ~DictionaryWriter();
 
-    Settings *settings = Settings::instance();
+    bool write();
 
-    ui.dirListWidget->addItems(settings->dictDirs());
-    ui.trayIconCheckBox->setChecked(settings->isTrayIconVisible());
-    ui.scanCheckBox->setChecked(settings->scan());
-    ui.automaticTranslationcheckBox->setChecked(settings->isAutomaticTranslation());
+private:
+    Dictionary *dict;
 
-    connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
-    connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
-}
-
-
-SettingsDialog::~SettingsDialog()
-{
-}
-
-
-void SettingsDialog::accept()
-{
-    Settings *settings = Settings::instance();
-
-    settings->dictDirs().clear();
-    for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
-
-    settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
-    settings->setScan(ui.scanCheckBox->checkState());
-    settings->setAutomaticTranslation(ui.automaticTranslationcheckBox->checkState());
-
-    QDialog::accept();
-}
+    void writeEntry(const Entry&);
+};
+/* xdict
+xdict
+    %title
+    %author
+lang
+    %original
+    %translated
+e
+    o
+    t
+*/
 
 
-void SettingsDialog::slotAddDir()
-{
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Select dictionaries directory"));
-    if (!dirName.isEmpty())
-        ui.dirListWidget->addItem(dirName);
-}
 
-
-void SettingsDialog::slotRemoveDir()
-{
-    ui.dirListWidget->takeItem(ui.dirListWidget->currentRow());
-}
+#endif

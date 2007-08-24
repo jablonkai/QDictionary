@@ -43,6 +43,9 @@ protected:
     void closeEvent(QCloseEvent*);
 
 private slots:
+    void slotNew();
+    void slotSave();
+    void slotSetMode(QAction*);
     void slotShowTrayIcon(bool);
     void slotSettings();
     void slotAbout();

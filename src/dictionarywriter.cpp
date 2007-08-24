@@ -17,59 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "settingsdialog.h"
+#include "dictionarywriter.h"
 
-#include <QtGui>
-
-#include "settings.h"
+#include "dictionary.h"
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
-{
-    ui.setupUi(this);
-
-    Settings *settings = Settings::instance();
-
-    ui.dirListWidget->addItems(settings->dictDirs());
-    ui.trayIconCheckBox->setChecked(settings->isTrayIconVisible());
-    ui.scanCheckBox->setChecked(settings->scan());
-    ui.automaticTranslationcheckBox->setChecked(settings->isAutomaticTranslation());
-
-    connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
-    connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
-}
-
-
-SettingsDialog::~SettingsDialog()
+DictionaryWriter::DictionaryWriter(QIODevice *device, Dictionary *d) : QXmlStreamWriter(device), dict(d)
 {
 }
 
 
-void SettingsDialog::accept()
+DictionaryWriter::~DictionaryWriter()
 {
-    Settings *settings = Settings::instance();
-
-    settings->dictDirs().clear();
-    for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
-
-    settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
-    settings->setScan(ui.scanCheckBox->checkState());
-    settings->setAutomaticTranslation(ui.automaticTranslationcheckBox->checkState());
-
-    QDialog::accept();
 }
 
 
-void SettingsDialog::slotAddDir()
+bool DictionaryWriter::write()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Select dictionaries directory"));
-    if (!dirName.isEmpty())
-        ui.dirListWidget->addItem(dirName);
+    writeStartDocument();
+    writeDTD("<!DOCTYPE xdict>");
+    writeStartElement("xdict");
+    writeAttribute("title", dict->title());
+    writeAttribute("author", dict->author());
+    writeAttribute("original", dict->oLang());
+    writeAttribute("translated", dict->tLang());
+
+    foreach (Entry e, dict->entryList())
+        writeEntry(e);
+
+    writeEndDocument();
+    return true;
 }
 
 
-void SettingsDialog::slotRemoveDir()
+void DictionaryWriter::writeEntry(const Entry& e)
 {
-    ui.dirListWidget->takeItem(ui.dirListWidget->currentRow());
+    writeStartElement("e");
+    writeTextElement("o", e.original);
+    writeTextElement("t", e.translated);
+    writeEndElement();
 }
