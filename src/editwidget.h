@@ -25,8 +25,6 @@
 
 class QStandardItemModel;
 
-class Dictionary;
-
 
 class EditWidget : public QWidget
 {
@@ -35,8 +33,7 @@ class EditWidget : public QWidget
 public:
     EditWidget();
 
-public slots:
-    void activateDictionary(Dictionary*);
+    void updateWidget();
 
 signals:
     void statusBarMessage(QString, int);
@@ -49,8 +46,6 @@ private:
     void updateList();
 
     Ui::EditWidget ui;
-
-    Dictionary *dict;
     QStandardItemModel *model;
 };
 

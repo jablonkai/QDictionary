@@ -22,6 +22,7 @@
 #include <QtGui>
 
 #include "dictionary.h"
+#include "dictionarymanager.h"
 #include "dictionarywidget.h"
 #include "newdictionarydialog.h"
 #include "popupwidget.h"
@@ -33,9 +34,12 @@ MainWindow::MainWindow() : QMainWindow()
 {
     ui.setupUi(this);
 
+    DictionaryManager::instance();
+
     createTrayIcon();
     popupWidget = new PopupWidget(this);
     createConnections();
+    setupDictionaryTree();
 
     readSettings();
 }
@@ -64,7 +68,8 @@ void MainWindow::slotNew()
     NewDictionaryDialog *dialog = new NewDictionaryDialog(this);
 
     if (dialog->exec() == QDialog::Accepted)
-        ui.treeWidget->addDictionary(dialog->newDictionary());
+        DictionaryManager::instance()->addDictionary(dialog->newDictionary());
+//        ui.treeWidget->addDictionary(dialog->newDictionary());
 
     delete dialog;
 }
@@ -72,6 +77,7 @@ void MainWindow::slotNew()
 
 void MainWindow::slotSave()
 {
+
 }
 
 
@@ -106,7 +112,7 @@ void MainWindow::slotSettings()
 
     if (dialog->exec() == QDialog::Accepted)
     {
-        ui.treeWidget->updateSettings();
+//        ui.treeWidget->updateSettings();
         ui.actionShowTrayIcon->setChecked(settings->isTrayIconVisible());
         ui.actionScan->setChecked(settings->scan());
 
@@ -131,6 +137,14 @@ void MainWindow::slotTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 
 
+void MainWindow::updateWidgets()
+{
+    ui.dictionaryWidget->updateWidget();
+    ui.editWidget->updateWidget();
+//    ui.stackedWidget->currentWidget();
+}
+
+
 void MainWindow::createConnections()
 {
     connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(slotNew()));
@@ -149,14 +163,10 @@ void MainWindow::createConnections()
     connect(ui.actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 
-    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.dictionaryWidget, SLOT(activateDictionary(Dictionary*)));
-    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), ui.editWidget, SLOT(activateDictionary(Dictionary*)));
-
-    connect(ui.treeWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+    connect(DictionaryManager::instance(), SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
+    connect(DictionaryManager::instance(), SIGNAL(update()), this, SLOT(updateWidgets()));
     connect(ui.dictionaryWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
     connect(ui.editWidget, SIGNAL(statusBarMessage(QString, int)), ui.statusBar, SLOT(showMessage(QString, int)));
-
-    connect(ui.treeWidget, SIGNAL(activateDictionary(Dictionary*)), popupWidget, SLOT(slotSetDictionary(Dictionary*)));
 
     ui.menu_Tools->insertAction(ui.actionSettings, ui.dockWidget->toggleViewAction());
     ui.menu_Tools->insertSeparator(ui.actionSettings);
@@ -179,6 +189,17 @@ void MainWindow::createTrayIcon()
 }
 
 
+void MainWindow::setupDictionaryTree()
+{
+    ui.treeWidget->header()->hide();
+    QTreeWidgetItem *dictRoot = DictionaryManager::instance()->dictionaryRoot();
+    ui.treeWidget->insertTopLevelItem(0, dictRoot);
+    ui.treeWidget->expandItem(dictRoot);
+
+    connect(ui.treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*, int)), DictionaryManager::instance(), SLOT(itemActivated(QTreeWidgetItem*)));
+}
+
+
 void MainWindow::readSettings()
 {
     QSettings conf;
@@ -197,7 +218,7 @@ void MainWindow::readSettings()
     if (!ui.actionShowTrayIcon->isChecked())
         show();
 
-    ui.treeWidget->updateSettings();
+//    ui.treeWidget->updateSettings();
 }
 
 

@@ -17,29 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef DICTIONARYTREE_H
-#define DICTIONARYTREE_H
+#ifndef DICTIONARYMANAGER_H
+#define DICTIONARYMANAGER_H
 
-#include <QTreeWidget>
+#include <QObject>
+
+#include "dictionary.h"
 
 
-class Dictionary;
-
-
-class DictionaryTree : public QTreeWidget
+class DictionaryManager : public QObject
 {
     Q_OBJECT
 
 public:
-    DictionaryTree(QWidget*);
+    static DictionaryManager *instance() { static DictionaryManager instance; return &instance; }
 
-    void updateSettings();
+    Dictionary *activeDictionary() const { return activeDict; }
+    Dictionary *popupDictionary() const { return popupDict; }
+    QTreeWidgetItem *dictionaryRoot() const { return dictRoot; }
+
+    void addDictionary(Dictionary*);
+
+public slots:
+    void itemActivated(QTreeWidgetItem*);
 
 signals:
     void statusBarMessage(QString, int);
+    void update();
 
 private:
-    QTreeWidgetItem *dictionaries;
+    DictionaryManager(QObject *parent = 0);
+    ~DictionaryManager();
+
+    void readSettings();
+    void writeSettings();
+
+    QTreeWidgetItem *dictRoot;
+    Dictionary *activeDict;
+    Dictionary *popupDict;
+    QList<Dictionary*> dictionaries;
 };
 
 

@@ -1,5 +1,4 @@
-SOURCES += dictionarytree.cpp \
-dictionarywidget.cpp \
+SOURCES += dictionarywidget.cpp \
 mainwindow.cpp \
 searchline.cpp \
 main.cpp \
@@ -10,7 +9,8 @@ settings.cpp \
 dictionaryreader.cpp \
 editwidget.cpp \
 newdictionarydialog.cpp \
-dictionarywriter.cpp
+dictionarywriter.cpp \
+dictionarymanager.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -18,8 +18,7 @@ CONFIG += warn_on \
 	  release
 TARGET = ../bin/qdictionary
 
-HEADERS += dictionarytree.h \
-dictionarywidget.h \
+HEADERS += dictionarywidget.h \
 mainwindow.h \
 searchline.h \
 settingsdialog.h \
@@ -29,7 +28,8 @@ settings.h \
 dictionaryreader.h \
 editwidget.h \
 newdictionarydialog.h \
-dictionarywriter.h
+dictionarywriter.h \
+dictionarymanager.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 settingsdialog.ui \

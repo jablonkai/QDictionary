@@ -25,19 +25,19 @@
 #include "dictionarywriter.h"
 
 
-Dictionary::Dictionary() : _loaded(true), _saved(false)
+Dictionary::Dictionary() : QTreeWidgetItem(1001), loaded(true), saved(false)
 {
 }
 
 
-Dictionary::Dictionary(const QString &name) : _fileName(name), _loaded(false), _saved(true)
+Dictionary::Dictionary(const QString &name) : QTreeWidgetItem(1001), _fileName(name), loaded(false), saved(true)
 {
 }
 
 
 Dictionary::~Dictionary()
 {
-    if (!_saved)
+    if (!saved)
         save();
 }
 
@@ -77,7 +77,7 @@ void Dictionary::load()
 
     DictionaryReader reader(&file, this);
     reader.read();
-    _loaded = true;
+    loaded = true;
 
     setIcon(0, QIcon(":/resources/qdictionary.png"));
 }
@@ -94,7 +94,7 @@ void Dictionary::save()
 
     DictionaryWriter writer(&file, this);
     writer.write();
-    _saved = true;
+    saved = true;
 }
 
 
@@ -145,3 +145,11 @@ QString Dictionary::popupSearch(const QString &string) const
 
     return text;
 }
+
+
+void Dictionary::append(const Entry &e)
+{
+    dictionary.append(e);
+    saved = false;
+}
+

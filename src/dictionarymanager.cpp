@@ -17,27 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "dictionarytree.h"
+#include "dictionarymanager.h"
 
 #include <QtGui>
 
-#include "dictionarymanager.h"
+#include "dictionary.h"
+#include "settings.h"
 
 
-DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
+DictionaryManager::DictionaryManager(QObject *parent) : QObject(parent)
 {
-    header()->hide();
-
-    dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")), 1000);
-    insertTopLevelItem(0, dictionaries);
-
-    connect(this, SIGNAL(itemActivated(QTreeWidgetItem*, int)), DictionaryManager::instance(), SLOT(itemActivated(QTreeWidgetItem*)));
-}
-
-
-void DictionaryTree::updateSettings()
-{/*
-    dictionaries->takeChildren();
+    readSettings();
+    dictRoot = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")), 1000);
+//    dictionaries->takeChildren();
 
     int i = 0;
     foreach (QString dir, Settings::instance()->dictDirs())
@@ -46,15 +38,52 @@ void DictionaryTree::updateSettings()
 
         foreach (QString fileName, dictDir.entryList(QDir::Files))
         {
-            Dictionary *d = new Dictionary(dictDir.absoluteFilePath(fileName));
-            if (d->readInfo())
+            Dictionary *dict = new Dictionary(dictDir.absoluteFilePath(fileName));
+            if (dict->readInfo())
             {
-                dictionaries->addChild(d);
+                dictionaries.append(dict);
+                dictRoot->addChild(dict);
                 ++i;
             }
         }
     }
-    expandItem(dictionaries);
 
     emit statusBarMessage(tr("%1 dictionaries loaded").arg(i), 0);
-*/}
+}
+
+
+DictionaryManager::~DictionaryManager()
+{
+    writeSettings();
+}
+
+
+void DictionaryManager::addDictionary(Dictionary *dict)
+{
+    dictionaries.append(dict);
+    dictRoot->addChild(dict);
+    itemActivated(dict);
+}
+
+
+void DictionaryManager::itemActivated(QTreeWidgetItem *item)
+{
+    if (item->type() == 1001)
+    {
+        activeDict = static_cast<Dictionary*>(item);
+        activeDict->load();
+        emit update();
+    }
+}
+
+
+void DictionaryManager::readSettings()
+{
+    QSettings settings;
+}
+
+
+void DictionaryManager::writeSettings()
+{
+    QSettings settings;
+}

@@ -21,7 +21,7 @@
 
 #include <QtGui>
 
-#include "dictionary.h"
+#include "dictionarymanager.h"
 
 
 EditWidget::EditWidget()
@@ -33,9 +33,9 @@ EditWidget::EditWidget()
 }
 
 
-void EditWidget::activateDictionary(Dictionary *d)
+void EditWidget::updateWidget()
 {
-    dict = d;
+    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
 
     ui.label1->setText(dict->oLang() + ":");
     ui.label2->setText(dict->tLang() + ":");
@@ -49,7 +49,7 @@ void EditWidget::activateDictionary(Dictionary *d)
 
 void EditWidget::slotAdd()
 {
-    dict->entryList().append(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
+    DictionaryManager::instance()->activeDictionary()->append(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
     ui.lineEdit1->clear();
     ui.lineEdit2->clear();
 
@@ -68,6 +68,7 @@ void EditWidget::slotReset()
 
 void EditWidget::updateList()
 {
+    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
     model = new QStandardItemModel(dict->entryList().size(), 2, this);
     model->setHeaderData(0, Qt::Horizontal, dict->oLang());
     model->setHeaderData(1, Qt::Horizontal, dict->tLang());

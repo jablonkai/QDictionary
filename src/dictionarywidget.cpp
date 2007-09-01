@@ -21,7 +21,7 @@
 
 #include <QtGui>
 
-#include "dictionary.h"
+#include "dictionarymanager.h"
 
 
 class SearchCommand : public QUndoCommand
@@ -41,7 +41,7 @@ private:
 };
 
 
-DictionaryWidget::DictionaryWidget() : dict(0), prevText(""), prevIndex(100)
+DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
 {
     ui.setupUi(this);
 
@@ -74,6 +74,7 @@ void DictionaryWidget::search(const QString &s, const int &i)
     ui.lineEdit->setText(s);
     ui.comboBox->setCurrentIndex(i);
 
+    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
     QList<Entry> d = dict->search(ui.lineEdit->text(), ui.comboBox->currentIndex());
 
     QStandardItemModel *model = new QStandardItemModel(d.size(), 2, this);
@@ -94,9 +95,9 @@ void DictionaryWidget::search(const QString &s, const int &i)
 }
 
 
-void DictionaryWidget::activateDictionary(Dictionary *d)
+void DictionaryWidget::updateWidget()
 {
-    dict = d;
+    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
     undoStack->clear();
     prevIndex = 100;
 
@@ -114,7 +115,7 @@ void DictionaryWidget::activateDictionary(Dictionary *d)
 
 void DictionaryWidget::slotSearch()
 {
-    if (!dict)
+    if (!DictionaryManager::instance()->activeDictionary())
         return;
 
     QTime time;

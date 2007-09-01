@@ -50,10 +50,12 @@ private slots:
     void slotSettings();
     void slotAbout();
     void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
+    void updateWidgets();
 
 private:
     void createConnections();
     void createTrayIcon();
+    void setupDictionaryTree();
 
     void readSettings();
     void writeSettings();

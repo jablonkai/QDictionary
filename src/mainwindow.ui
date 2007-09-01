@@ -109,7 +109,7 @@
       <number>1</number>
      </property>
      <item>
-      <widget class="DictionaryTree" name="treeWidget" >
+      <widget class="QTreeWidget" name="treeWidget" >
        <column>
         <property name="text" >
          <string>1</string>
@@ -187,11 +187,6 @@
   </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>DictionaryTree</class>
-   <extends>QTreeWidget</extends>
-   <header>dictionarytree.h</header>
-  </customwidget>
   <customwidget>
    <class>DictionaryWidget</class>
    <extends>QWidget</extends>

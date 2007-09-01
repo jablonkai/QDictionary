@@ -20,8 +20,6 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
-//#include <QList>
-//#include <QString>
 #include <QTreeWidgetItem>
 
 
@@ -63,21 +61,18 @@ public:
     void setTLang(const QString &s) { _tLang = s; }
     QString tLang() const { return _tLang; }
 
-    bool loaded() const { return _loaded; }
-    void setLoaded(bool b) { _loaded = b; }
-
     QList<Entry> &entryList() { return dictionary; }
+    void append(const Entry&);
 
 private:
     QString _title;
     QString _author;
     QString _oLang;
     QString _tLang;
-
     QString _fileName;
-    bool _loaded;
-    bool _saved;
 
+    bool loaded;
+    bool saved;
     QList<Entry> dictionary;
 };
 
