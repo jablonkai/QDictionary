@@ -21,35 +21,22 @@
 
 #include <QtGui>
 
-#include "dictionary.h"
-#include "settings.h"
+#include "dictionarymanager.h"
 
 
 DictionaryTree::DictionaryTree(QWidget *parent) : QTreeWidget(parent)
 {
     header()->hide();
 
-    dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")));
+    dictionaries = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")), 1000);
     insertTopLevelItem(0, dictionaries);
 
-    connect(this, SIGNAL(itemActivated(QTreeWidgetItem*, int)), this, SLOT(itemActivate(QTreeWidgetItem*, int)));
-}
-
-
-void DictionaryTree::itemActivate(QTreeWidgetItem *item, int)
-{
-    if (dictionaries == item)
-        return;
-
-    Dictionary *dict = static_cast<Dictionary*>(item);
-    dict->load();
-
-    emit activateDictionary(dict);
+    connect(this, SIGNAL(itemActivated(QTreeWidgetItem*, int)), DictionaryManager::instance(), SLOT(itemActivated(QTreeWidgetItem*)));
 }
 
 
 void DictionaryTree::updateSettings()
-{
+{/*
     dictionaries->takeChildren();
 
     int i = 0;
@@ -70,11 +57,4 @@ void DictionaryTree::updateSettings()
     expandItem(dictionaries);
 
     emit statusBarMessage(tr("%1 dictionaries loaded").arg(i), 0);
-}
-
-
-void DictionaryTree::addDictionary(Dictionary *dict)
-{
-    dictionaries->addChild(dict);
-    emit activateDictionary(dict);
-}
+*/}

@@ -34,14 +34,9 @@ public:
     DictionaryTree(QWidget*);
 
     void updateSettings();
-    void addDictionary(Dictionary*);
 
 signals:
     void statusBarMessage(QString, int);
-    void activateDictionary(Dictionary*);
-
-private slots:
-    void itemActivate(QTreeWidgetItem*, int);
 
 private:
     QTreeWidgetItem *dictionaries;
