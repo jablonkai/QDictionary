@@ -21,10 +21,10 @@
 
 #include <QtGui>
 
-#include "dictionary.h"
+#include "dictionarymanager.h"
 
 
-PopupWidget::PopupWidget(QWidget *parent) : QWidget(parent, Qt::Popup)/*Qt::ToolTip)*/, dict(0)
+PopupWidget::PopupWidget(QWidget *parent) : QWidget(parent, Qt::Popup)
 {
     textBrowser = new QTextBrowser(this);
 
@@ -38,12 +38,6 @@ PopupWidget::PopupWidget(QWidget *parent) : QWidget(parent, Qt::Popup)/*Qt::Tool
 
 PopupWidget::~PopupWidget()
 {
-}
-
-
-void PopupWidget::slotSetDictionary(Dictionary *d)
-{
-    dict = d;
 }
 
 
@@ -84,6 +78,7 @@ void PopupWidget::timerEvent(QTimerEvent*)
 
 void PopupWidget::search()
 {
+    Dictionary *dict = DictionaryManager::instance()->popupDictionary();
     if (!dict)
         return;
 

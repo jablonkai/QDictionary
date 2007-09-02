@@ -38,6 +38,13 @@ public:
 
     void addDictionary(Dictionary*);
 
+    QStringList dictionaryList() const;
+    int popupIndex() const;
+    void setPopupDictionary(const int&);
+
+    void setDictDirs(const QStringList &list) { _dictDirs = list; }
+    QStringList dictDirs() const { return _dictDirs; }
+
 public slots:
     void itemActivated(QTreeWidgetItem*);
 
@@ -56,6 +63,8 @@ private:
     Dictionary *activeDict;
     Dictionary *popupDict;
     QList<Dictionary*> dictionaries;
+
+    QStringList _dictDirs;
 };
 
 

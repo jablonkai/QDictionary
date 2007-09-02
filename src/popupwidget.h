@@ -24,7 +24,6 @@
 
 
 class QTextBrowser;
-class Dictionary;
 
 
 class PopupWidget : public QWidget
@@ -36,7 +35,6 @@ public:
     ~PopupWidget();
 
 public slots:
-    void slotSetDictionary(Dictionary*);
     void slotScan(bool);
 
 protected:
@@ -47,7 +45,6 @@ protected:
 private:
     void search();
 
-    Dictionary *dict;
     QTextBrowser *textBrowser;
     QTimer *closeTimer;
     QString prevSelection;

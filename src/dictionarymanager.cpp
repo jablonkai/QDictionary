@@ -32,7 +32,7 @@ DictionaryManager::DictionaryManager(QObject *parent) : QObject(parent)
 //    dictionaries->takeChildren();
 
     int i = 0;
-    foreach (QString dir, Settings::instance()->dictDirs())
+    foreach (QString dir, _dictDirs)
     {
         QDir dictDir = QDir(dir);
 
@@ -66,6 +66,30 @@ void DictionaryManager::addDictionary(Dictionary *dict)
 }
 
 
+QStringList DictionaryManager::dictionaryList() const
+{
+    QStringList list;
+    foreach (Dictionary *i, dictionaries)
+        list << i->title();
+    return list;
+}
+
+
+int DictionaryManager::popupIndex() const
+{
+    if (!popupDict)
+        return -1;
+    return dictionaries.indexOf(popupDict);
+}
+
+
+void DictionaryManager::setPopupDictionary(const int &i)
+{
+    popupDict = dictionaries.at(i);
+    popupDict->load();
+}
+
+
 void DictionaryManager::itemActivated(QTreeWidgetItem *item)
 {
     if (item->type() == 1001)
@@ -80,10 +104,18 @@ void DictionaryManager::itemActivated(QTreeWidgetItem *item)
 void DictionaryManager::readSettings()
 {
     QSettings settings;
+
+    settings.beginGroup("Dictionary");
+    _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
+    settings.endGroup();
 }
 
 
 void DictionaryManager::writeSettings()
 {
     QSettings settings;
+
+    settings.beginGroup("Dictionary");
+    settings.setValue("dirs", _dictDirs);
+    settings.endGroup();
 }

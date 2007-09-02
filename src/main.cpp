@@ -21,7 +21,6 @@
 #include <QTranslator>
 
 #include "mainwindow.h"
-#include "settings.h"
 
 
 int main(int argc, char **argv)
@@ -32,10 +31,7 @@ int main(int argc, char **argv)
     app.setQuitOnLastWindowClosed(false);
 
     QTranslator translator;
-    if (Settings::instance()->isAutomaticTranslation())
-        translator.load("qdictionary_" + QLocale::system().name(), app.applicationDirPath() + "/i18n");
-    else
-        translator.load("qdictionary_" + Settings::instance()->translation(), app.applicationDirPath() + "/i18n");
+    translator.load("qdictionary_" + QLocale::system().name(), app.applicationDirPath() + "/i18n");
     app.installTranslator(&translator);
 
     MainWindow mainWindow;

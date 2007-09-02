@@ -55,36 +55,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_2" >
-         <property name="title" >
-          <string>Translation</string>
-         </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QCheckBox" name="automaticTranslationcheckBox" >
-            <property name="text" >
-             <string>Automatic</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QLabel" name="label" >
-              <property name="text" >
-               <string>Selected:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="translationComboBox" />
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -208,38 +178,6 @@
     <hint type="destinationlabel" >
      <x>103</x>
      <y>71</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>automaticTranslationcheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>103</x>
-     <y>171</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>61</x>
-     <y>200</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>automaticTranslationcheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>translationComboBox</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>103</x>
-     <y>171</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>144</x>
-     <y>200</y>
     </hint>
    </hints>
   </connection>

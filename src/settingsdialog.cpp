@@ -21,6 +21,7 @@
 
 #include <QtGui>
 
+#include "dictionarymanager.h"
 #include "settings.h"
 
 
@@ -29,14 +30,21 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     ui.setupUi(this);
 
     Settings *settings = Settings::instance();
+    DictionaryManager *dictManager = DictionaryManager::instance();
 
-    ui.dirListWidget->addItems(settings->dictDirs());
+    ui.dirListWidget->addItems(dictManager->dictDirs());
     ui.trayIconCheckBox->setChecked(settings->isTrayIconVisible());
     ui.scanCheckBox->setChecked(settings->scan());
-    ui.automaticTranslationcheckBox->setChecked(settings->isAutomaticTranslation());
+    ui.scanCheckBox->setEnabled(ui.trayIconCheckBox->checkState());
+    ui.dictionaryComboBox->addItems(dictManager->dictionaryList());
+    int index = dictManager->popupIndex();
+    if (!(index < 0))
+        ui.dictionaryComboBox->setCurrentIndex(index);
+    ui.dictionaryComboBox->setEnabled(ui.scanCheckBox->checkState() && ui.trayIconCheckBox->checkState());
 
     connect(ui.addDirButton, SIGNAL(clicked()), this, SLOT(slotAddDir()));
     connect(ui.removeDirButton, SIGNAL(clicked()), this, SLOT(slotRemoveDir()));
+    connect(ui.trayIconCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotStateChanged(int)));
 }
 
 
@@ -48,14 +56,15 @@ SettingsDialog::~SettingsDialog()
 void SettingsDialog::accept()
 {
     Settings *settings = Settings::instance();
+    DictionaryManager *dictManager = DictionaryManager::instance();
 
-    settings->dictDirs().clear();
+    dictManager->dictDirs().clear();
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        settings->dictDirs().push_back(ui.dirListWidget->item(i)->text());
+        dictManager->dictDirs().append(ui.dirListWidget->item(i)->text());
 
     settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
     settings->setScan(ui.scanCheckBox->checkState());
-    settings->setAutomaticTranslation(ui.automaticTranslationcheckBox->checkState());
+    dictManager->setPopupDictionary(ui.dictionaryComboBox->currentIndex());
 
     QDialog::accept();
 }
@@ -72,4 +81,10 @@ void SettingsDialog::slotAddDir()
 void SettingsDialog::slotRemoveDir()
 {
     ui.dirListWidget->takeItem(ui.dirListWidget->currentRow());
+}
+
+
+void SettingsDialog::slotStateChanged(int i)
+{
+    ui.dictionaryComboBox->setEnabled(ui.scanCheckBox->checkState() && i);
 }

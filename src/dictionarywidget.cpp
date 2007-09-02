@@ -34,8 +34,8 @@ public:
 
 private:
     QString prevText;
-    QString text;
     int prevIndex;
+    QString text;
     int index;
     DictionaryWidget *widget;
 };
@@ -52,14 +52,14 @@ DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
     filterModel->setDynamicSortFilter(true);
     filterModel->setSortLocaleAware(true),
     filterModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    ui.tableView->setModel(filterModel);
+    ui.treeView->setModel(filterModel);
 
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
     connect(ui.searchButton, SIGNAL(clicked()), this, SLOT(slotSearch()));
     connect(ui.filteringCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotFiltering(bool)));
     connect(ui.filterComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotFilter()));
     connect(ui.filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(slotFilter()));
-    connect(ui.tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
+    connect(ui.treeView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(slotItemActivated(const QModelIndex&)));
     connect(ui.backwardButton, SIGNAL(clicked()), undoStack, SLOT(undo()));
     connect(ui.forwardButton, SIGNAL(clicked()), undoStack, SLOT(redo()));
     connect(undoStack, SIGNAL(canUndoChanged(bool)), ui.backwardButton, SLOT(setEnabled(bool)));
@@ -88,8 +88,8 @@ void DictionaryWidget::search(const QString &s, const int &i)
     }
 
     filterModel->setSourceModel(model);
-    ui.tableView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
-    ui.tableView->resizeColumnsToContents();
+    ui.treeView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
+//    ui.treeView->resizeColumnsToContents();
 
     n = d.size();
 }

@@ -217,8 +217,6 @@ void MainWindow::readSettings()
     slotShowTrayIcon(ui.actionShowTrayIcon->isChecked());
     if (!ui.actionShowTrayIcon->isChecked())
         show();
-
-//    ui.treeWidget->updateSettings();
 }
 
 
