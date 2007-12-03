@@ -58,7 +58,6 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionShowTrayIcon" />
-    <addaction name="actionScan" />
     <addaction name="separator" />
     <addaction name="actionSettings" />
    </widget>
@@ -149,14 +148,6 @@
    </property>
    <property name="text" >
     <string>Show &amp;Tray Icon</string>
-   </property>
-  </action>
-  <action name="actionScan" >
-   <property name="checkable" >
-    <bool>true</bool>
-   </property>
-   <property name="text" >
-    <string>S&amp;can</string>
    </property>
   </action>
   <action name="actionDictionary" >

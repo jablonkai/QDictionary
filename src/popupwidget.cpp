@@ -78,7 +78,7 @@ void PopupWidget::timerEvent(QTimerEvent*)
 
 void PopupWidget::search()
 {
-    Dictionary *dict = DictionaryManager::instance()->popupDictionary();
+    DictionaryModel *dict = DictionaryManager::instance()->popupDictionary();
     if (!dict)
         return;
 

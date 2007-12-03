@@ -21,7 +21,9 @@
 
 #include <QtGui>
 
+#include "dictionarydialog.h"
 #include "dictionarymanager.h"
+#include "entry.h"
 
 
 EditWidget::EditWidget()
@@ -29,53 +31,89 @@ EditWidget::EditWidget()
     ui.setupUi(this);
 
     connect(ui.addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
-    connect(ui.resetButton, SIGNAL(clicked()), this, SLOT(slotReset()));
+    connect(ui.saveButton, SIGNAL(clicked()), this, SLOT(slotSave()));
+    connect(ui.deleteButton, SIGNAL(clicked()), this, SLOT(slotDelete()));
+    connect(ui.toolButton, SIGNAL(clicked()), this, SLOT(slotDocSettings()));
+    connect(ui.tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(slotSelected(const QModelIndex&)));
 }
 
 
 void EditWidget::updateWidget()
 {
-    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
-
-    ui.label1->setText(dict->oLang() + ":");
-    ui.label2->setText(dict->tLang() + ":");
-    ui.lineEdit1->clear();
-    ui.lineEdit2->clear();
-
-    updateList();
+    if (this->isVisible())
+        updateDictionary();
 }
 
+
+void EditWidget::showEvent(QShowEvent*)
+{
+    updateDictionary();
+}
 
 
 void EditWidget::slotAdd()
 {
-    DictionaryManager::instance()->activeDictionary()->append(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+    if (!dict)
+        return;
+
+    dict->addEntry(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
+
+    ui.lineEdit1->clear();
+    ui.lineEdit2->clear();
+}
+
+
+void EditWidget::slotSave()
+{
+    int i = ui.tableView->currentIndex().row();
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+
+    dict->entryList().replace(i, Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
+    dict->setSaved(false);
+}
+
+
+void EditWidget::slotDelete()
+{
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+    if (!dict)
+        return;
+
+    dict->removeRow(ui.tableView->selectionModel()->selectedIndexes().first().row());
+    dict->setSaved(false);
+}
+
+
+void EditWidget::slotDocSettings()
+{
+    DictionaryDialog *dialog = new DictionaryDialog(this, DictionaryManager::instance()->activeDictionary());
+    if (dialog->exec() == QDialog::Accepted)
+        updateDictionary();
+    delete dialog;
+    DictionaryManager::instance()->activeDictionary()->updateInfo();
+}
+
+
+void EditWidget::slotSelected(const QModelIndex&)
+{
+    int i = ui.tableView->currentIndex().row();
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+
+    ui.lineEdit1->setText(dict->entryList().at(i).original);
+    ui.lineEdit2->setText(dict->entryList().at(i).translated);
+}
+
+
+void EditWidget::updateDictionary()
+{
     ui.lineEdit1->clear();
     ui.lineEdit2->clear();
 
-    updateList();
-}
-
-
-void EditWidget::slotReset()
-{
-/*    int row = ui.tableView->selectedIndexes().first().row();
-    dict->entryList().removeAll(Entry(dict->entryList().at(row).original, dict->entryList().at(row).translated));
-    updateList();*/
-//    removeAt();
-}
-
-
-void EditWidget::updateList()
-{
-    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
-    model = new QStandardItemModel(dict->entryList().size(), 2, this);
-    model->setHeaderData(0, Qt::Horizontal, dict->oLang());
-    model->setHeaderData(1, Qt::Horizontal, dict->tLang());
-    for (int i = 0; i < dict->entryList().size(); ++i)
-    {
-        model->setData(model->index(i, 0, QModelIndex()), dict->entryList().at(i).original);
-        model->setData(model->index(i, 1, QModelIndex()), dict->entryList().at(i).translated);
-    }
-    ui.tableView->setModel(model);
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+    if (!dict)
+        return;
+    ui.tableView->setModel(dict);
+    ui.label1->setText(dict->oLang() + ":");
+    ui.label2->setText(dict->tLang() + ":");
 }

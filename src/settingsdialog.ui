@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
-    <height>322</height>
+    <width>372</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -14,111 +14,66 @@
   </property>
   <layout class="QVBoxLayout" >
    <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <layout class="QVBoxLayout" >
-       <item>
-        <widget class="QGroupBox" name="groupBox_3" >
-         <property name="title" >
-          <string>System Tray Icon</string>
-         </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QCheckBox" name="trayIconCheckBox" >
-            <property name="text" >
-             <string>Show System Tray Icon</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="scanCheckBox" >
-            <property name="text" >
-             <string>Enable Scan</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QLabel" name="label_3" >
-              <property name="text" >
-               <string>Dictionary:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="dictionaryComboBox" />
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
-        <string>Dictionary Paths</string>
-       </property>
-       <layout class="QVBoxLayout" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Dictionary Paths</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QListWidget" name="dirListWidget" />
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
         <item>
-         <widget class="QListWidget" name="dirListWidget" />
+         <widget class="QToolButton" name="addDirButton" >
+          <property name="toolTip" >
+           <string>Add Path</string>
+          </property>
+          <property name="text" >
+           <string/>
+          </property>
+          <property name="icon" >
+           <iconset resource="qdictionary.qrc" >:/resources/plus.png</iconset>
+          </property>
+         </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" >
-          <item>
-           <widget class="QToolButton" name="addDirButton" >
-            <property name="text" >
-             <string/>
-            </property>
-            <property name="icon" >
-             <iconset resource="qdictionary.qrc" >:/resources/plus.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="removeDirButton" >
-            <property name="text" >
-             <string/>
-            </property>
-            <property name="icon" >
-             <iconset resource="qdictionary.qrc" >:/resources/minus.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         <widget class="QToolButton" name="removeDirButton" >
+          <property name="toolTip" >
+           <string>Delete Path</string>
+          </property>
+          <property name="text" >
+           <string/>
+          </property>
+          <property name="icon" >
+           <iconset resource="qdictionary.qrc" >:/resources/minus.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
-      </widget>
-     </item>
-    </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="trayIconCheckBox" >
+     <property name="text" >
+      <string>Show System Tray Icon</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox" >
@@ -162,54 +117,6 @@
     <hint type="destinationlabel" >
      <x>233</x>
      <y>174</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trayIconCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>scanCheckBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>103</x>
-     <y>47</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>103</x>
-     <y>71</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>scanCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_3</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>103</x>
-     <y>71</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>61</x>
-     <y>100</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>scanCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>dictionaryComboBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>103</x>
-     <y>71</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>144</x>
-     <y>100</y>
     </hint>
    </hints>
   </connection>

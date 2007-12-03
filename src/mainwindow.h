@@ -46,11 +46,9 @@ private slots:
     void slotNew();
     void slotSave();
     void slotSetMode(QAction*);
-    void slotShowTrayIcon(bool);
     void slotSettings();
     void slotAbout();
     void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
-    void updateWidgets();
 
 private:
     void createConnections();
@@ -62,7 +60,6 @@ private:
 
     Ui::MainWindow ui;
     QSystemTrayIcon *trayIcon;
-    PopupWidget *popupWidget;
 };
 
 

@@ -22,6 +22,7 @@
 #include <QtGui>
 
 #include "dictionarymanager.h"
+#include "searchmodel.h"
 
 
 class SearchCommand : public QUndoCommand
@@ -54,6 +55,10 @@ DictionaryWidget::DictionaryWidget() : prevText(""), prevIndex(100)
     filterModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     ui.treeView->setModel(filterModel);
 
+    searchModel = new SearchModel(this);
+    searchModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    filterModel->setSourceModel(searchModel);
+
     connect(ui.lineEdit, SIGNAL(returnPressed()), this, SLOT(slotSearch()));
     connect(ui.searchButton, SIGNAL(clicked()), this, SLOT(slotSearch()));
     connect(ui.filteringCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotFiltering(bool)));
@@ -74,42 +79,23 @@ void DictionaryWidget::search(const QString &s, const int &i)
     ui.lineEdit->setText(s);
     ui.comboBox->setCurrentIndex(i);
 
-    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
-    QList<Entry> d = dict->search(ui.lineEdit->text(), ui.comboBox->currentIndex());
+    searchModel->setFilterKeyColumn(i);
+    searchModel->setFilterRegExp(QRegExp(s, Qt::CaseInsensitive, QRegExp::Wildcard));
 
-    QStandardItemModel *model = new QStandardItemModel(d.size(), 2, this);
-    model->setHeaderData(0, Qt::Horizontal, dict->oLang());
-    model->setHeaderData(1, Qt::Horizontal, dict->tLang());
-
-    for (int i = 0; i < d.size(); ++i)
-    {
-        model->setData(model->index(i, 0, QModelIndex()), d.at(i).original);
-        model->setData(model->index(i, 1, QModelIndex()), d.at(i).translated);
-    }
-
-    filterModel->setSourceModel(model);
-    ui.treeView->sortByColumn(ui.comboBox->currentIndex(), Qt::AscendingOrder);
-//    ui.treeView->resizeColumnsToContents();
-
-    n = d.size();
+    n = searchModel->rowCount();//d.size();
 }
 
 
 void DictionaryWidget::updateWidget()
 {
-    Dictionary *dict = DictionaryManager::instance()->activeDictionary();
-    undoStack->clear();
-    prevIndex = 100;
+    if (this->isVisible())
+        updateDictionary();
+}
 
-    ui.comboBox->clear();
-    ui.lineEdit->clear();
-    ui.comboBox->addItem(QString("%1 -> %2").arg(dict->oLang()).arg(dict->tLang()));
-    ui.comboBox->addItem(QString("%1 -> %2").arg(dict->tLang()).arg(dict->oLang()));
 
-    ui.filterComboBox->clear();
-    ui.filterLineEdit->clear();
-    ui.filterComboBox->addItem(QString("%1").arg(dict->oLang()));
-    ui.filterComboBox->addItem(QString("%1").arg(dict->tLang()));
+void DictionaryWidget::showEvent(QShowEvent*)
+{
+    updateDictionary();
 }
 
 
@@ -128,7 +114,7 @@ void DictionaryWidget::slotSearch()
     prevText = text;
     prevIndex = index;
 
-    emit statusBarMessage(tr("The number of results: %1\t(Within %2 sec)").arg(n).arg(time.elapsed() / 1000.0f), 0);
+    emit statusBarMessage(tr("The number of results: %1 (Within %2 sec)").arg(n).arg(time.elapsed() / 1000.0f), 0);
 }
 
 
@@ -153,4 +139,25 @@ void DictionaryWidget::slotItemActivated(const QModelIndex &index)
 
     ui.filterLineEdit->clear();
     slotFilter();
+}
+
+
+void DictionaryWidget::updateDictionary()
+{
+    undoStack->clear();
+    prevIndex = 100;
+
+    ui.comboBox->clear();
+    ui.lineEdit->clear();
+    ui.filterComboBox->clear();
+    ui.filterLineEdit->clear();
+
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+    if (!dict)
+        return;
+    searchModel->setSourceModel(dict);
+    ui.comboBox->addItem(QString("%1 -> %2").arg(dict->oLang()).arg(dict->tLang()));
+    ui.comboBox->addItem(QString("%1 -> %2").arg(dict->tLang()).arg(dict->oLang()));
+    ui.filterComboBox->addItem(QString("%1").arg(dict->oLang()));
+    ui.filterComboBox->addItem(QString("%1").arg(dict->tLang()));
 }

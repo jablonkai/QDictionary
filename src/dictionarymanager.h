@@ -22,7 +22,7 @@
 
 #include <QObject>
 
-#include "dictionary.h"
+#include "dictionarymodel.h"
 
 
 class DictionaryManager : public QObject
@@ -32,15 +32,10 @@ class DictionaryManager : public QObject
 public:
     static DictionaryManager *instance() { static DictionaryManager instance; return &instance; }
 
-    Dictionary *activeDictionary() const { return activeDict; }
-    Dictionary *popupDictionary() const { return popupDict; }
+    DictionaryModel *activeDictionary() const { return activeDict; }
     QTreeWidgetItem *dictionaryRoot() const { return dictRoot; }
 
-    void addDictionary(Dictionary*);
-
-    QStringList dictionaryList() const;
-    int popupIndex() const;
-    void setPopupDictionary(const int&);
+    void addDictionary(DictionaryModel*);
 
     void setDictDirs(const QStringList &list) { _dictDirs = list; }
     QStringList dictDirs() const { return _dictDirs; }
@@ -60,9 +55,8 @@ private:
     void writeSettings();
 
     QTreeWidgetItem *dictRoot;
-    Dictionary *activeDict;
-    Dictionary *popupDict;
-    QList<Dictionary*> dictionaries;
+    DictionaryModel *activeDict;
+    QList<DictionaryModel*> dictionaries;
 
     QStringList _dictDirs;
 };

@@ -34,15 +34,6 @@ public:
     void setTrayIconVisible(bool b) { _trayIconVisible = b; }
     bool isTrayIconVisible() { return _trayIconVisible; }
 
-    void setScan(bool b) { _scan = b; }
-    bool scan() { return _scan; }
-
-    void setAutomaticTranslation(bool b) { _automaticTranslation = b; }
-    bool isAutomaticTranslation() { return _automaticTranslation; }
-
-    void setTranslation(const QString &s) { _translation = s; }
-    QString translation() const { return _translation; }
-
 private:
     Settings();
     ~Settings();
@@ -52,9 +43,6 @@ private:
 
     QStringList _dictDirs;
     bool _trayIconVisible;
-    bool _scan;
-    bool _automaticTranslation;
-    QString _translation;
 };
 
 

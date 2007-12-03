@@ -21,7 +21,7 @@
 
 #include <QtGui>
 
-#include "dictionary.h"
+#include "dictionarymodel.h"
 #include "settings.h"
 
 
@@ -29,7 +29,6 @@ DictionaryManager::DictionaryManager(QObject *parent) : QObject(parent)
 {
     readSettings();
     dictRoot = new QTreeWidgetItem((QTreeWidget*)0, QStringList(tr("Dictionaries")), 1000);
-//    dictionaries->takeChildren();
 
     int i = 0;
     foreach (QString dir, _dictDirs)
@@ -38,7 +37,7 @@ DictionaryManager::DictionaryManager(QObject *parent) : QObject(parent)
 
         foreach (QString fileName, dictDir.entryList(QDir::Files))
         {
-            Dictionary *dict = new Dictionary(dictDir.absoluteFilePath(fileName));
+            DictionaryModel *dict = new DictionaryModel(dictDir.absoluteFilePath(fileName));
             if (dict->readInfo())
             {
                 dictionaries.append(dict);
@@ -58,7 +57,7 @@ DictionaryManager::~DictionaryManager()
 }
 
 
-void DictionaryManager::addDictionary(Dictionary *dict)
+void DictionaryManager::addDictionary(DictionaryModel *dict)
 {
     dictionaries.append(dict);
     dictRoot->addChild(dict);
@@ -66,35 +65,11 @@ void DictionaryManager::addDictionary(Dictionary *dict)
 }
 
 
-QStringList DictionaryManager::dictionaryList() const
-{
-    QStringList list;
-    foreach (Dictionary *i, dictionaries)
-        list << i->title();
-    return list;
-}
-
-
-int DictionaryManager::popupIndex() const
-{
-    if (!popupDict)
-        return -1;
-    return dictionaries.indexOf(popupDict);
-}
-
-
-void DictionaryManager::setPopupDictionary(const int &i)
-{
-    popupDict = dictionaries.at(i);
-    popupDict->load();
-}
-
-
 void DictionaryManager::itemActivated(QTreeWidgetItem *item)
 {
     if (item->type() == 1001)
     {
-        activeDict = static_cast<Dictionary*>(item);
+        activeDict = static_cast<DictionaryModel*>(item);
         activeDict->load();
         emit update();
     }

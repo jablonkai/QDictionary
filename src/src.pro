@@ -3,14 +3,15 @@ mainwindow.cpp \
 searchline.cpp \
 main.cpp \
 settingsdialog.cpp \
-dictionary.cpp \
-popupwidget.cpp \
 settings.cpp \
 dictionaryreader.cpp \
 editwidget.cpp \
-newdictionarydialog.cpp \
 dictionarywriter.cpp \
-dictionarymanager.cpp
+dictionarymanager.cpp \
+dictionarymodel.cpp \
+ searchmodel.cpp \
+ dictionarydialog.cpp \
+ entry.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -22,19 +23,20 @@ HEADERS += dictionarywidget.h \
 mainwindow.h \
 searchline.h \
 settingsdialog.h \
-dictionary.h \
-popupwidget.h \
 settings.h \
 dictionaryreader.h \
 editwidget.h \
-newdictionarydialog.h \
 dictionarywriter.h \
-dictionarymanager.h
+dictionarymanager.h \
+dictionarymodel.h \
+ searchmodel.h \
+ dictionarydialog.h \
+ entry.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 settingsdialog.ui \
 editwidget.ui \
-newdictionarydialog.ui
+dictionarydialog.ui
 QT += core \
 xml \
 gui

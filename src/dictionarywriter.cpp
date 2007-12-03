@@ -19,10 +19,11 @@
  ***************************************************************************/
 #include "dictionarywriter.h"
 
-#include "dictionary.h"
+#include "dictionarymodel.h"
+#include "entry.h"
 
 
-DictionaryWriter::DictionaryWriter(QIODevice *device, Dictionary *d) : QXmlStreamWriter(device), dict(d)
+DictionaryWriter::DictionaryWriter(QIODevice *device, DictionaryModel *d) : QXmlStreamWriter(device), dict(d)
 {
 }
 

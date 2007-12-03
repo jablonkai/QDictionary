@@ -19,10 +19,11 @@
  ***************************************************************************/
 #include "dictionaryreader.h"
 
-#include "dictionary.h"
+#include "dictionarymodel.h"
+#include "entry.h"
 
 
-DictionaryReader::DictionaryReader(QIODevice *device, Dictionary *d) : QXmlStreamReader(device), dict(d)
+DictionaryReader::DictionaryReader(QIODevice *device, DictionaryModel *d) : QXmlStreamReader(device), dict(d)
 {
 }
 

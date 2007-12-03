@@ -23,20 +23,20 @@
 #include <QXmlStreamWriter>
 
 
-class Dictionary;
+class DictionaryModel;
 class Entry;
 
 
 class DictionaryWriter : public QXmlStreamWriter
 {
 public:
-    DictionaryWriter(QIODevice*, Dictionary*);
+    DictionaryWriter(QIODevice*, DictionaryModel*);
     ~DictionaryWriter();
 
     bool write();
 
 private:
-    Dictionary *dict;
+    DictionaryModel *dict;
 
     void writeEntry(const Entry&);
 };

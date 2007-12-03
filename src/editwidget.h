@@ -33,17 +33,24 @@ class EditWidget : public QWidget
 public:
     EditWidget();
 
+public slots:
     void updateWidget();
 
 signals:
     void statusBarMessage(QString, int);
 
+protected:
+    void showEvent(QShowEvent*);
+
 private slots:
     void slotAdd();
-    void slotReset();
+    void slotSave();
+    void slotDelete();
+    void slotDocSettings();
+    void slotSelected(const QModelIndex&);
 
 private:
-    void updateList();
+    void updateDictionary();
 
     Ui::EditWidget ui;
     QStandardItemModel *model;
