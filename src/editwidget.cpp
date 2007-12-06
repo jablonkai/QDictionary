@@ -54,7 +54,7 @@ void EditWidget::showEvent(QShowEvent*)
 void EditWidget::slotAdd()
 {
     DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
-    if (!dict)
+    if (!dict || (ui.lineEdit1 && ui.lineEdit1->))
         return;
 
     dict->addEntry(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
@@ -66,9 +66,11 @@ void EditWidget::slotAdd()
 
 void EditWidget::slotSave()
 {
-    int i = ui.tableView->currentIndex().row();
     DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+    if (!dict || !ui.tableView->currentIndex().isValid())
+        return;
 
+    int i = ui.tableView->currentIndex().row();
     dict->entryList().replace(i, Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
     dict->setSaved(false);
 }
@@ -87,7 +89,11 @@ void EditWidget::slotDelete()
 
 void EditWidget::slotDocSettings()
 {
-    DictionaryDialog *dialog = new DictionaryDialog(this, DictionaryManager::instance()->activeDictionary());
+    DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
+    if (!dict)
+        return;
+
+    DictionaryDialog *dialog = new DictionaryDialog(this, dict);
     if (dialog->exec() == QDialog::Accepted)
         updateDictionary();
     delete dialog;
@@ -109,6 +115,9 @@ void EditWidget::updateDictionary()
 {
     ui.lineEdit1->clear();
     ui.lineEdit2->clear();
+    ui.tableView->setModel(0);
+    ui.label1->setText(tr("First language:"));
+    ui.label2->setText(tr("Second language:"));
 
     DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
     if (!dict)

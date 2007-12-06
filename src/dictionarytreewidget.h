@@ -17,63 +17,40 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef DICTIONARY_H
-#define DICTIONARY_H
+#ifndef DICTIONARYTREEWIDGET_H
+#define DICTIONARYTREEWIDGET_H
 
-#include <QTreeWidgetItem>
+#include <QTreeWidget>
 
 
-class Entry
+class MainWindow;
+
+
+class DictionaryTreeWidget : public QTreeWidget
 {
+    Q_OBJECT
+
 public:
-    Entry(const QString &o, const QString &t) : original(o), translated(t) {}
+    DictionaryTreeWidget(QWidget *parent = 0);
+    ~DictionaryTreeWidget();
 
-    QString original;
-    QString translated;
-};
+    void init(MainWindow*);
 
+protected:
+    void contextMenuEvent(QContextMenuEvent*);
 
-class Dictionary : public QTreeWidgetItem
-{
-public:
-    Dictionary();
-    Dictionary(const QString&);
-    ~Dictionary();
-
-    bool readInfo();
-    void load();
-    void save();
-    QList<Entry> search(const QString&, int) const;
-    QString popupSearch(const QString&) const;
-    QTreeWidgetItem *getTreeWidgetItem();
-
-    void setFileName(const QString &s) { _fileName = s; }
-
-    void setTitle(const QString &s) { _title = s; }
-    QString title() const { return _title; }
-
-    void setAuthor(const QString &s) { _author = s; }
-    QString author() const { return _author; }
-
-    void setOLang(const QString &s) { _oLang = s; }
-    QString oLang() const { return _oLang; }
-
-    void setTLang(const QString &s) { _tLang = s; }
-    QString tLang() const { return _tLang; }
-
-    QList<Entry> &entryList() { return dictionary; }
-    void append(const Entry&);
+private slots:
+//    void slotMode
+    void slotLoad();
+    void slotSave();
+    void slotUnload();
 
 private:
-    QString _title;
-    QString _author;
-    QString _oLang;
-    QString _tLang;
-    QString _fileName;
+    MainWindow *mainWindow;
 
-    bool loaded;
-    bool saved;
-    QList<Entry> dictionary;
+    QAction *loadAct;
+    QAction *saveAct;
+    QAction *unloadAct;
 };
 
 

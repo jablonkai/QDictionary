@@ -108,7 +108,7 @@
       <number>1</number>
      </property>
      <item>
-      <widget class="QTreeWidget" name="treeWidget" >
+      <widget class="DictionaryTreeWidget" name="treeWidget" >
        <column>
         <property name="text" >
          <string>1</string>
@@ -151,11 +151,20 @@
    </property>
   </action>
   <action name="actionDictionary" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
    <property name="text" >
     <string>&amp;Dictionary</string>
    </property>
   </action>
   <action name="actionEdit" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
    <property name="text" >
     <string>&amp;Edit</string>
    </property>
@@ -190,26 +199,14 @@
    <header>editwidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>DictionaryTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>dictionarytreewidget.h</header>
+  </customwidget>
  </customwidgets>
  <resources>
   <include location="qdictionary.qrc" />
  </resources>
- <connections>
-  <connection>
-   <sender>actionShowTrayIcon</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>actionScan</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

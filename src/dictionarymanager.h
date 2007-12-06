@@ -37,8 +37,10 @@ public:
 
     void addDictionary(DictionaryModel*);
 
-    void setDictDirs(const QStringList &list) { _dictDirs = list; }
+    void setDictDirs(const QStringList &list) { _dictDirs.clear(); _dictDirs = list; }
     QStringList dictDirs() const { return _dictDirs; }
+
+    void itemDeactivated(QTreeWidgetItem*);
 
 public slots:
     void itemActivated(QTreeWidgetItem*);

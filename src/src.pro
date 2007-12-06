@@ -11,7 +11,8 @@ dictionarymanager.cpp \
 dictionarymodel.cpp \
  searchmodel.cpp \
  dictionarydialog.cpp \
- entry.cpp
+ entry.cpp \
+ dictionarytreewidget.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -31,7 +32,8 @@ dictionarymanager.h \
 dictionarymodel.h \
  searchmodel.h \
  dictionarydialog.h \
- entry.h
+ entry.h \
+ dictionarytreewidget.h
 FORMS += dictionarywidget.ui \
 mainwindow.ui \
 settingsdialog.ui \

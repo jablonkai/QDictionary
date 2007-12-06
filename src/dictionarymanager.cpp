@@ -65,6 +65,19 @@ void DictionaryManager::addDictionary(DictionaryModel *dict)
 }
 
 
+void DictionaryManager::itemDeactivated(QTreeWidgetItem *item)
+{
+    if (item->type() == 1001)
+    {
+        DictionaryModel *_item = static_cast<DictionaryModel*>(item);
+        if (_item == activeDict)
+            activeDict = 0;
+        _item->unload();
+        emit update();
+    }
+}
+
+
 void DictionaryManager::itemActivated(QTreeWidgetItem *item)
 {
     if (item->type() == 1001)
@@ -83,6 +96,11 @@ void DictionaryManager::readSettings()
     settings.beginGroup("Dictionary");
     _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
     settings.endGroup();
+
+    foreach (QString i, _dictDirs)
+        if (QApplication::instance()->applicationDirPath() + "/dict" == i)
+            return;
+    _dictDirs += QApplication::instance()->applicationDirPath() + "/dict";
 }
 
 

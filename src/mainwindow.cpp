@@ -34,7 +34,7 @@ MainWindow::MainWindow() : QMainWindow()
 
     createTrayIcon();
     createConnections();
-    setupDictionaryTree();
+    ui.treeWidget->init(this);
 
     readSettings();
 }
@@ -157,17 +157,6 @@ void MainWindow::createTrayIcon()
 }
 
 
-void MainWindow::setupDictionaryTree()
-{
-    ui.treeWidget->header()->hide();
-    QTreeWidgetItem *dictRoot = DictionaryManager::instance()->dictionaryRoot();
-    ui.treeWidget->insertTopLevelItem(0, dictRoot);
-    ui.treeWidget->expandItem(dictRoot);
-
-    connect(ui.treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*, int)), DictionaryManager::instance(), SLOT(itemActivated(QTreeWidgetItem*)));
-}
-
-
 void MainWindow::readSettings()
 {
     QSettings conf;
@@ -175,7 +164,7 @@ void MainWindow::readSettings()
     conf.beginGroup("MainWindow");
     restoreState(conf.value("state", saveState()).toByteArray());
     restoreGeometry(conf.value("geometry", saveGeometry()).toByteArray());
-    ui.actionShowTrayIcon->setChecked(conf.value("trayIcon", true).toBool());
+    ui.actionShowTrayIcon->setChecked(conf.value("trayIcon", false).toBool());
     conf.value("hide", false).toBool() ? hide() : show();
 
     trayIcon->setVisible(ui.actionShowTrayIcon->isChecked());

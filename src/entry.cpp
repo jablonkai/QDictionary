@@ -17,51 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "newdictionarydialog.h"
-
-#include <QtGui>
-
-#include "dictionary.h"
+#include "entry.h"
 
 
-NewDictionaryDialog::NewDictionaryDialog(QWidget *parent) : QDialog(parent), dict(0)
+Entry::~Entry()
 {
-    ui.setupUi(this);
-
-    connect(ui.fileToolButton, SIGNAL(clicked()), this, SLOT(slotFile()));
-}
-
-
-NewDictionaryDialog::~NewDictionaryDialog()
-{
-}
-
-
-Dictionary *NewDictionaryDialog::newDictionary()
-{
-    return dict;
-}
-
-
-void NewDictionaryDialog::accept()
-{
-    dict = new Dictionary;
-
-    dict->setTitle(ui.titleLineEdit->text());
-    dict->setAuthor(ui.authorLineEdit->text());
-    dict->setFileName(ui.fileLineEdit->text());
-    dict->setOLang(ui.oLangLineEdit->text());
-    dict->setTLang(ui.tLangLineEdit->text());
-
-    QDialog::accept();
-}
-
-
-void NewDictionaryDialog::slotFile()
-{
-    QString fileName = QFileDialog::getSaveFileName(this);
-    if (fileName.isEmpty())
-        return;
-
-    ui.fileLineEdit->setText(fileName);
 }

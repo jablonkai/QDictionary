@@ -17,37 +17,62 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef NEWDICTIONARYDIALOG_H
-#define NEWDICTIONARYDIALOG_H
+#include "dictionarydialog.h"
 
-#include <QDialog>
+#include <QtGui>
 
-#include "ui_newdictionarydialog.h"
-
-
-class Dictionary;
+#include "dictionarymodel.h"
 
 
-class NewDictionaryDialog : public QDialog
+DictionaryDialog::DictionaryDialog(QWidget *parent, DictionaryModel *d) : QDialog(parent), dict(d)
 {
-    Q_OBJECT
+    ui.setupUi(this);
 
-public:
-    NewDictionaryDialog(QWidget *parent = 0);
-    ~NewDictionaryDialog();
-
-    Dictionary *newDictionary();
-
-public slots:
-    virtual void accept();
-
-private slots:
-    void slotFile();
-
-private:
-    Ui::NewDictionaryDialog ui;
-    Dictionary *dict;
-};
+    if (dict)
+    {
+        ui.titleLineEdit->setText(dict->title());
+        ui.authorLineEdit->setText(dict->author());
+        ui.fileLineEdit->setText(dict->fileName());
+        ui.oLangLineEdit->setText(dict->oLang());
+        ui.tLangLineEdit->setText(dict->tLang());
+    }
+    connect(ui.fileToolButton, SIGNAL(clicked()), this, SLOT(slotFile()));
+}
 
 
-#endif
+DictionaryModel *DictionaryDialog::newDictionary()
+{
+    DictionaryModel *dict = new DictionaryModel;
+    dict->setTitle(ui.titleLineEdit->text());
+    dict->setAuthor(ui.authorLineEdit->text());
+    dict->setFileName(ui.fileLineEdit->text());
+    dict->setOLang(ui.oLangLineEdit->text());
+    dict->setTLang(ui.tLangLineEdit->text());
+
+    return dict;
+}
+
+
+void DictionaryDialog::accept()
+{
+    if (dict)
+    {
+        dict->setTitle(ui.titleLineEdit->text());
+        dict->setAuthor(ui.authorLineEdit->text());
+        dict->setFileName(ui.fileLineEdit->text());
+        dict->setOLang(ui.oLangLineEdit->text());
+        dict->setTLang(ui.tLangLineEdit->text());
+        dict->setSaved(false);
+    }
+    QDialog::accept();
+}
+
+
+void DictionaryDialog::slotFile()
+{
+    QString fileName = QFileDialog::getSaveFileName(this);
+    if (fileName.isEmpty())
+        return;
+
+    ui.fileLineEdit->setText(fileName);
+}

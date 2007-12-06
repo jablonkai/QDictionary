@@ -151,6 +151,7 @@ void DictionaryWidget::updateDictionary()
     ui.lineEdit->clear();
     ui.filterComboBox->clear();
     ui.filterLineEdit->clear();
+    searchModel->setSourceModel(0);
 
     DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
     if (!dict)

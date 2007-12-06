@@ -17,47 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef ENTRY_H
+#define ENTRY_H
 
-#include <QMainWindow>
-#include <QSystemTrayIcon>
-
-#include "ui_mainwindow.h"
-
-#define QDICTIONARY_VERSION "0.3.0"
+#include <QString>
 
 
-class MainWindow : public QMainWindow
+class Entry
 {
-    Q_OBJECT
-
 public:
-    MainWindow();
-    ~MainWindow();
+    Entry(const QString &o, const QString &t) : original(o), translated(t) {}
+    ~Entry();
 
-protected:
-    void closeEvent(QCloseEvent*);
+/*    QString &original() const { return *_original; }
+    void setOriginal(const QString &s) { _original = s; }
+    QString &translated() const { return *_translated; }
+    void setTranslated(const QString &s) { _translated = s; }
 
-private slots:
-    void slotNew();
-    void slotSave();
-    void slotSetMode(QAction*);
-    void slotSettings();
-    void slotAbout();
-    void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
-
-private:
-    friend class DictionaryTreeWidget;
-
-    void createConnections();
-    void createTrayIcon();
-
-    void readSettings();
-    void writeSettings();
-
-    Ui::MainWindow ui;
-    QSystemTrayIcon *trayIcon;
+private:*/
+    QString original;
+    QString translated;
 };
 
 

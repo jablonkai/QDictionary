@@ -50,9 +50,12 @@ void SettingsDialog::accept()
     Settings *settings = Settings::instance();
     DictionaryManager *dictManager = DictionaryManager::instance();
 
-    dictManager->dictDirs().clear();
+//    dictManager->dictDirs().clear();
+    QStringList dirs;
     for (int i = 0; i < ui.dirListWidget->count(); ++i)
-        dictManager->dictDirs().append(ui.dirListWidget->item(i)->text());
+        dirs += ui.dirListWidget->item(i)->text();
+//        dictManager->dictDirs().append(ui.dirListWidget->item(i)->text());
+    dictManager->setDictDirs(dirs);
 
     settings->setTrayIconVisible(ui.trayIconCheckBox->checkState());
 

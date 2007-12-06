@@ -17,47 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DICTIONARYDIALOG_H
+#define DICTIONARYDIALOG_H
 
-#include <QMainWindow>
-#include <QSystemTrayIcon>
+#include <QDialog>
 
-#include "ui_mainwindow.h"
-
-#define QDICTIONARY_VERSION "0.3.0"
+#include "ui_dictionarydialog.h"
 
 
-class MainWindow : public QMainWindow
+class DictionaryModel;
+
+
+class DictionaryDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    MainWindow();
-    ~MainWindow();
+    DictionaryDialog(QWidget *parent = 0, DictionaryModel *d = 0);
 
-protected:
-    void closeEvent(QCloseEvent*);
+    DictionaryModel *newDictionary();
+
+public slots:
+    virtual void accept();
 
 private slots:
-    void slotNew();
-    void slotSave();
-    void slotSetMode(QAction*);
-    void slotSettings();
-    void slotAbout();
-    void slotTrayIconActivated(QSystemTrayIcon::ActivationReason);
+    void slotFile();
 
 private:
-    friend class DictionaryTreeWidget;
-
-    void createConnections();
-    void createTrayIcon();
-
-    void readSettings();
-    void writeSettings();
-
-    Ui::MainWindow ui;
-    QSystemTrayIcon *trayIcon;
+    Ui::DictionaryDialog ui;
+    DictionaryModel *dict;
 };
 
 
