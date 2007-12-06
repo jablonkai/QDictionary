@@ -66,7 +66,6 @@ void DictionaryTreeWidget::contextMenuEvent(QContextMenuEvent *event)
         return;
 
     QMenu menu(this);
-    menu.addMenu(mainWindow->ui.menu_Mode);
     menu.addSeparator();
     if (dict->isLoaded())
     {
@@ -74,17 +73,9 @@ void DictionaryTreeWidget::contextMenuEvent(QContextMenuEvent *event)
             menu.addAction(saveAct);
         menu.addAction(unloadAct);
     }
-//void DictionaryTree::slotLoad()
-/*     newAct = new QAction(QIcon(":/images/new.png"), tr("&New"), this);
-     newAct->setShortcut(tr("Ctrl+N"));
-     newAct->setStatusTip(tr("Create a new file"));
-     connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));*/
     else
         menu.addAction(loadAct);
-//    ui.actionDictionary->isChecked() ? menu.addAction(ui.actionEdit) : menu.addAction(ui.actionDictionary);
-
-    menu.addAction(new QAction("gdf", this));
-    menu.addAction(new QAction("dfh", this));
+    menu.addMenu(mainWindow->ui.menu_Mode);
 
     menu.exec(event->globalPos());
 }
@@ -104,6 +95,5 @@ void DictionaryTreeWidget::slotSave()
 
 void DictionaryTreeWidget::slotUnload()
 {
-//    static_cast<DictionaryModel*>(selectedItems().first())->unload();
     DictionaryManager::instance()->itemDeactivated(selectedItems().first());
 }

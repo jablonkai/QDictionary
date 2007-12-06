@@ -60,7 +60,6 @@ public:
     void load();
     void unload();
     void save();
-    QString popupSearch(const QString&) const;
     QTreeWidgetItem *getTreeWidgetItem();
 
     void setFileName(const QString &s) { _fileName = s; }

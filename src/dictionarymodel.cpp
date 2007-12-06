@@ -230,38 +230,6 @@ void DictionaryModel::save()
 }
 
 
-QString DictionaryModel::popupSearch(const QString &string) const
-{
-    QString text = QString("<strong>%1</strong><hr/>").arg(string);
-
-    QList<Entry> firstList;
-    QList<Entry> secondList;
-    foreach (Entry i, list)
-    {
-        if (i.original == string)
-            firstList << i;
-        if (i.translated == string)
-            secondList << i;
-    }
-
-    if (!firstList.empty())
-    {
-        text += QString("<em><u>%1 - %2</u></em><br/>").arg(_oLang).arg(_tLang);
-        foreach (Entry i, firstList)
-            text += QString("%1<br/>").arg(i.translated);
-    }
-
-    if (!secondList.empty())
-    {
-        text += QString("<em><u>%1 - %2</u></em><br/>").arg(_tLang).arg(_oLang);
-        foreach (Entry i, secondList)
-            text += QString("%1<br/>").arg(i.original);
-    }
-
-    return text;
-}
-
-
 void DictionaryModel::append(const Entry &e)
 {
     list.append(e);

@@ -54,7 +54,7 @@ void EditWidget::showEvent(QShowEvent*)
 void EditWidget::slotAdd()
 {
     DictionaryModel *dict = DictionaryManager::instance()->activeDictionary();
-    if (!dict || (ui.lineEdit1 && ui.lineEdit1->))
+    if (!dict || ui.lineEdit1->text().isEmpty() || ui.lineEdit1->text().isEmpty())
         return;
 
     dict->addEntry(Entry(ui.lineEdit1->text(), ui.lineEdit2->text()));
