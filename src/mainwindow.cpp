@@ -106,7 +106,7 @@ void MainWindow::slotSettings()
 
 void MainWindow::slotAbout()
 {
-    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("<b>QDictionary</b><br>Version " QDICTIONARY_VERSION "<br>Copyright (C) 2007 by Tamás Jablonkai<br><a href=\"mailto:tamas.jablonkai@gmail.com\">tamas.jablonkai@gmail.com</a>"));
+    QMessageBox::about(this, tr("About QDictionary"), QString::fromUtf8("<b>QDictionary</b><br>Version " QDICTIONARY_VERSION "<br>Copyright (C) 2007-2012 by Tamás Jablonkai<br><a href=\"mailto:tamas.jablonkai@gmail.com\">tamas.jablonkai@gmail.com</a>"));
 }
 
 
