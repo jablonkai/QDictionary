@@ -53,3 +53,6 @@ MOC_DIR = ../build
 RCC_DIR = ../build
 RESOURCES += qdictionary.qrc
 
+OTHER_FILES += \
+    CMakeLists.txt
+
