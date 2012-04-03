@@ -7,32 +7,44 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 set(qengineer_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
 
 set(qdictionary_SRCS
-    aboutdialog.cpp
-    dictionary.cpp
+    dictionarydialog.cpp
+    dictionarymanager.cpp
+    dictionarymodel.cpp
     dictionaryreader.cpp
-    dictionarytree.cpp
+    dictionarytreewidget.cpp
     dictionarywidget.cpp
+    dictionarywriter.cpp
     editwidget.cpp
     entry.cpp
     main.cpp
     mainwindow.cpp
-    searchline.cpp)
+    searchline.cpp
+    searchmodel.cpp
+    settings.cpp
+    settingsdialog.cpp)
 set(qdictionary_MOC_HDRS
-    aboutdialog.h
-    dictionarytree.h
+    dictionarydialog.h
+    dictionarymanager.h
+    dictionarymodel.h
+#    dictionaryreader.h
+    dictionarytreewidget.h
     dictionarywidget.h
+#    dictionarywriter.h
     editwidget.h
+#    entry.h
     mainwindow.h
-    searchline.h)
+    searchline.h
+    searchmodel.h
+#    settings.h
+    settingsdialog.h)
 set(qdictionary_UIS
-    aboutdialog.ui
-    dictionarywidget.ui
+    dictionarydialog.ui
+    dictionarywidget.sui
     editwidget.ui
-    mainwindow.ui)
+    mainwindow.ui
+    settingsdialog.ui)
 set(qdictionary_RCCS
-    dictionarywidget.qrc
-    editwidget.qrc
-    mainwindow.qrc)
+    dictionarywidget.qrc)
 
 QT4_WRAP_CPP(qdictionary_MOC_SRCS ${qdictionary_MOC_HDRS})
 QT4_WRAP_UI(qdictionary_UIS_H ${qdictionary_UIS})
