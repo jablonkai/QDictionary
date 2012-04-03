@@ -31,7 +31,7 @@ set(qdictionary_MOC_HDRS
     dictionarywidget.h
 #    dictionarywriter.h
     editwidget.h
-#    entry.h
+#   entry.h
     mainwindow.h
     searchline.h
     searchmodel.h
@@ -39,12 +39,12 @@ set(qdictionary_MOC_HDRS
     settingsdialog.h)
 set(qdictionary_UIS
     dictionarydialog.ui
-    dictionarywidget.sui
+    dictionarywidget.ui
     editwidget.ui
     mainwindow.ui
     settingsdialog.ui)
 set(qdictionary_RCCS
-    dictionarywidget.qrc)
+    qdictionary.qrc)
 
 QT4_WRAP_CPP(qdictionary_MOC_SRCS ${qdictionary_MOC_HDRS})
 QT4_WRAP_UI(qdictionary_UIS_H ${qdictionary_UIS})
