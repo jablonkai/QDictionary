@@ -1,6 +1,8 @@
 PROJECT(qdictionary)
 
-find_package(Qt4 REQUIRED)
+#find_package(Qt4 REQUIRED)
+set(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets)
+find_package(Qt5Widgets REQUIRED)
 include(${QT_USE_FILE})
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
