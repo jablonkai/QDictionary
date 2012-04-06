@@ -20,7 +20,7 @@
 #ifndef DICTIONARYMODEL_H
 #define DICTIONARYMODEL_H
 
-#include <QAbstractItemModel>
+#include <QtCore/QAbstractItemModel>
 #include <QTreeWidgetItem>
 
 

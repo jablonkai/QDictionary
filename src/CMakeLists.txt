@@ -1,12 +1,15 @@
 PROJECT(qdictionary)
 
 #find_package(Qt4 REQUIRED)
-set(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets)
+set(Qt5Core_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Core/)
+set(Qt5Gui_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Gui/)
+set(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets/)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-include(${QT_USE_FILE})
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
-set(qengineer_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
+set(qdictionary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
 
 set(qdictionary_SRCS
     dictionarydialog.cpp
@@ -48,9 +51,9 @@ set(qdictionary_UIS
 set(qdictionary_RCCS
     qdictionary.qrc)
 
-QT4_WRAP_CPP(qdictionary_MOC_SRCS ${qdictionary_MOC_HDRS})
-QT4_WRAP_UI(qdictionary_UIS_H ${qdictionary_UIS})
-QT4_ADD_RESOURCES(qdictionary_RCC_SRCS ${qdictionary_RCCS})
+QT5_WRAP_CPP(qdictionary_MOC_SRCS ${qdictionary_MOC_HDRS})
+QT5_WRAP_UI(qdictionary_UIS_H ${qdictionary_UIS})
+QT5_ADD_RESOURCES(qdictionary_RCC_SRCS ${qdictionary_RCCS})
 
 add_executable(qdictionary
     ${qdictionary_SRCS}
@@ -58,11 +61,11 @@ add_executable(qdictionary
     ${qdictionary_UIS_H}
     ${qdictionary_RCC_SRCS})
 target_link_libraries(qdictionary
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
-    ${QT_QTXML_LIBRARY})
+    ${Qt5Core_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}
-    ${QT_QTCORE_INCLUDE_DIR}
-    ${QT_QTGUI_INCLUDE_DIR}
-    ${QT_QTXML_INCLUDE_DIR}
-    ${qengineer_INCLUDE_DIR})
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${qdictionary_INCLUDE_DIR})
