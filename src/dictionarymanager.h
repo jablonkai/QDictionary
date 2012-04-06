@@ -20,7 +20,8 @@
 #ifndef DICTIONARYMANAGER_H
 #define DICTIONARYMANAGER_H
 
-#include <QObject>
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
 
 #include "dictionarymodel.h"
 

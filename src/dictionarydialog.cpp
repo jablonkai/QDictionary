@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "dictionarydialog.h"
 
-#include <QtGui>
+#include <Qt/QtWidgets>
 
 #include "dictionarymodel.h"
 

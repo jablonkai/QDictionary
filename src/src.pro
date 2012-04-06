@@ -41,7 +41,8 @@ editwidget.ui \
 dictionarydialog.ui
 QT += core \
 xml \
-gui
+gui \
+widgets
 TRANSLATIONS += translations/qdictionary_hu.ts
 
 OBJECTS_DIR = ../build

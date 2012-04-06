@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "searchline.h"
 
-#include <QtGui>
+#include <Qt/QtWidgets>
 
 
 static char *clearPixmap[]={

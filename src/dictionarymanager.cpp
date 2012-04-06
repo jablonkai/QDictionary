@@ -19,7 +19,8 @@
  ***************************************************************************/
 #include "dictionarymanager.h"
 
-#include <QtGui>
+#include <Qt/QtGui>
+#include <Qt/QtCore>
 
 #include "dictionarymodel.h"
 #include "settings.h"
@@ -94,7 +95,7 @@ void DictionaryManager::readSettings()
     QSettings settings;
 
     settings.beginGroup("Dictionary");
-    _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
+//    _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
     settings.endGroup();
 
     foreach (QString i, _dictDirs)

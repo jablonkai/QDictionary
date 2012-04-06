@@ -19,7 +19,8 @@
  ***************************************************************************/
 #include "mainwindow.h"
 
-#include <QtGui>
+#include <Qt/QtGui>
+#include <Qt/QtWidgets>
 
 #include "dictionarydialog.h"
 #include "dictionarymanager.h"

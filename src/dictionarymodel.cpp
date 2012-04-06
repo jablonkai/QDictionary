@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "dictionarymodel.h"
 
-#include <QtGui>
+#include <Qt/QtWidgets>
 
 #include "dictionaryreader.h"
 #include "dictionarywriter.h"

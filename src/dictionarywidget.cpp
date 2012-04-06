@@ -19,7 +19,8 @@
  ***************************************************************************/
 #include "dictionarywidget.h"
 
-#include <QtGui>
+#include <Qt/QtGui>
+#include <Qt/QtWidgets>
 
 #include "dictionarymanager.h"
 #include "searchmodel.h"

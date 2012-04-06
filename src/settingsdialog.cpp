@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "settingsdialog.h"
 
-#include <QtGui>
+#include <Qt/QtWidgets>
 
 #include "dictionarymanager.h"
 #include "settings.h"
