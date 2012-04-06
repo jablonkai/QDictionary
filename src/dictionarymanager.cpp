@@ -95,13 +95,13 @@ void DictionaryManager::readSettings()
     QSettings settings;
 
     settings.beginGroup("Dictionary");
-//    _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
+/*    _dictDirs = settings.value("dirs", QApplication::instance()->applicationDirPath() + "/dict").toStringList();
     settings.endGroup();
 
     foreach (QString i, _dictDirs)
         if (QApplication::instance()->applicationDirPath() + "/dict" == i)
             return;
-    _dictDirs += QApplication::instance()->applicationDirPath() + "/dict";
+    _dictDirs += QApplication::instance()->applicationDirPath() + "/dict";*/
 }
 
 
