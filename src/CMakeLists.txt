@@ -1,31 +1,25 @@
-PROJECT(qdictionary)
+PROJECT(QDictionary)
 
-set(QDICTIONARY_VERSION_MAJOR 0)
-set(QDICTIONARY_VERSION_MINOR 1)
-set(QDICTIONARY_VERSION_PATCH 0)
-set(QDICTIONARY_VERSION ${QDICTIONARY_VERSION_MAJOR}.${QDICTIONARY_VERSION_MINOR}.${QDICTIONARY_VERSION_PATCH})
-set(QDICTIONARY_VERSION_STRING "${QDICTIONARY_VERSION}")
-
-set(Qt5Core_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Core/)
-set(Qt5Gui_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Gui/)
-set(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets/)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+SET(Qt5Core_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Core/)
+SET(Qt5Gui_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Gui/)
+SET(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets/)
+FIND_PACKAGE(Qt5Core REQUIRED)
+FIND_PACKAGE(Qt5Gui REQUIRED)
+FIND_PACKAGE(Qt5Widgets REQUIRED)
 
 # TODO: Remove me once fixed in ECM module
-if(Qt5Core_FOUND)
+IF(Qt5Core_FOUND)
   # Avoid errors and build in PIC mode:
   # qt5/qtbase/include/QtCore/qglobal.h:1765:4: error:
   #   #error "You must build your code with position independent code if Qt was
   #   built with -reduce-relocations. " "Compile your code with -fPIC or -fPIE."
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-endif()
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+ENDIF()
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
-set(qdictionary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
+SET(QDictionary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
 
-set(qdictionary_SRCS
+SET(QDictionary_SRCS
     dictionarydialog.cpp
     dictionarymanager.cpp
     dictionarymodel.cpp
@@ -41,7 +35,7 @@ set(qdictionary_SRCS
     searchmodel.cpp
     settings.cpp
     settingsdialog.cpp)
-set(qdictionary_MOC_HDRS
+SET(QDictionary_MOC_HDRS
     dictionarydialog.h
     dictionarymanager.h
     dictionarymodel.h
@@ -56,30 +50,30 @@ set(qdictionary_MOC_HDRS
     searchmodel.h
 #    settings.h
     settingsdialog.h)
-set(qdictionary_UIS
+SET(QDictionary_UIS
     dictionarydialog.ui
     dictionarywidget.ui
     editwidget.ui
     mainwindow.ui
     settingsdialog.ui)
-set(qdictionary_RCCS
+SET(QDictionary_RCCS
     qdictionary.qrc)
 
-QT5_WRAP_CPP(qdictionary_MOC_SRCS ${qdictionary_MOC_HDRS})
-QT5_WRAP_UI(qdictionary_UIS_H ${qdictionary_UIS})
-QT5_ADD_RESOURCES(qdictionary_RCC_SRCS ${qdictionary_RCCS})
+QT5_WRAP_CPP(QDictionary_MOC_SRCS ${QDictionary_MOC_HDRS})
+QT5_WRAP_UI(QDictionary_UIS_H ${QDictionary_UIS})
+QT5_ADD_RESOURCES(QDictionary_RCC_SRCS ${QDictionary_RCCS})
 
-add_executable(qdictionary
-    ${qdictionary_SRCS}
-    ${qdictionary_MOC_SRCS} 
-    ${qdictionary_UIS_H}
-    ${qdictionary_RCC_SRCS})
-target_link_libraries(qdictionary
+ADD_EXECUTABLE(qdictionary
+    ${QDictionary_SRCS}
+    ${QDictionary_MOC_SRCS}
+    ${QDictionary_UIS_H}
+    ${QDictionary_RCC_SRCS})
+TARGET_LINK_LIBRARIES(qdictionary
     ${Qt5Core_LIBRARIES}
     ${Qt5Gui_LIBRARIES}
     ${Qt5Widgets_LIBRARIES})
-include_directories(${CMAKE_CURRENT_BINARY_DIR}
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
-    ${qdictionary_INCLUDE_DIR})
+    ${QDictionary_INCLUDE_DIR})
