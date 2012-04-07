@@ -20,7 +20,7 @@
 #ifndef DICTIONARYREADER_H
 #define DICTIONARYREADER_H
 
-#include <QXmlStreamReader>
+#include <QtCore/QXmlStreamReader>
 
 
 class DictionaryModel;

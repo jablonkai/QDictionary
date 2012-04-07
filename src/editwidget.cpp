@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include "editwidget.h"
 
-#include <QtGui>
-
 #include "dictionarydialog.h"
 #include "dictionarymanager.h"
 #include "entry.h"

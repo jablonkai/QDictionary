@@ -19,8 +19,9 @@
  ***************************************************************************/
 #include "mainwindow.h"
 
-#include <Qt/QtGui>
-#include <Qt/QtWidgets>
+#include <QtCore/QSettings>
+#include <QtGui/QCloseEvent>
+#include <QtWidgets/QMessageBox>
 
 #include "dictionarydialog.h"
 #include "dictionarymanager.h"

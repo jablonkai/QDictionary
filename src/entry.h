@@ -20,7 +20,7 @@
 #ifndef ENTRY_H
 #define ENTRY_H
 
-#include <QString>
+#include <QtCore/QString>
 
 
 class Entry

@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "dictionarytreewidget.h"
 
-#include <QtGui>
+#include <QtGui/QContextMenuEvent>
 
 #include "dictionarymanager.h"
 #include "dictionarymodel.h"

@@ -20,7 +20,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QStringList>
+#include <QtCore/QStringList>
 
 
 class Settings

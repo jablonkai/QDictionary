@@ -20,7 +20,7 @@
 #ifndef DICTIONARYDIALOG_H
 #define DICTIONARYDIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 #include "ui_dictionarydialog.h"
 

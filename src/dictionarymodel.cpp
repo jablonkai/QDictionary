@@ -19,7 +19,8 @@
  ***************************************************************************/
 #include "dictionarymodel.h"
 
-#include <Qt/QtWidgets>
+#include <QtCore/QFile>
+#include <QtWidgets/QMessageBox>
 
 #include "dictionaryreader.h"
 #include "dictionarywriter.h"

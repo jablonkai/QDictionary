@@ -21,7 +21,7 @@
 #define DICTIONARYMODEL_H
 
 #include <QtCore/QAbstractItemModel>
-#include <QTreeWidgetItem>
+#include <QtWidgets/QTreeWidgetItem>
 
 
 class Entry;

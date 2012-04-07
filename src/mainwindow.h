@@ -20,8 +20,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QSystemTrayIcon>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QSystemTrayIcon>
 
 #include "ui_mainwindow.h"
 

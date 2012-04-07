@@ -20,7 +20,7 @@
 #ifndef DICTIONARYTREEWIDGET_H
 #define DICTIONARYTREEWIDGET_H
 
-#include <QTreeWidget>
+#include <QtWidgets/QTreeWidget>
 
 
 class MainWindow;

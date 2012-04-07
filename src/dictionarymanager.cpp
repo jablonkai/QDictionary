@@ -19,8 +19,8 @@
  ***************************************************************************/
 #include "dictionarymanager.h"
 
-#include <Qt/QtGui>
-#include <Qt/QtCore>
+#include <QtCore/QDir>
+#include <QtCore/QSettings>
 
 #include "dictionarymodel.h"
 #include "settings.h"

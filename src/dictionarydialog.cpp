@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "dictionarydialog.h"
 
-#include <Qt/QtWidgets>
+#include <QtWidgets/QFileDialog>
 
 #include "dictionarymodel.h"
 

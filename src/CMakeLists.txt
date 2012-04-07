@@ -1,6 +1,11 @@
 PROJECT(qdictionary)
 
-#find_package(Qt4 REQUIRED)
+set(QDICTIONARY_VERSION_MAJOR 0)
+set(QDICTIONARY_VERSION_MINOR 1)
+set(QDICTIONARY_VERSION_PATCH 0)
+set(QDICTIONARY_VERSION ${QDICTIONARY_VERSION_MAJOR}.${QDICTIONARY_VERSION_MINOR}.${QDICTIONARY_VERSION_PATCH})
+set(QDICTIONARY_VERSION_STRING "${QDICTIONARY_VERSION}")
+
 set(Qt5Core_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Core/)
 set(Qt5Gui_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Gui/)
 set(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets/)

@@ -19,7 +19,9 @@
  ***************************************************************************/
 #include "searchline.h"
 
-#include <Qt/QtWidgets>
+#include <QtGui/QMouseEvent>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QStyle>
 
 
 static char *clearPixmap[]={

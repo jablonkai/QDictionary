@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "settingsdialog.h"
 
-#include <Qt/QtWidgets>
+#include <QtWidgets/QFileDialog>
 
 #include "dictionarymanager.h"
 #include "settings.h"

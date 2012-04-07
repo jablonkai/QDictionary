@@ -20,7 +20,7 @@
 #ifndef SEARCHLINE_H
 #define SEARCHLINE_H
 
-#include <QLineEdit>
+#include <QtWidgets/QLineEdit>
 
 
 class QLabel;

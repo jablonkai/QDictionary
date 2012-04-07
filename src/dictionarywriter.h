@@ -20,7 +20,7 @@
 #ifndef DICTIONARYWRITER_H
 #define DICTIONARYWRITER_H
 
-#include <QXmlStreamWriter>
+#include <QtCore/QXmlStreamWriter>
 
 
 class DictionaryModel;

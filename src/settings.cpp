@@ -19,8 +19,7 @@
  ***************************************************************************/
 #include "settings.h"
 
-#include <QApplication>
-#include <QSettings>
+#include <QtCore/QSettings>
 
 
 Settings::Settings()

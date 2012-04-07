@@ -20,7 +20,7 @@
 #ifndef SEARCHMODEL_H
 #define SEARCHMODEL_H
 
-#include <QSortFilterProxyModel>
+#include <QtCore/QSortFilterProxyModel>
 
 
 class SearchModel : public QSortFilterProxyModel

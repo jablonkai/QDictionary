@@ -19,8 +19,8 @@
  ***************************************************************************/
 #include "dictionarywidget.h"
 
-#include <Qt/QtGui>
-#include <Qt/QtWidgets>
+#include <QtCore/QTime>
+#include <QtWidgets/QUndoStack>
 
 #include "dictionarymanager.h"
 #include "searchmodel.h"
