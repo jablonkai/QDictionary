@@ -8,6 +8,15 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
+# TODO: Remove me once fixed in ECM module
+if(Qt5Core_FOUND)
+  # Avoid errors and build in PIC mode:
+  # qt5/qtbase/include/QtCore/qglobal.h:1765:4: error:
+  #   #error "You must build your code with position independent code if Qt was
+  #   built with -reduce-relocations. " "Compile your code with -fPIC or -fPIE."
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif()
+
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 set(qdictionary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
 
