@@ -1,1 +1,16 @@
- 
+Version 0.3.0
+  * ported to Qt5
+  * qmake replaced with cmake
+  * not need restart on dictionary list directories update
+
+Version 0.2.2
+  * more bugfix
+
+Version 0.2.1
+  * some bugfix
+
+Version 0.2.0
+  * some update and new features
+
+Version 0.1.0
+  * initial release
