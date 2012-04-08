@@ -1,21 +1,5 @@
 PROJECT(QDictionary)
 
-SET(Qt5Core_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Core/)
-SET(Qt5Gui_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Gui/)
-SET(Qt5Widgets_DIR /home/tamas/Downloads/Qt5-alpha/lib/cmake/Qt5Widgets/)
-FIND_PACKAGE(Qt5Core REQUIRED)
-FIND_PACKAGE(Qt5Gui REQUIRED)
-FIND_PACKAGE(Qt5Widgets REQUIRED)
-
-# TODO: Remove me once fixed in ECM module
-IF(Qt5Core_FOUND)
-  # Avoid errors and build in PIC mode:
-  # qt5/qtbase/include/QtCore/qglobal.h:1765:4: error:
-  #   #error "You must build your code with position independent code if Qt was
-  #   built with -reduce-relocations. " "Compile your code with -fPIC or -fPIE."
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-ENDIF()
-
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 SET(QDictionary_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/)
 
