@@ -52,9 +52,6 @@ public:
 private:
     QList<Entry> list;
 
-
-
-
 public:
     bool readInfo();
     void load();

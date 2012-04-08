@@ -40,7 +40,9 @@ private:
 
     void writeEntry(const Entry&);
 };
-/* xdict
+
+// xdict file format:
+/*
 xdict
     %title
     %author

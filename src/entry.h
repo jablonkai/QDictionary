@@ -29,12 +29,6 @@ public:
     Entry(const QString &o, const QString &t) : original(o), translated(t) {}
     ~Entry();
 
-/*    QString &original() const { return *_original; }
-    void setOriginal(const QString &s) { _original = s; }
-    QString &translated() const { return *_translated; }
-    void setTranslated(const QString &s) { _translated = s; }
-
-private:*/
     QString original;
     QString translated;
 };

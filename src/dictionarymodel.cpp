@@ -141,15 +141,6 @@ void DictionaryModel::updateInfo()
     setToolTip(0, QString("<b>%1</b><br>Author: %2<br>Original: %3<br>Translated: %4").arg(_title).arg(_author).arg(_oLang).arg(_tLang));
 }
 
-
-
-
-
-
-
-
-
-
 bool DictionaryModel::readInfo()
 {
     QFile file(_fileName);

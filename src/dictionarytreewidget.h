@@ -40,7 +40,6 @@ protected:
     void contextMenuEvent(QContextMenuEvent*);
 
 private slots:
-//    void slotMode
     void slotLoad();
     void slotSave();
     void slotUnload();
