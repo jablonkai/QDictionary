@@ -38,9 +38,6 @@ private:
     Settings();
     ~Settings();
 
-    void write();
-    void read();
-
     QStringList _dictDirs;
     bool _trayIconVisible;
 };

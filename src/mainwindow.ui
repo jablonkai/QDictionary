@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,108 +10,91 @@
     <height>412</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>QDictionary</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="qdictionary.qrc" >:/resources/qdictionary.png</iconset>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/resources/qdictionary.png</normaloff>:/resources/qdictionary.png</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget" >
-   <layout class="QVBoxLayout" >
-    <property name="leftMargin" >
-     <number>0</number>
-    </property>
-    <property name="topMargin" >
-     <number>0</number>
-    </property>
-    <property name="rightMargin" >
-     <number>0</number>
-    </property>
-    <property name="bottomMargin" >
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout">
+    <property name="margin">
      <number>0</number>
     </property>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget" >
-      <widget class="DictionaryWidget" name="dictionaryWidget" />
-      <widget class="EditWidget" name="editWidget" />
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="DictionaryWidget" name="dictionaryWidget"/>
+      <widget class="EditWidget" name="editWidget"/>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar" >
-   <property name="geometry" >
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>482</width>
-     <height>29</height>
+     <height>24</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_Help" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionAbout" />
-    <addaction name="actionAboutQt" />
+    <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
    </widget>
-   <widget class="QMenu" name="menu_Tools" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionShowTrayIcon" />
-    <addaction name="separator" />
-    <addaction name="actionSettings" />
+    <addaction name="actionShowTrayIcon"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menu_File" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNew" />
-    <addaction name="actionSave" />
-    <addaction name="separator" />
-    <addaction name="actionQuit" />
+    <addaction name="actionNew"/>
+    <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menu_Mode" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_Mode">
+    <property name="title">
      <string>&amp;Mode</string>
     </property>
-    <addaction name="actionDictionary" />
-    <addaction name="actionEdit" />
+    <addaction name="actionDictionary"/>
+    <addaction name="actionEdit"/>
    </widget>
-   <addaction name="menu_File" />
-   <addaction name="menu_Mode" />
-   <addaction name="menu_Tools" />
-   <addaction name="menu_Help" />
+   <addaction name="menu_File"/>
+   <addaction name="menu_Mode"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menu_Help"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar" />
-  <widget class="QDockWidget" name="dockWidget" >
-   <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
-   <property name="windowTitle" >
+   <property name="windowTitle">
     <string>Dictionary List</string>
    </property>
-   <attribute name="dockWidgetArea" >
+   <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2" >
-    <layout class="QVBoxLayout" >
-     <property name="leftMargin" >
-      <number>1</number>
-     </property>
-     <property name="topMargin" >
-      <number>1</number>
-     </property>
-     <property name="rightMargin" >
-      <number>1</number>
-     </property>
-     <property name="bottomMargin" >
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout">
+     <property name="margin">
       <number>1</number>
      </property>
      <item>
-      <widget class="DictionaryTreeWidget" name="treeWidget" >
+      <widget class="DictionaryTreeWidget" name="treeWidget">
        <column>
-        <property name="text" >
+        <property name="text">
          <string>1</string>
         </property>
        </column>
@@ -119,69 +103,72 @@
     </layout>
    </widget>
   </widget>
-  <action name="actionQuit" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/resources/close.png</iconset>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/resources/close.png</normaloff>:/resources/close.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Quit</string>
    </property>
   </action>
-  <action name="actionAbout" >
-   <property name="text" >
+  <action name="actionAbout">
+   <property name="text">
     <string>About</string>
    </property>
   </action>
-  <action name="actionAboutQt" >
-   <property name="text" >
+  <action name="actionAboutQt">
+   <property name="text">
     <string>About Qt</string>
    </property>
   </action>
-  <action name="actionSettings" >
-   <property name="text" >
+  <action name="actionSettings">
+   <property name="text">
     <string>&amp;Settings...</string>
    </property>
   </action>
-  <action name="actionShowTrayIcon" >
-   <property name="checkable" >
+  <action name="actionShowTrayIcon">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Show &amp;Tray Icon</string>
    </property>
   </action>
-  <action name="actionDictionary" >
-   <property name="checkable" >
+  <action name="actionDictionary">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked" >
+   <property name="checked">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Dictionary</string>
    </property>
   </action>
-  <action name="actionEdit" >
-   <property name="checkable" >
+  <action name="actionEdit">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Edit</string>
    </property>
   </action>
-  <action name="actionNew" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/resources/new.png</iconset>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/resources/new.png</normaloff>:/resources/new.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;New...</string>
    </property>
   </action>
-  <action name="actionSave" >
-   <property name="icon" >
-    <iconset resource="qdictionary.qrc" >:/resources/save.png</iconset>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/resources/save.png</normaloff>:/resources/save.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Save</string>
    </property>
   </action>
@@ -205,8 +192,6 @@
    <header>dictionarytreewidget.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="qdictionary.qrc" />
- </resources>
+ <resources/>
  <connections/>
 </ui>

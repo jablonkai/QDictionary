@@ -1,4 +1,5 @@
 Version 0.3.0
+  * ChangeLog created
   * ported to Qt5
   * qmake replaced with cmake
   * not need restart on dictionary list directories update

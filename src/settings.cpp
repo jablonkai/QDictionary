@@ -21,26 +21,10 @@
 
 #include <QtCore/QSettings>
 
-
 Settings::Settings()
 {
-    read();
 }
-
 
 Settings::~Settings()
 {
-    write();
-}
-
-
-void Settings::read()
-{
-    QSettings settings;
-}
-
-
-void Settings::write()
-{
-    QSettings settings;
 }
