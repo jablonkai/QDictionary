@@ -23,8 +23,8 @@
 #include "ui_dictionarywidget.h"
 
 
-class QSortFilterProxyModel;
-class QUndoStack;
+QT_FORWARD_DECLARE_CLASS(QSortFilterProxyModel)
+QT_FORWARD_DECLARE_CLASS(QUndoStack)
 
 class SearchModel;
 

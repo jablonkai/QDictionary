@@ -23,7 +23,7 @@
 #include "ui_editwidget.h"
 
 
-class QStandardItemModel;
+QT_FORWARD_DECLARE_CLASS(QStandardItemModel)
 
 
 class EditWidget : public QWidget
