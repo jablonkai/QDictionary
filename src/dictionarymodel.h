@@ -36,7 +36,7 @@ public:
     DictionaryModel(const QString &fileName, QObject *parent = 0);
     ~DictionaryModel();
 
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const { return hasIndex(row, column, parent) ? createIndex(row, column, 0) : QModelIndex(); }
+    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const { return hasIndex(row, column, parent) ? createIndex(row, column) : QModelIndex(); }
     QModelIndex parent(const QModelIndex&) const { return QModelIndex(); }
     int columnCount (const QModelIndex&) const { return 2; }
     int rowCount(const QModelIndex&) const { return list.count(); }
