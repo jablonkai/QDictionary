@@ -25,7 +25,7 @@
 
 #include "ui_mainwindow.h"
 
-#define QDICTIONARY_VERSION "0.3.1"
+#define QDICTIONARY_VERSION "0.3.0dev"
 
 
 class MainWindow : public QMainWindow
